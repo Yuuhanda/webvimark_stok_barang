@@ -98,6 +98,9 @@ $config = [
                         'yii\bootstrap5\BootstrapAsset',  // Use Bootstrap 5 asset
                     ],
                 ],
+                'yii\bootstrap\BootstrapAsset' => [
+                    'class' => 'yii\bootstrap5\BootstrapAsset',
+                ],
             ],
         ],
 

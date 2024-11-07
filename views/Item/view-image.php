@@ -1,5 +1,6 @@
 <?php
 
+use webvimark\modules\UserManagement\components\GhostHtml;
 use yii\helpers\Html;
 use yii\helpers\Url;
 
@@ -7,5 +8,5 @@ use yii\helpers\Url;
 
 ?>
 <div class="image-preview">
-    <?= Html::img(Url::to('@web/uploads/' . $model->imagefile, $schema = true), ['alt' => $model->item_name, 'class' => 'img-fluid']) ?>
+    <?= GhostHtml::img(Url::to('@web/uploads/' . $model->imagefile, $schema = true), ['alt' => $model->item_name, 'class' => 'img-fluid']) ?>
 </div>

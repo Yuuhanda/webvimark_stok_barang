@@ -20,31 +20,11 @@ class UserController extends Controller
      */
     public function behaviors()
     {
-        return array_merge(
-            parent::behaviors(),
-            [
-                'verbs' => [
-                    'class' => VerbFilter::class,
-                    'actions' => [
-                        'delete' => ['POST'],
-                    ],
-                ],
-                'access' => [
-                    'class' => AccessControl::class,
-                    'only' => ['*'], // restrict access to all actions
-                    'rules' => [
-                        [
-                            'allow' => true,
-                            'roles' => ['superadmin'], // allow authenticated users (logged in)
-                        ],
-                        [
-                            'allow' => false,
-                            'roles' => ['?'], // deny guests
-                        ],
-                    ],
-                ],
-            ]
-        );
+    	return [
+    		'ghost-access'=> [
+    			'class' => 'webvimark\modules\UserManagement\components\GhostAccessControl',
+    		],
+    	];
     }
 
     /**

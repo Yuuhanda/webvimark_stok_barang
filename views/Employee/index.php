@@ -1,6 +1,7 @@
 <?php
 
 use app\models\Employee;
+use webvimark\modules\UserManagement\components\GhostHtml;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\grid\ActionColumn;
@@ -18,7 +19,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= Html::a('Create Employee', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= GhostHtml::a('Add Employee', ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>

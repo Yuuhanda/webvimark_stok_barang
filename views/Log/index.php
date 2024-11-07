@@ -1,6 +1,7 @@
 <?php
 
 use app\models\UnitLog;
+use webvimark\modules\UserManagement\components\GhostHtml;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\grid\GridView;
@@ -16,7 +17,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <p>
         <?php 
             // Button to trigger hidden export form
-            echo Html::button('Export Log Data to .xlsx', [
+            echo GhostHtml::button('Export Log Data to .xlsx', [
                 'class' => 'btn btn-success',
                 'onclick' => "$('#export-form').submit();"
             ]);

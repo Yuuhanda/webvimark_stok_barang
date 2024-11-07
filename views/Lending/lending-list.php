@@ -6,6 +6,7 @@ use yii\helpers\Url;
 use yii\grid\ActionColumn;
 use yii\grid\GridView;
 use kartik\date\DatePicker;
+use webvimark\modules\UserManagement\components\GhostHtml;
 use yii\widgets\ActiveForm;
 
 /** @var yii\web\View $this */
@@ -56,7 +57,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'header' => 'Action',
                 'buttons' => [
                     'returnunit' => function ($url, $model, $key) {
-                        return Html::a('Return', ['unit/return-unit', 'id_unit' => $model['id_unit']], ['class' => 'btn btn-primary']);
+                        return GhostHtml::a('Return', ['unit/return-unit', 'id_unit' => $model['id_unit']], ['class' => 'btn btn-primary']);
                     },
                 ],
             ],

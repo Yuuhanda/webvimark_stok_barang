@@ -30,40 +30,11 @@ class ItemController extends Controller
      */
     public function behaviors()
     {
-        return array_merge(
-            parent::behaviors(),
-            [
-                'verbs' => [
-                    'class' => VerbFilter::class,
-                    'actions' => [
-                        'delete' => ['POST'],
-                    ],
-                ],
-                'access' => [
-                    'class' => AccessControl::class,
-                    'only' => ['*'], // restrict access to all actions
-                    'rules' => [
-                        [
-                            'allow' => true,
-                            'roles' => ['Admin'], // allow authenticated users (logged in)
-                        ],
-                        [
-                            'allow' => true,
-                            'roles' => ['superadmin'], // allow authenticated users (logged in)
-                        ],
-                        [
-                            'allow' => false,
-                            'actions' =>['create','update'],
-                            'roles' => ['maintenance'], // deny guests
-                        ],
-                        [
-                            'allow' => true,
-                            'roles' => ['maintenance'], // deny guests
-                        ],
-                    ],
-                ],
-            ]
-        );
+    	return [
+    		'ghost-access'=> [
+    			'class' => 'webvimark\modules\UserManagement\components\GhostAccessControl',
+    		],
+    	];
     }
 
     /**

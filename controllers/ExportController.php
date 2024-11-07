@@ -17,6 +17,14 @@ use app\models\LendingSearch;
 use app\models\DamagedSearch;
 class ExportController extends \yii\web\Controller
 {
+    public function behaviors()
+    {
+    	return [
+    		'ghost-access'=> [
+    			'class' => 'webvimark\modules\UserManagement\components\GhostAccessControl',
+    		],
+    	];
+    }
     public function actionIndex()
     {
         return $this->render('index');

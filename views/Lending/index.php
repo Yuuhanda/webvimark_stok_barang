@@ -1,6 +1,7 @@
 <?php
 
 use app\models\UnitLog;
+use webvimark\modules\UserManagement\components\GhostHtml;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\grid\ActionColumn;
@@ -43,7 +44,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         // Check if 'available' is greater than 0
                         if ($model['available'] > 0) {
                             // Create the "Loan A Unit" button
-                            return Html::a('Loan A Unit', ['lending/loan-unit', 'id_item' => $model['id_item']], ['class' => 'btn btn-primary']);
+                            return GhostHtml::a('Loan A Unit', ['lending/loan-unit', 'id_item' => $model['id_item']], ['class' => 'btn btn-primary']);
                         }
                         // Return nothing if 'available' is 0 or less
                         return '';

@@ -1,3 +1,5 @@
+
+
 <?php
 
 /** @var yii\web\View $this */
@@ -10,7 +12,11 @@ use yii\bootstrap5\Html;
 use yii\bootstrap5\Nav;
 use yii\bootstrap5\NavBar;
 use yii\bootstrap5\BootstrapAsset;
-
+use webvimark\modules\UserManagement\components\GhostMenu;
+use webvimark\modules\UserManagement\UserManagementModule;
+use webvimark\modules\UserManagement\models\User;
+use webvimark\modules\UserManagement\components\GhostHtml;
+use webvimark\modules\UserManagement\components\GhostNav;
 
 BootstrapAsset::register($this);
 
@@ -42,7 +48,7 @@ NavBar::begin([
     'options' => ['class' => 'navbar-expand-md navbar-dark bg-dark fixed-top'],
 ]);
 
-echo Nav::widget([
+echo GhostNav::widget([
     'options' => ['class' => 'navbar-nav'],
     'items' => [
         // Inventory Dropdown
@@ -50,12 +56,10 @@ echo Nav::widget([
             'label' => 'Inventory',
             'items' => [
                 ['label' => 'Master Inventory', 'url' => ['/item/index']],
-                ['label' => 'Manage Unit', 'url' => ['/unit/index'], 'visible' => !Yii::$app->user->isGuest && 
-            (Yii::$app->user->identity->superadmin == 1 || Yii::$app->user->identity->superadmin == 0)],
-                ['label' => 'Bulk Upload History', 'url' => ['/docs/index'], 'visible' => !Yii::$app->user->isGuest && 
-            (Yii::$app->user->identity->superadmin == 1 || Yii::$app->user->identity->superadmin == 0)],
+                ['label' => 'Manage Unit', 'url' => ['/unit/index']],
+                ['label' => 'Bulk Upload History', 'url' => ['/docs/index']],
                 ['label' => 'Unit Usage Log', 'url' => ['/log/index']],
-            ], 'visible' => !Yii::$app->user->isGuest,
+            ]
         ],
         // Item Loaning Dropdown
         [
@@ -63,36 +67,32 @@ echo Nav::widget([
             'items' => [
                 ['label' => 'Unit Loaning', 'url' => ['/lending/index']],
                 ['label' => 'Loaning List', 'url' => ['/lending/list']],
-            ], 'visible' => !Yii::$app->user->isGuest && 
-            (Yii::$app->user->identity->superadmin == 1 || Yii::$app->user->identity->superadmin == 0),
+            ],
         ],
         // Unit Damaged & In-Repair Dropdown
         [
             'label' => 'Damaged & In-Repair Unit',
             'items' => [
-                ['label' => 'Damaged Unit', 'url' => ['/unit/damaged'], 'visible' => !Yii::$app->user->isGuest],
-                ['label' => 'Unit In-Repair', 'url' => ['/unit/repair'], 'visible' => !Yii::$app->user->isGuest && 
-            (Yii::$app->user->identity->superadmin == 1 || Yii::$app->user->identity->superadmin == 2)],
-            ], 'visible' => !Yii::$app->user->isGuest
+                ['label' => 'Damaged Unit', 'url' => ['/unit/damaged']],
+                ['label' => 'Unit In-Repair', 'url' => ['/unit/repair']]
+            ]
         ],
         // Single Links
-        ['label' => 'Search & Edit Unit Data', 'url' => ['/unit/correction-search'], 'visible' => !Yii::$app->user->isGuest && 
-            (Yii::$app->user->identity->superadmin == 1 || Yii::$app->user->identity->superadmin == 0)],
-        ['label' => 'Warehouse', 'url' => ['/warehouse/index'], 'visible' => !Yii::$app->user->isGuest],
-        ['label' => 'Employee', 'url' => ['/employee/index'],'visible' => !Yii::$app->user->isGuest && 
-            (Yii::$app->user->identity->superadmin == 1 || Yii::$app->user->identity->superadmin == 0)],
+        ['label' => 'Search & Edit Unit Data', 'url' => ['/unit/correction-search']],
+        ['label' => 'Warehouse', 'url' => ['/warehouse/index'], ],
+        ['label' => 'Employee', 'url' => ['/employee/index']],
         [
-            'label' => 'Admin List',
-            'url' => ['/user/index'],
-            'visible' => Yii::$app->user->identity && Yii::$app->user->identity->superadmin == 1, // Show if user is superadmin
+            'label' => 'Admin Menu',
+            'items'=>UserManagementModule::menuItems(), 
         ],
         
         
         // User Login/Logout
         Yii::$app->user->isGuest
-            ? ['label' => 'Login', 'url' => ['/site/login']]
-            : '<li class="nav-item">'
-                . Html::beginForm(['/site/logout'], 'post')
+            ? ['label' => 'Login', 'url' => ['/user-management/auth/login']]
+            : ['label' => 'Account Settings', 'url'=>['/user-management/auth/change-own-password']],
+            '<li class="nav-item">'
+                . Html::beginForm(['/user-management/auth/logout'], 'post')
                 . Html::submitButton(
                     'Logout (' . Yii::$app->user->identity->username . ')',
                     ['class' => 'nav-link btn btn-link logout']
@@ -107,6 +107,8 @@ NavBar::end();
 
 </header>
 
+
+<br>
 <main id="main" class="flex-shrink-0" role="main">
     <div class="container">
         <?php if (!empty($this->params['breadcrumbs'])): ?>
@@ -125,7 +127,11 @@ NavBar::end();
         </div>
     </div>
 </footer>
+<?php
 
+
+
+?>
 <?php $this->endBody() ?>
 </body>
 </html>

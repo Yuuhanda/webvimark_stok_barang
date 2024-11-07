@@ -7,6 +7,7 @@ use yii\helpers\Url;
 use yii\grid\ActionColumn;
 use yii\grid\GridView;
 use app\controllers\UnitController;
+use webvimark\modules\UserManagement\components\GhostHtml;
 
 /** @var yii\web\View $this */
 /** @var app\models\Itemearch $searchModel */
@@ -41,7 +42,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'buttons' => [
                     'addunit' => function ($url, $model, $key) {
                         // Create the "See Detail In Warehouse" button
-                        return Html::a('Add New Unit', ['unit/add-unit', 'id_item' => $model['id_item']], ['class' => 'btn btn-primary']);
+                        return GhostHtml::a('Add New Unit', ['unit/add-unit', 'id_item' => $model['id_item']], ['class' => 'btn btn-primary']);
                     },
                 ],
             ],

@@ -22,6 +22,7 @@ use app\models\UploadForm;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use yii\web\UploadedFile;
 use app\models\DocUploaded;
+
 /**
  * UnitController implements the CRUD actions for ItemUnit model.
  */
@@ -30,48 +31,18 @@ class UnitController extends Controller
     /**
      * @inheritDoc
      */
+    
+
+   
     public function behaviors()
     {
-        return array_merge(
-            parent::behaviors(),
-            [
-                'verbs' => [
-                    'class' => VerbFilter::class,
-                    'actions' => [
-                        'delete' => ['POST'],
-                    ],
-                ],
-                'access' => [
-                    'class' => AccessControl::class,
-                    'only' => ['*'], // restrict access to all actions
-                    'rules' => [
-                        [
-                            'allow' => true,
-                            'roles' => ['superadmin'], // allow authenticated users (logged in)
-                        ],
-                        [
-                            'allow' => false,
-                            'actions' => ['repair', 'unit-repair', 'finish-repair', 'get-broken-unit'],
-                            'roles' => ['Admin'], // deny guests
-                        ],
-                        [
-                            'allow' => true,
-                            'roles' => ['Admin'], // deny guests
-                        ],
-                        [
-                            'allow' => true,
-                            'actions' => ['repair', 'damaged', 'send-repair', 'unit-repair', 'finish-repair', 'get-broken-unit'],
-                            'roles' => ['maintenance'], // deny guests
-                        ],
-                        [
-                            'allow' => false,
-                            'roles' => ['?'], // deny guests
-                        ],
-                    ],
-                ],
-            ]
-        );
+    	return [
+    		'ghost-access'=> [
+    			'class' => 'webvimark\modules\UserManagement\components\GhostAccessControl',
+    		],
+    	];
     }
+
 
 
     /**
@@ -430,8 +401,8 @@ class UnitController extends Controller
             $model->save();
             $logController = new LogController('log', Yii::$app); // Pass the required parameters to the controller
             $logController->actionEditLog($serial_number);
-            Yii::$app->session->setFlash('success', 'Unit saved successfully.');
-            return $this->refresh(); // Prevents form resubmission
+            Yii::$app->session->setFlash('success', 'Unit updated successfully.');
+            return $this->redirect('/item/details?id_item='.$model->id_item); // Prevents form resubmission
         }
     
         return $this->render('correction-unit', [

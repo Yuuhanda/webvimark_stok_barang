@@ -1,6 +1,7 @@
 <?php
 
 use app\models\UnitLog;
+use webvimark\modules\UserManagement\components\GhostHtml;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\grid\ActionColumn;
@@ -51,7 +52,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'sendrepair' => function ($url, $model, $key) {
                     // Ensure we are checking the correct value, like a numeric ID or a specific status name
                     if (isset($model['status']) && $model['status'] == 'Available in warehouse') { // Adjust 'Available' based on your actual status name for status = 1
-                        return Html::a('Repair', ['unit/send-repair', 'id_unit' => $model['id_unit']], ['class' => 'btn btn-primary']);
+                        return GhostHtml::a('Repair', ['unit/send-repair', 'id_unit' => $model['id_unit']], ['class' => 'btn btn-primary']);
                     }
                     // Return nothing if the status is not 'Available'
                     return '';

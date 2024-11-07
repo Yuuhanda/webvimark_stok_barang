@@ -1,6 +1,7 @@
 <?php
 
 use app\models\UnitLog;
+use webvimark\modules\UserManagement\components\GhostHtml;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\grid\ActionColumn;
@@ -46,7 +47,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'buttons' => [
                     'repairdone' => function ($url, $model, $key) {
                         // Create the "See Detail In Warehouse" button
-                        return Html::a('Finish Repair', ['unit/finish-repair', 'id_unit' => $model['id_unit']], ['class' => 'btn btn-primary']);
+                        return GhostHtml::a('Finish Repair', ['unit/finish-repair', 'id_unit' => $model['id_unit']], ['class' => 'btn btn-primary']);
                     },
                 ],
             ],

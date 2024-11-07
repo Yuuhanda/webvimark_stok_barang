@@ -1,6 +1,7 @@
 <?php
 
 use app\models\Item;
+use webvimark\modules\UserManagement\components\GhostHtml;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\grid\ActionColumn;
@@ -16,7 +17,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="item-whdist">
 
     <h1><?= Html::encode($this->title) ?></h1>
-    <p><?= Html::a('Export to .xlsx', ['export/wh-dist', 'id_item' =>Yii::$app->request->get('id_item')], ['class' => 'btn btn-info']) ?></p>
+    <p><?= GhostHtml::a('Export to .xlsx', ['export/wh-dist', 'id_item' =>Yii::$app->request->get('id_item')], ['class' => 'btn btn-info']) ?></p>
 
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
