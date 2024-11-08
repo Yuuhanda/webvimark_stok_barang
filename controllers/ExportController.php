@@ -491,4 +491,104 @@ class ExportController extends \yii\web\Controller
         $writer->save('php://output');
         exit();
     }
+
+    public function actionExportItemReport()
+    {
+        //filter params
+         $params = Yii::$app->request->post();   
+        // Initialize search model
+
+        $searchModel = new LendingSearch();
+        
+        // Load parameters directly into the search model to ensure they apply
+        if (!$searchModel->load($params) || !$searchModel->validate()) {
+            // If params do not load or validate, handle it (e.g., return all data or show an error)
+            Yii::$app->session->setFlash('error', 'Invalid search parameters for export.');
+            return $this->redirect(['lending/item-report-active']);
+        }
+        // Filter the data based on search input
+        $dataProvider = $searchModel->searchItemReport($params);
+        $dataProvider->pagination = false; // Disable pagination for export
+
+        $items =  $dataProvider->getModels(); // Retrieve data with filters applied
+
+        // Create new Spreadsheet object
+        $spreadsheet = new Spreadsheet();
+        $sheet = $spreadsheet->getActiveSheet();
+
+        // Set headers
+        $sheet->setCellValue('A1', 'item_name');
+        $sheet->setCellValue('B1', 'SKU');
+        $sheet->setCellValue('C1', 'number_of_times_item_is_lent');
+
+        // Populate data
+        $row = 2;  // Row starts after the headers
+        foreach ($items as $item) {
+            $sheet->setCellValue('A' . $row, $item['item_name']);  // Access array keys instead of object properties
+            $sheet->setCellValue('B' . $row, $item['SKU']);
+            $sheet->setCellValue('C' . $row, $item['number_of_times_item_is_lent']);
+            $row++;
+        }
+
+        // Set filename and export
+        $filename = 'export_loan_item_report' . date('Y-m-d_H-i-s') . '.xlsx';
+        $writer = new Xlsx($spreadsheet);
+
+        // Send file as response for download
+        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        header('Content-Disposition: attachment; filename="' . $filename . '"');
+        $writer->save('php://output');
+        exit();
+            
+    }
+    
+    public function actionExportUnitReport()
+    {
+        //filter params
+         $params = Yii::$app->request->post();   
+        // Initialize search model
+
+        $searchModel = new LendingSearch();
+        
+        // Load parameters directly into the search model to ensure they apply
+        if (!$searchModel->load($params) || !$searchModel->validate()) {
+            // If params do not load or validate, handle it (e.g., return all data or show an error)
+            Yii::$app->session->setFlash('error', 'Invalid search parameters for export.');
+            return $this->redirect(['lending/item-report-active']);
+        }
+        // Filter the data based on search input
+        $dataProvider = $searchModel->searchUnitReport($params);
+        $dataProvider->pagination = false; // Disable pagination for export
+
+        $items =  $dataProvider->getModels(); // Retrieve data with filters applied
+
+        // Create new Spreadsheet object
+        $spreadsheet = new Spreadsheet();
+        $sheet = $spreadsheet->getActiveSheet();
+
+        // Set headers
+        $sheet->setCellValue('A1', 'item_name');
+        $sheet->setCellValue('B1', 'serial_number');
+        $sheet->setCellValue('C1', 'number_of_times_unit_is_lent');
+
+        // Populate data
+        $row = 2;  // Row starts after the headers
+        foreach ($items as $item) {
+            $sheet->setCellValue('A' . $row, $item['item_name']);  // Access array keys instead of object properties
+            $sheet->setCellValue('B' . $row, $item['serial_number']);
+            $sheet->setCellValue('C' . $row, $item['number_of_times_unit_is_lent']);
+            $row++;
+        }
+
+        // Set filename and export
+        $filename = 'export_loan_unit_report' . date('Y-m-d_H-i-s') . '.xlsx';
+        $writer = new Xlsx($spreadsheet);
+
+        // Send file as response for download
+        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        header('Content-Disposition: attachment; filename="' . $filename . '"');
+        $writer->save('php://output');
+        exit();
+            
+    }
 }
