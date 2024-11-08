@@ -141,6 +141,7 @@ class Lending extends \yii\db\ActiveRecord
         return $results;
     }
 
+
     public function getWarehouse()
     {
         return $this->hasOne(Warehouse::class, ['id_wh' => 'id_wh']); // Replace with correct field names

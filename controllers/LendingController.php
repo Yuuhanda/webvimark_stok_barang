@@ -197,4 +197,30 @@ class LendingController extends Controller
             'data' => $data,
         ]);
     }
+
+    public function actionItemReportActive(){
+        //$lending_type = 1;
+        // Create the search model and load the request data
+        $searchModel = new LendingSearch();
+        $dataProvider = $searchModel->searchItemReport(Yii::$app->request->queryParams);
+
+        // Render the view with the search model and data provider
+        return $this->render('item-active', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+
+    public function actionUnitReportActive(){
+        //$lending_type = 1;
+        // Create the search model and load the request data
+        $searchModel = new LendingSearch();
+        $dataProvider = $searchModel->searchUnitReport(Yii::$app->request->queryParams);
+
+        // Render the view with the search model and data provider
+        return $this->render('unit-report', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
 }
