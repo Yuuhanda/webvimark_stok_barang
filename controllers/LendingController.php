@@ -223,4 +223,22 @@ class LendingController extends Controller
             'dataProvider' => $dataProvider,
         ]);
     }
+
+    public function actionLendingHistory()
+    {
+        // Create the search model and load the request data
+        $searchModel = new LendingSearch();
+        $dataProvider = $searchModel->searchLendingHistory(Yii::$app->request->queryParams);
+        $statusList = [
+            'in_use' => 'In Use',
+            'returned' => 'Returned',
+        ];
+
+        // Render the view with the search model and data provider
+        return $this->render('lending-history', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+            'statusList' => $statusList,
+        ]);
+    }
 }

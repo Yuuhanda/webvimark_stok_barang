@@ -591,4 +591,64 @@ class ExportController extends \yii\web\Controller
         exit();
             
     }
+
+    public function actionExportLendingHistory()
+    {
+        $searchModel = new LendingSearch();
+
+        //filter params
+        $params = Yii::$app->request->post();
+
+        // Load parameters directly into the search model to ensure they apply
+        if (!$searchModel->load($params) || !$searchModel->validate()) {
+            // If params do not load or validate, handle it (e.g., return all data or show an error)
+            Yii::$app->session->setFlash('error', 'Invalid search parameters for export.');
+            return $this->redirect(['lending/lending-history']);
+        }
+        //echo var_dump($params);
+        //exit();
+        // Get the data provider with params applied
+        $dataProvider = $searchModel->searchLendingHistory($params);
+        $dataProvider->pagination = false; // Disable pagination for export
+
+        $items = $dataProvider->getModels(); // Retrieve data with filters applied
+        
+        // Fetch data (for example, from a model)
+        //$lendingmodel = new Lending();
+        //$items = $lendingmodel->getLendingList();  // change it to calling getLendingList in Lending model
+
+        // Create new Spreadsheet object
+        $spreadsheet = new Spreadsheet();
+        $sheet = $spreadsheet->getActiveSheet();
+
+        // Set headers
+        $sheet->setCellValue('A1', 'serial_number');
+        $sheet->setCellValue('B1', 'employee');
+        $sheet->setCellValue('C1', 'updated_by');
+        $sheet->setCellValue('D1', 'comment');
+        $sheet->setCellValue('E1', 'date');
+        $sheet->setCellValue('F1', 'status');
+
+        // Populate data
+        $row = 2;  // Row starts after the headers
+        foreach ($items as $item) {
+            $sheet->setCellValue('A' . $row, $item['serial_number']);  // Access array keys instead of object properties
+            $sheet->setCellValue('B' . $row, $item['employee']);
+            $sheet->setCellValue('C' . $row, $item['updated_by']);
+            $sheet->setCellValue('D' . $row, $item['comment']);
+            $sheet->setCellValue('E' . $row, $item['date']);
+            $sheet->setCellValue('F' . $row, $item['status']);
+            $row++;
+        }
+
+        // Set filename and export
+        $filename = 'exported_lending_history' . date('Y-m-d_H-i-s') . '.xlsx';
+        $writer = new Xlsx($spreadsheet);
+
+        // Send file as response for download
+        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        header('Content-Disposition: attachment; filename="' . $filename . '"');
+        $writer->save('php://output');
+        exit();
+    }
 }

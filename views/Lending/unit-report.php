@@ -36,9 +36,19 @@ $this->params['breadcrumbs'][] = $this->title;
     'filterModel' => $searchModel,
     'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
-            'item_name',
-            'serial_number',
-            'number_of_times_unit_is_lent',
+            [
+                'attribute' => 'item_name',
+                'value' => 'item_name',
+            ],
+            [
+                'attribute' => 'serial_number',
+                'value' => 'serial_number',
+            ],
+            [
+                'attribute' => 'number_of_times_unit_is_lent',
+                'label' => 'Number of Times Unit is Lent',
+                'filter' => false, // Disable filter for aggregate columns if not needed
+            ],
         ],
     ]); ?>
 
