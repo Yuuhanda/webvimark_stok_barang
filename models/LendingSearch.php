@@ -28,7 +28,7 @@ class LendingSearch extends Model
     public function rules()
     {
         return [
-            [['serial_number', 'employee', 'updated_by', 'comment', 'item_name','SKU','status',], 'safe'],
+            [['serial_number', 'employee', 'updated_by', 'comment', 'item_name','SKU','status', 'id_item'], 'safe'],
             [['date'], 'date', 'format' => 'php:Y-m-d'],
             [['id_unit', 'id_lending'], 'integer'],
         ];
@@ -101,19 +101,18 @@ class LendingSearch extends Model
                 'SKU' => 'item.SKU',
                 'item_name' => 'item.item_name',
                 'id_item' => 'item.id_item',
-                'number_of_times_item_is_lent' => 'COUNT(lending.id_unit)', // Count of units lent out
+                // Count of times each item is lent out (only type 1 lendings)
+                'total_item_lent' => new \yii\db\Expression("COUNT(CASE WHEN lending.type = 1 THEN lending.id_lending END)"),
             ])
             ->from('item_unit')
             ->leftJoin('lending', 'item_unit.id_unit = lending.id_unit')
             ->leftJoin('item', 'item.id_item = item_unit.id_item')
-            ->orderBy(['number_of_times_item_is_lent' => SORT_DESC])   
-            // Uncomment if you need to filter by lending type
-            //->where(['lending.type' => $lending_type])
-            ->groupBy('item.id_item');
-    
+            ->groupBy('item.id_item')
+            ->orderBy(['total_item_lent' => SORT_DESC]);
+            
         // Load search parameters (if any)
         $this->load($params);
-    
+
         // If validation fails, return no results
         if (!$this->validate()) {
             $query->where('0=1');
@@ -140,6 +139,7 @@ class LendingSearch extends Model
                     'SKU',
                     'id_item',
                     'item_lent',
+                    'total_item_lent',
                 ],
             ],
         ]);
@@ -201,7 +201,7 @@ class LendingSearch extends Model
     
     public function searchLendingHistory($params)
     {
-        // Your custom query
+        // Initialize the query for fetching lending history details
         $query = (new Query())
             ->select([
                 'serial_number' => 'item_unit.serial_number',
@@ -210,42 +210,108 @@ class LendingSearch extends Model
                 'comment' => 'item_unit.comment',
                 'date' => 'lending.date',
                 'id_unit' => 'lending.id_unit',
+                'id_item' => 'item_unit.id_item',
                 'id_lending' => 'lending.id_lending',
-                // Show warehouse only when status is not 2
                 new \yii\db\Expression("CASE 
-                WHEN lending.type = 1 THEN 'in_use' 
-                ELSE 'returned'
-                END AS status"),
+                    WHEN lending.type = 1 THEN 'in_use' 
+                    ELSE 'returned'
+                    END AS status"),
             ])
             ->from('lending')
             ->leftJoin('employee', 'employee.id_employee = lending.id_employee')
             ->leftJoin('item_unit', 'item_unit.id_unit = lending.id_unit')
             ->leftJoin('user', 'user.id = lending.user_id')
-            ->orderBy('status'); // add sort by status 'in_use'
-
-        // Load the search parameters
+            ->leftJoin('item', 'item.id_item = item_unit.id_item')
+            ->orderBy(['status' => SORT_ASC]); // Sorting by status
+    
+        // Load and validate the search parameters
         $this->load($params);
-
-        // Apply filtering conditions
+    
         if (!$this->validate()) {
             // Return all records if validation fails
             $query->where('0=1');
+            return new ArrayDataProvider(['query' => $query]);
         }
-
-        // Add conditions based on filters
-        $query->andFilterWhere(['like', 'item_unit.serial_number', $this->serial_number])
+    
+        // Apply filtering conditions based on search model attributes
+        $query->andFilterWhere(['item_unit.id_item' => $this->id_item])
+              ->andFilterWhere(['like', 'item_unit.serial_number', $this->serial_number])
               ->andFilterWhere(['like', 'employee.emp_name', $this->employee])
               ->andFilterWhere(['like', 'user.username', $this->updated_by])
               ->andFilterWhere(['like', 'item_unit.comment', $this->comment])
               ->andFilterWhere(['=', 'lending.date', $this->date])
-              ->andFilterHaving(['like', 'status', $this->status]);
+              ->andFilterHaving(['status' => $this->status]);
+    
 
-        // Execute the query and return an ArrayDataProvider
+        // Execute the query
         $command = $query->createCommand();
         $results = $command->queryAll();
-
+        // Execute the query and return results in an ArrayDataProvider
         return new ArrayDataProvider([
             'allModels' => $results,
+            'pagination' => [
+                'pageSize' => 20, // Adjust as needed
+            ],
+            'sort' => [
+                'attributes' => [
+                    'serial_number',
+                    'employee',
+                    'updated_by',
+                    'comment',
+                    'date',
+                    'status',
+                ],
+            ],
+        ]);
+    }
+    
+    public function searchHistoryDetail($params, $id_unit)
+    {
+        // Initialize the query for fetching lending history details
+        $query = (new Query())
+            ->select([
+                'serial_number' => 'item_unit.serial_number',
+                'employee' => 'employee.emp_name',
+                'updated_by' => 'user.username',
+                'comment' => 'item_unit.comment',
+                'date' => 'lending.date',
+                'id_unit' => 'lending.id_unit',
+                'id_item' => 'item_unit.id_item',
+                'id_lending' => 'lending.id_lending',
+                new \yii\db\Expression("CASE 
+                    WHEN lending.type = 1 THEN 'in_use' 
+                    ELSE 'returned'
+                    END AS status"),
+            ])
+            ->from('lending')
+            ->leftJoin('employee', 'employee.id_employee = lending.id_employee')
+            ->leftJoin('item_unit', 'item_unit.id_unit = lending.id_unit')
+            ->leftJoin('user', 'user.id = lending.user_id')
+            ->leftJoin('item', 'item.id_item = item_unit.id_item')
+            ->where(['item_unit.id_item' => $id_unit])
+            ->orderBy(['status' => SORT_ASC]); // Sorting by status
+    
+        // Load and validate the search parameters
+        $this->load($params);
+    
+        if (!$this->validate()) {
+            // Return all records if validation fails
+            $query->where('0=1');
+            return new ArrayDataProvider(['query' => $query]);
+        }
+    
+        // Apply filtering conditions based on search model attributes
+        $query->andFilterWhere(['item_unit.id_item' => $this->id_item])
+              ->andFilterWhere(['like', 'item_unit.serial_number', $this->serial_number])
+              ->andFilterWhere(['like', 'employee.emp_name', $this->employee])
+              ->andFilterWhere(['like', 'user.username', $this->updated_by])
+              ->andFilterWhere(['like', 'item_unit.comment', $this->comment])
+              ->andFilterWhere(['=', 'lending.date', $this->date])
+              ->andFilterHaving(['status' => $this->status]);
+    
+        // Execute the query and return results in an ArrayDataProvider
+        return new ArrayDataProvider([
+            'allModels' => $query->all(),
             'pagination' => [
                 'pageSize' => 20, // Adjust as needed
             ],

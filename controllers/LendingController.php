@@ -227,6 +227,7 @@ class LendingController extends Controller
     public function actionLendingHistory()
     {
         // Create the search model and load the request data
+
         $searchModel = new LendingSearch();
         $dataProvider = $searchModel->searchLendingHistory(Yii::$app->request->queryParams);
         $statusList = [
@@ -241,4 +242,29 @@ class LendingController extends Controller
             'statusList' => $statusList,
         ]);
     }
+
+    public function actionHistoryDetail($id_item)
+    {
+        // Create the search model and load the request data
+        $searchModel = new LendingSearch();
+    
+        // Add id_item to the request parameters for filtering in search
+        $params = Yii::$app->request->queryParams;
+        $params['LendingSearch']['id_item'] = $id_item;
+        $dataProvider = $searchModel->searchLendingHistory($params);
+        //$dataProvider = $searchModel->searchHistoryDetail(Yii::$app->request->queryParams, $id_item);
+        
+        $statusList = [
+            'in_use' => 'In Use',
+            'returned' => 'Returned',
+        ];
+    
+        // Render the view with the search model and data provider
+        return $this->render('lending-history', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+            'statusList' => $statusList,
+        ]);
+    }
+    
 }
