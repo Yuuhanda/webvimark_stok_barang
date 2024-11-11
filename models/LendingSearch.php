@@ -106,6 +106,7 @@ class LendingSearch extends Model
             ->from('item_unit')
             ->leftJoin('lending', 'item_unit.id_unit = lending.id_unit')
             ->leftJoin('item', 'item.id_item = item_unit.id_item')
+            ->orderBy(['number_of_times_item_is_lent' => SORT_DESC])   
             // Uncomment if you need to filter by lending type
             //->where(['lending.type' => $lending_type])
             ->groupBy('item.id_item');
@@ -161,6 +162,7 @@ class LendingSearch extends Model
             ->leftJoin('item', 'item.id_item = item_unit.id_item')
             //->where(['lending.type' => $lending_type]) // Uncomment if you need to filter by lending type
             ->groupBy('lending.id_unit')
+            ->orderBy(['number_of_times_unit_is_lent' => SORT_DESC])        
             ->having(['>', 'COUNT(lending.id_unit)', 0]); // Show only rows where count > 0
     
         // Load search parameters (if any)
