@@ -337,5 +337,31 @@ class LogController extends Controller
         ]);
     }
 
+    public function actionNewUnit($serial_n, $id_unit){
+        $model = new UnitLog();
+
+        // Get data of the current logged-in user
+        $user = Yii::$app->user->identity;
+
+        // Assign the unit ID to the log model
+        $model->id_unit = $id_unit;
+
+        //getting the username that added the new unit
+        $model->content = "New unit $serial_n added by " . $user->username;
+
+        //date time
+        $model->update_at = new \yii\db\Expression('NOW()');
+
+        // Validate and save the log model
+        if ($model->validate() && $model->save()) {
+            return true; // Save was successful
+        } else {
+            // Log save failed, output validation errors
+            Yii::error($model->getErrors(), __METHOD__);
+            throw new \yii\web\ServerErrorHttpException("Failed to save log: " . json_encode($model->getErrors()));
+        }
+
+    }
+
 
 }

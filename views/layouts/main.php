@@ -17,7 +17,6 @@ use webvimark\modules\UserManagement\UserManagementModule;
 use webvimark\modules\UserManagement\models\User;
 use webvimark\modules\UserManagement\components\GhostHtml;
 use webvimark\modules\UserManagement\components\GhostNav;
-
 BootstrapAsset::register($this);
 
 
@@ -29,6 +28,7 @@ $this->registerMetaTag(['name' => 'viewport', 'content' => 'width=device-width, 
 $this->registerMetaTag(['name' => 'description', 'content' => $this->params['meta_description'] ?? '']);
 $this->registerMetaTag(['name' => 'keywords', 'content' => $this->params['meta_keywords'] ?? '']);
 $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii::getAlias('@web/favicon.ico')]);
+
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
@@ -81,7 +81,7 @@ echo GhostNav::widget([
             ]
         ],
         // Single Links
-        ['label' => 'Search & Edit Unit Data', 'url' => ['/unit/correction-search']],
+        ['label' => 'Edit Unit Data', 'url' => ['/unit/correction-search']],
         ['label' => 'Warehouse', 'url' => ['/warehouse/index'], ],
         ['label' => 'Employee', 'url' => ['/employee/index']],
         [
@@ -106,12 +106,14 @@ echo GhostNav::widget([
 ]);
 
 NavBar::end();
+
 ?>
 
 </header>
 
 
 <br>
+
 <main id="main" class="flex-shrink-0" role="main">
     <div class="container">
         <?php if (!empty($this->params['breadcrumbs'])): ?>
@@ -122,9 +124,9 @@ NavBar::end();
     </div>
 </main>
 
-<footer id="footer" class="mt-auto py-3 bg-light">
+<footer id="footer" class="mt-auto py-3 bg-dark">
     <div class="container">
-        <div class="row text-muted">
+        <div class="row text-light">
             <div class="col-md-6 text-center text-md-start">&copy;Fikri A. Yuhanda - Prabubima Tech 2024 || Office Inventory Management Yii2 <?= date('Y') ?></div>
             <!--<div class="col-md-6 text-center text-md-end"><?php //echo Yii::powered() ?></div> -->
         </div>

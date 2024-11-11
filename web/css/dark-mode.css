@@ -1,0 +1,53 @@
+/* General background and text color */
+body, #main {
+    background-color: #121212;
+    color: #ffffff;
+}
+
+/* Container styling */
+.container {
+    background-color: #1f1f1f;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+}
+
+/* Breadcrumbs styling */
+.breadcrumb {
+    background-color: #1f1f1f;
+    color: #ffffff;
+}
+
+.breadcrumb a {
+    color: #1e90ff;
+}
+
+.breadcrumb a:hover {
+    color: #6495ed;
+}
+
+/* Alert styling */
+.alert {
+    background-color: #333333;
+    color: #ffffff;
+    border: 1px solid #444444;
+}
+
+/* Links styling */
+a {
+    color: #1e90ff;
+}
+
+a:hover {
+    color: #6495ed;
+}
+
+/* Button styling */
+.btn {
+    background-color: #333333;
+    color: #ffffff;
+}
+
+.btn:hover {
+    background-color: #444444;
+}

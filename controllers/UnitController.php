@@ -166,6 +166,11 @@ class UnitController extends Controller
                 $model->updated_by = $user->id;
             if ($model->save()){
                 Yii::$app->session->setFlash('success', 'Unit Added successfully.');
+                $serial_n = $model->serial_number;
+                $id_unit = $model->id_unit;
+
+                $logController = new LogController('log', Yii::$app); // Pass the required parameters to the controller
+                $logController->actionNewUnit($serial_n, $id_unit);
                 return $this->redirect(['index']);
             }
             }
