@@ -67,6 +67,7 @@ echo GhostNav::widget([
             'items' => [
                 ['label' => 'Unit Loaning', 'url' => ['/lending/index']],
                 ['label' => 'Loaning List', 'url' => ['/lending/list']],
+                ['label' => 'Lending History', 'url' => ['/lending/lending-history']],
                 ['label' => 'Item Loan Report', 'url' => ['/lending/item-report-active']],
                 ['label' => 'Unit Loan Report', 'url' => ['/lending/unit-report-active']],
             ],
