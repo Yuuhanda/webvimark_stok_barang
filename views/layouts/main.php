@@ -48,12 +48,14 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
             'items' => [  
                 Yii::$app->user->isGuest
                     ? ['label' => 'Login', 'url' => ['/user-management/auth/login']]
-                    : [
+                    : ['label'=>'Account Settings', 'url'=>['/user-management/auth/change-own-password']],
+                    [
                         'label' => 'Logout (' . Yii::$app->user->identity->username . ')', 
                         'url' => ['/user-management/auth/logout'], 
                         'linkOptions' => ['data-method' => 'post'],
                         'options' => ['class' => 'ml-auto']  // This aligns the Logout button to the right
-                    ]
+                    ],
+                    
             ],
         ]) ?>
     </nav>
