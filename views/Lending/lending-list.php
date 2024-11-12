@@ -49,7 +49,10 @@ $this->params['breadcrumbs'][] = $this->title;
                         'format' => 'yyyy-mm-dd', // Adjust to your preferred format
                     ],
                 ]),
-                'format' => 'date', // Format the date in the grid
+                'value' => function ($model) {
+                    return Yii::$app->formatter->asDate($model['date'], 'php:d F, Y');
+                },
+                'format' => 'raw',
             ],
             [
                 'class' => 'yii\grid\ActionColumn',

@@ -28,7 +28,13 @@ $this->params['breadcrumbs'][] = $this->title;
 
             'id_doc',
             'file_name',
-            'datetime',
+            [
+                'attribute' => 'datetime',
+                'value' => function ($model) {
+                    return Yii::$app->formatter->asDateTime($model['datetime'], 'php: H:i, d F, Y');
+                },
+                'label' => 'Date Time',
+            ],
             'username',
             [
                 'label' => 'Action',

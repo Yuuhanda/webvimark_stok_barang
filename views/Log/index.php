@@ -75,7 +75,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'content',
             [
                 'attribute' => 'log_date',
-                'format' => ['date', 'php:Y-m-d H:i:s'],
+                'format' => ['date', 'php:d-m-Y, H:i:s'],
             ],
         ],
     ]); ?>

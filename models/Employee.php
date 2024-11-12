@@ -34,7 +34,8 @@ class Employee extends \yii\db\ActiveRecord
     {
         return [
             [['emp_name', 'phone', 'email', 'address'], 'required'],
-            [['emp_name', 'email'], 'string', 'max' => 60],
+            [['email'], 'string', 'max' => 60],
+            [['emp_name'], 'string', 'max' => 80],
             [['phone'], 'string', 'max' => 20],
             [['address'], 'string', 'max' => 255],
             [['email'], 'unique'],

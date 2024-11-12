@@ -51,8 +51,9 @@ class DocSearch extends DocUploaded
             ->from('doc_uploaded')
             ->leftJoin('user', 'doc_uploaded.user_id = user.id')
             ->groupBy('doc_uploaded.id_doc');
-
+        
         // add conditions that should always apply here
+        //i need date time format to be dd mm, yyyy. hh.mm
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
