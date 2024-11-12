@@ -50,7 +50,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         </svg>', 
                         ['lending/history-detail', 'id_item' => $model['id_item']], [
                             'class' => 'btn btn-info',
-                            'style' => 'margin-top: 2px; margin-bottom: 2px;'
+                            'style' => 'margin-top: 1px; margin-bottom: 1px; font-size: 12px; padding: 3px 6px;'
                         ]);
                     },
                 ],
