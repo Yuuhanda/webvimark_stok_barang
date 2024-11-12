@@ -71,7 +71,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                 'data-bs-toggle' => 'modal',
                                 'data-bs-target' => '#imageModal',
                                 'data-id' => $model['id_item'],
-                                'style' => 'margin-top: 2px; margin-bottom: 2px;'
+                                'style' => 'margin-top: 1px; margin-bottom: 1px; font-size: 12px; padding: 3px 6px;'
                             ]
                         );
                     },
@@ -82,7 +82,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             </svg>'
                         , ['item/warehouse', 'id_item' => $model['id_item']], [
                             'class' => 'btn btn-primary',
-                            'style' => 'margin-top: 2px; margin-bottom: 2px;'
+                            'style' => 'margin-top: 1px; margin-bottom: 1px; font-size: 12px; padding: 3px 6px;'
                         ]);
                     },
                     'detail' => function ($url, $model, $key) {
@@ -91,17 +91,17 @@ $this->params['breadcrumbs'][] = $this->title;
                         </svg>', 
                         ['item/details', 'id_item' => $model['id_item']], [
                             'class' => 'btn btn-info',
-                            'style' => 'margin-top: 2px; margin-bottom: 2px;'
+                            'style' => 'margin-top: 1px; margin-bottom: 1px; font-size: 12px; padding: 3px 6px;'
                         ]);
                     },
                     'edit' => function ($url, $model, $key) {
                             return GhostHtml::a('<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
-                                                  <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325"/>
-                                                </svg>', 
-                                                ['item/update', 'id_item' => $model['id_item']], [
-                                                'class' => 'btn btn-success',
-                                                'style' => 'margin-top: 2px; margin-bottom: 2px;'
-                                            ]);
+                                  <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325"/>
+                                </svg>', 
+                                ['item/update', 'id_item' => $model['id_item']], [
+                                'class' => 'btn btn-success',
+                                'style' => 'margin-top: 1px; margin-bottom: 1px; font-size: 12px; padding: 3px 6px;'
+                            ]);
                     },
 
                 ],

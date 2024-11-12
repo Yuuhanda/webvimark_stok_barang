@@ -52,7 +52,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'sendrepair' => function ($url, $model, $key) {
                     // Ensure we are checking the correct value, like a numeric ID or a specific status name
                     if (isset($model['status']) && $model['status'] == 'Available in warehouse') { // Adjust 'Available' based on your actual status name for status = 1
-                        return GhostHtml::a('Repair', ['unit/send-repair', 'id_unit' => $model['id_unit']], ['class' => 'btn btn-primary']);
+                        return GhostHtml::a('Repair', ['unit/send-repair', 'id_unit' => $model['id_unit']], ['class' => 'btn btn-primary', 'style' => 'margin-top: 1px; margin-bottom: 1px; font-size: 12px; padding: 3px 6px;']);
                     }
                     // Return nothing if the status is not 'Available'
                     return '';

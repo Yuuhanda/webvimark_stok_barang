@@ -46,7 +46,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                             </svg>'
                         , ['view', 'id_employee' => $model['id_employee']], [
                             'class' => 'btn btn-info',
-                            'style' => 'margin-top: 2px; margin-bottom: 2px;'
+                            'style' => 'margin-top: 1px; margin-bottom: 1px; font-size: 12px; padding: 3px 6px;'
                         ]);
                     },
                     'update' => function ($url, $model, $key) {
@@ -55,7 +55,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                             </svg>', 
                         ['update', 'id_employee' => $model['id_employee']], [
                             'class' => 'btn btn-success',
-                            'style' => 'margin-top: 2px; margin-bottom: 2px;'
+                            'style' => 'margin-top: 1px; margin-bottom: 1px; font-size: 12px; padding: 3px 6px;'
                         ]);
                     },
                     'delete' => function ($url, $model, $key) {
@@ -65,7 +65,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                                 </svg>', 
                                                 ['delete', 'id_employee' => $model['id_employee']], [
                                                 'class' => 'btn btn-danger',
-                                                'style' => 'margin-top: 2px; margin-bottom: 2px;'
+                                                'style' => 'margin-top: 1px; margin-bottom: 1px; font-size: 12px; padding: 3px 6px;'
                             ]);
                     },
                     ]

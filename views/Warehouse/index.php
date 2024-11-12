@@ -42,7 +42,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         return GhostHtml::a('Item In Warehouse'
                         , ['warehouse/item', 'id_wh' => $model->id_wh], [
                             'class' => 'btn btn-primary',
-                            'style' => 'margin-top: 2px; margin-bottom: 2px;'
+                            'style' => 'margin-top: 1px; margin-bottom: 1px; font-size: 12px; padding: 3px 6px;'
                         ]);
                     },
                     'view' => function ($url, $model, $key) {
@@ -52,7 +52,7 @@ $this->params['breadcrumbs'][] = $this->title;
 </svg>'
                         , ['warehouse/view', 'id_wh' => $model['id_wh']], [
                             'class' => 'btn btn-info',
-                            'style' => 'margin-top: 2px; margin-bottom: 2px;'
+                            'style' => 'margin-top: 1px; margin-bottom: 1px; font-size: 12px; padding: 3px 6px;'
                         ]);
                     },
                     'update' => function ($url, $model, $key) {
@@ -61,7 +61,7 @@ $this->params['breadcrumbs'][] = $this->title;
 </svg>', 
                         ['warehouse/update', 'id_wh' => $model['id_wh']], [
                             'class' => 'btn btn-success',
-                            'style' => 'margin-top: 2px; margin-bottom: 2px;'
+                            'style' => 'margin-top: 1px; margin-bottom: 1px; font-size: 12px; padding: 3px 6px;'
                         ]);
                     },
                     'delete' => function ($url, $model, $key) {
@@ -71,7 +71,7 @@ $this->params['breadcrumbs'][] = $this->title;
 </svg>', 
                                                 ['warehouse/delete', 'id_wh' => $model['id_wh']], [
                                                 'class' => 'btn btn-danger',
-                                                'style' => 'margin-top: 2px; margin-bottom: 2px;'
+                                                'style' => 'margin-top: 1px; margin-bottom: 1px; font-size: 12px; padding: 3px 6px;'
                             ]);
                     },
                     ]

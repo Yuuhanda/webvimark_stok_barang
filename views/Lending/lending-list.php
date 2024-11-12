@@ -57,7 +57,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'header' => 'Action',
                 'buttons' => [
                     'returnunit' => function ($url, $model, $key) {
-                        return GhostHtml::a('Return', ['unit/return-unit', 'id_unit' => $model['id_unit']], ['class' => 'btn btn-primary']);
+                        return GhostHtml::a('Return', ['unit/return-unit', 'id_unit' => $model['id_unit']], ['class' => 'btn btn-primary', 'style' => 'margin-top: 1px; margin-bottom: 1px; font-size: 12px; padding: 3px 6px;']);
                     },
                 ],
             ],
