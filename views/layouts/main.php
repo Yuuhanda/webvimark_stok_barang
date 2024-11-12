@@ -38,16 +38,26 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
 <div class="wrapper">
 
     <!-- Navbar -->
-    <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+    <nav class="main-header navbar navbar-expand navbar-black navbar-dark">
+      <a class="nav-link" data-widget="pushmenu" href="#" role="button"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="white" class="bi bi-list" viewBox="0 0 16 16">
+          <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5"/>
+        </svg>
+        <i class="fas fa-bars"></i></a>
         <?= GhostNav::widget([
             'options' => ['class' => 'navbar-nav'],
             'items' => [  
                 Yii::$app->user->isGuest
                     ? ['label' => 'Login', 'url' => ['/user-management/auth/login']]
-                    : ['label' => 'Logout (' . Yii::$app->user->identity->username . ')', 'url' => ['/user-management/auth/logout'], 'linkOptions' => ['data-method' => 'post']]
+                    : [
+                        'label' => 'Logout (' . Yii::$app->user->identity->username . ')', 
+                        'url' => ['/user-management/auth/logout'], 
+                        'linkOptions' => ['data-method' => 'post'],
+                        'options' => ['class' => 'ml-auto']  // This aligns the Logout button to the right
+                    ]
             ],
         ]) ?>
     </nav>
+
 
     <!-- Main Sidebar Container -->
     <aside class="main-sidebar sidebar-dark-primary elevation-4">
