@@ -123,7 +123,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                         </svg>', 
                                         ['unit/correction-unit', 'serial_number' => $model['serial_number']], [
                                         'class' => 'btn btn-success',
-                                        'style' => 'margin-top: 2px; margin-bottom: 2px;'
+                                        'style' => 'margin-top: 1px; margin-bottom: 1px; font-size: 12px; padding: 3px 6px;'
                                     ]);
                     }
                     return GhostHtml::a('<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-x-circle" viewBox="0 0 16 16">
