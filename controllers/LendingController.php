@@ -251,6 +251,7 @@ class LendingController extends Controller
         // Add id_item to the request parameters for filtering in search
         $params = Yii::$app->request->queryParams;
         $params['LendingSearch']['id_item'] = $id_item;
+        $params['LendingSearch']['status']= 'in_use';
         $dataProvider = $searchModel->searchLendingHistory($params);
         //$dataProvider = $searchModel->searchHistoryDetail(Yii::$app->request->queryParams, $id_item);
         
