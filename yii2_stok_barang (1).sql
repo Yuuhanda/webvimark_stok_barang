@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 08, 2024 at 04:41 AM
+-- Generation Time: Nov 13, 2024 at 02:43 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -39,12 +39,12 @@ CREATE TABLE `auth_assignment` (
 
 INSERT INTO `auth_assignment` (`item_name`, `user_id`, `created_at`) VALUES
 ('Admin', 5, 1730945009),
-('Admin', 7, 1730945017),
+('Admin', 8, 1731460658),
 ('maintenance', 9, 1730950172),
+('maintenance', 12, 1731460710),
 ('sandbag', 10, 1730952624),
 ('superadmin', 1, 1730169714),
 ('superadmin', 4, 1731036786),
-('superadmin', 8, 1730252448),
 ('superadmin', 11, 1730952835);
 
 -- --------------------------------------------------------
@@ -103,6 +103,7 @@ INSERT INTO `auth_item` (`name`, `type`, `description`, `rule_name`, `data`, `cr
 ('/export/export-damaged', 3, NULL, NULL, NULL, 1730945389, 1730945389, NULL),
 ('/export/export-item-report', 3, NULL, NULL, NULL, 1731036360, 1731036360, NULL),
 ('/export/export-lending', 3, NULL, NULL, NULL, 1730945389, 1730945389, NULL),
+('/export/export-lending-history', 3, NULL, NULL, NULL, 1731289810, 1731289810, NULL),
 ('/export/export-log', 3, NULL, NULL, NULL, 1730945389, 1730945389, NULL),
 ('/export/export-log-single', 3, NULL, NULL, NULL, 1730945389, 1730945389, NULL),
 ('/export/export-main', 3, NULL, NULL, NULL, 1730945389, 1730945389, NULL),
@@ -135,8 +136,10 @@ INSERT INTO `auth_item` (`name`, `type`, `description`, `rule_name`, `data`, `cr
 ('/lending/*', 3, NULL, NULL, NULL, 1730945389, 1730945389, NULL),
 ('/lending/create', 3, NULL, NULL, NULL, 1730945389, 1730945389, NULL),
 ('/lending/delete', 3, NULL, NULL, NULL, 1730945389, 1730945389, NULL),
+('/lending/history-detail', 3, NULL, NULL, NULL, 1731374474, 1731374474, NULL),
 ('/lending/index', 3, NULL, NULL, NULL, 1730945389, 1730945389, NULL),
 ('/lending/item-report-active', 3, NULL, NULL, NULL, 1731030003, 1731030003, NULL),
+('/lending/lending-history', 3, NULL, NULL, NULL, 1731046375, 1731046375, NULL),
 ('/lending/lending-list', 3, NULL, NULL, NULL, 1730945389, 1730945389, NULL),
 ('/lending/list', 3, NULL, NULL, NULL, 1730945389, 1730945389, NULL),
 ('/lending/loan-unit', 3, NULL, NULL, NULL, 1730945389, 1730945389, NULL),
@@ -150,6 +153,7 @@ INSERT INTO `auth_item` (`name`, `type`, `description`, `rule_name`, `data`, `cr
 ('/log/edit-log', 3, NULL, NULL, NULL, 1730945389, 1730945389, NULL),
 ('/log/index', 3, NULL, NULL, NULL, 1730945389, 1730945389, NULL),
 ('/log/lending-log', 3, NULL, NULL, NULL, 1730945389, 1730945389, NULL),
+('/log/new-unit', 3, NULL, NULL, NULL, 1731374474, 1731374474, NULL),
 ('/log/repair-log', 3, NULL, NULL, NULL, 1730945389, 1730945389, NULL),
 ('/log/return-log', 3, NULL, NULL, NULL, 1730945389, 1730945389, NULL),
 ('/log/search-log', 3, NULL, NULL, NULL, 1730945389, 1730945389, NULL),
@@ -297,15 +301,20 @@ INSERT INTO `auth_item` (`name`, `type`, `description`, `rule_name`, `data`, `cr
 ('commonPermission', 2, 'Common permission', NULL, NULL, 1729233880, 1729233880, NULL),
 ('createUsers', 2, 'Create users', NULL, NULL, 1729233881, 1729233881, 'userManagement'),
 ('damaged-list', 2, 'Damaged Unit', NULL, NULL, 1730949678, 1730951532, 'maintenance'),
+('damaged-view-only', 2, 'damaged view only', NULL, NULL, 1731040192, 1731040192, 'maintenance'),
 ('deleteUsers', 2, 'Delete users', NULL, NULL, 1729233881, 1729233881, 'userManagement'),
 ('editUserEmail', 2, 'Edit user email', NULL, NULL, 1729233881, 1729233881, 'userManagement'),
 ('editUsers', 2, 'Edit users', NULL, NULL, 1729233881, 1729233881, 'userManagement'),
 ('employee', 2, 'Employee', NULL, NULL, 1730949984, 1730951475, 'employee'),
+('employee-view-only', 2, 'employee-view-only', NULL, NULL, 1731038487, 1731038487, 'employee'),
 ('god', 2, 'GOD MODE', NULL, NULL, 1730953358, 1730953358, 'god'),
+('in-repair-view-only', 2, 'in-repair-view-only', NULL, NULL, 1731040294, 1731040294, 'maintenance'),
 ('inventory-view', 2, 'inventory view only', NULL, NULL, 1730962928, 1730963079, 'inventory-master'),
 ('item-loan', 2, 'unit loaning', NULL, NULL, 1730949341, 1730949341, 'loaning'),
+('lending-history', 2, 'lending-history', NULL, NULL, 1731046364, 1731046364, 'loaning'),
 ('loan-list', 2, 'loan-list & return', NULL, NULL, 1730949508, 1730949508, 'loaning'),
 ('loan-report', 2, 'loan-report', NULL, NULL, 1731032924, 1731032924, 'loaning'),
+('loaning-view-only', 2, 'loaning-view-only', NULL, NULL, 1731038542, 1731038542, 'loaning'),
 ('log-view', 2, 'log-view', NULL, NULL, 1730949125, 1730949125, 'inventory-master'),
 ('maintenance', 1, 'Maintenance & Repair Officer', NULL, NULL, 1730943897, 1730953864, NULL),
 ('manage-unit', 2, 'manage-unit', NULL, NULL, 1730948658, 1730948658, 'inventory-master'),
@@ -321,7 +330,7 @@ INSERT INTO `auth_item` (`name`, `type`, `description`, `rule_name`, `data`, `cr
 ('viewUsers', 2, 'View users', NULL, NULL, 1729233881, 1729233881, 'userManagement'),
 ('viewVisitLog', 2, 'View visit log', NULL, NULL, 1729233881, 1729233881, 'userManagement'),
 ('warehouse', 2, 'Warehouse', NULL, NULL, 1730949846, 1730951487, 'warehouse'),
-('warehouse-view', 2, 'warehouse-view-only', NULL, NULL, 1730964440, 1730964440, 'warehouse');
+('warehouse-view-only', 2, 'warehouse-view-only', NULL, NULL, 1731040023, 1731040023, 'warehouse');
 
 -- --------------------------------------------------------
 
@@ -345,6 +354,7 @@ INSERT INTO `auth_item_child` (`parent`, `child`) VALUES
 ('Admin', 'damaged-list'),
 ('Admin', 'employee'),
 ('Admin', 'item-loan'),
+('Admin', 'lending-history'),
 ('Admin', 'loan-list'),
 ('Admin', 'loan-report'),
 ('Admin', 'log-view'),
@@ -382,6 +392,10 @@ INSERT INTO `auth_item_child` (`parent`, `child`) VALUES
 ('assignRolesToUsers', '/user-management/user-permission/set-roles'),
 ('assignRolesToUsers', 'viewUserRoles'),
 ('assignRolesToUsers', 'viewUsers'),
+('base', '/item/dashboard-data'),
+('base', '/item/index'),
+('base', '/item/item-name'),
+('base', '/item/view-image'),
 ('base', '/site/*'),
 ('bulk-documents', '/docs/index'),
 ('bulk-documents', '/docs/update'),
@@ -395,6 +409,7 @@ INSERT INTO `auth_item_child` (`parent`, `child`) VALUES
 ('damaged-list', '/export/export-damaged'),
 ('damaged-list', '/unit/damaged'),
 ('damaged-list', '/unit/send-repair'),
+('damaged-view-only', '/unit/damaged'),
 ('deleteUsers', '/user-management/user/bulk-delete'),
 ('deleteUsers', '/user-management/user/delete'),
 ('deleteUsers', 'viewUsers'),
@@ -404,6 +419,8 @@ INSERT INTO `auth_item_child` (`parent`, `child`) VALUES
 ('editUsers', '/user-management/user/update'),
 ('editUsers', 'viewUsers'),
 ('employee', '/employee/*'),
+('employee-view-only', '/employee/index'),
+('employee-view-only', '/employee/view'),
 ('god', '/*'),
 ('god', 'assignRolesToUsers'),
 ('god', 'base'),
@@ -431,6 +448,7 @@ INSERT INTO `auth_item_child` (`parent`, `child`) VALUES
 ('god', 'viewUsers'),
 ('god', 'viewVisitLog'),
 ('god', 'warehouse'),
+('in-repair-view-only', '/unit/repair'),
 ('inventory-view', '/export/export-main'),
 ('inventory-view', '/export/item-detail'),
 ('inventory-view', '/item/dashboard-data'),
@@ -443,15 +461,24 @@ INSERT INTO `auth_item_child` (`parent`, `child`) VALUES
 ('item-loan', '/lending/create'),
 ('item-loan', '/lending/index'),
 ('item-loan', '/lending/loan-unit'),
+('lending-history', '/export/export-lending-history'),
+('lending-history', '/lending/lending-history'),
 ('loan-list', '/export/export-lending'),
 ('loan-list', '/lending/lending-list'),
 ('loan-list', '/lending/list'),
 ('loan-list', '/lending/update'),
 ('loan-list', '/unit/return-unit'),
 ('loan-report', '/export/export-item-report'),
+('loan-report', '/export/export-lending-history'),
 ('loan-report', '/export/export-unit-report'),
+('loan-report', '/lending/history-detail'),
 ('loan-report', '/lending/item-report-active'),
 ('loan-report', '/lending/unit-report-active'),
+('loaning-view-only', '/lending/index'),
+('loaning-view-only', '/lending/item-report-active'),
+('loaning-view-only', '/lending/lending-list'),
+('loaning-view-only', '/lending/list'),
+('loaning-view-only', '/lending/unit-report-active'),
 ('log-view', '/export/export-log'),
 ('log-view', '/export/export-log-single'),
 ('log-view', '/log/edit-log'),
@@ -465,7 +492,7 @@ INSERT INTO `auth_item_child` (`parent`, `child`) VALUES
 ('maintenance', 'inventory-view'),
 ('maintenance', 'log-view'),
 ('maintenance', 'repair-list'),
-('maintenance', 'warehouse'),
+('maintenance', 'warehouse-view-only'),
 ('manage-unit', '/unit/add-unit'),
 ('manage-unit', '/unit/available-lending'),
 ('manage-unit', '/unit/available-unit'),
@@ -498,9 +525,13 @@ INSERT INTO `auth_item_child` (`parent`, `child`) VALUES
 ('repair-list', '/unit/finish-repair'),
 ('repair-list', '/unit/repair'),
 ('sandbag', 'base'),
-('sandbag', 'inventory-view'),
-('sandbag', 'log-view'),
-('sandbag', 'warehouse-view'),
+('sandbag', 'changeOwnPassword'),
+('sandbag', 'damaged-view-only'),
+('sandbag', 'employee-view-only'),
+('sandbag', 'in-repair-view-only'),
+('sandbag', 'loan-report'),
+('sandbag', 'loaning-view-only'),
+('sandbag', 'warehouse-view-only'),
 ('superadmin', 'App Admin'),
 ('superadmin', 'assignRolesToUsers'),
 ('superadmin', 'base'),
@@ -515,8 +546,7 @@ INSERT INTO `auth_item_child` (`parent`, `child`) VALUES
 ('superadmin', 'editUsers'),
 ('superadmin', 'employee'),
 ('superadmin', 'inventory-view'),
-('superadmin', 'item-loan'),
-('superadmin', 'loan-list'),
+('superadmin', 'lending-history'),
 ('superadmin', 'loan-report'),
 ('superadmin', 'log-view'),
 ('superadmin', 'manage-unit'),
@@ -534,10 +564,9 @@ INSERT INTO `auth_item_child` (`parent`, `child`) VALUES
 ('viewUsers', '/user-management/user/index'),
 ('viewUsers', '/user-management/user/view'),
 ('warehouse', '/warehouse/*'),
-('warehouse-view', '/warehouse/*'),
-('warehouse-view', '/warehouse/index'),
-('warehouse-view', '/warehouse/item'),
-('warehouse-view', '/warehouse/view');
+('warehouse-view-only', '/warehouse/index'),
+('warehouse-view-only', '/warehouse/item'),
+('warehouse-view-only', '/warehouse/view');
 
 -- --------------------------------------------------------
 
@@ -626,7 +655,14 @@ CREATE TABLE `doc_uploaded` (
 --
 
 INSERT INTO `doc_uploaded` (`id_doc`, `file_name`, `datetime`, `user_id`) VALUES
-(1, 'bulk_unit651_1730948866.xlsx', '2024-11-07 10:07:46.00', 5);
+(1, 'bulk_unit651_1730948866.xlsx', '2024-11-07 10:07:46.00', 5),
+(2, 'bulk_unit417_1731039861.xlsx', '2024-11-08 11:24:21.00', 10),
+(3, 'bulk_unit638_1731460940.xlsx', '2024-11-13 08:22:20.00', 5),
+(4, 'bulk_unit135_1731460963.xlsx', '2024-11-13 08:22:43.00', 5),
+(5, 'bulk_unit904_1731460975.xlsx', '2024-11-13 08:22:55.00', 5),
+(6, 'bulk_unit264_1731460985.xlsx', '2024-11-13 08:23:05.00', 5),
+(7, 'bulk_unit839_1731461003.xlsx', '2024-11-13 08:23:23.00', 5),
+(8, 'bulk_unit554_1731461012.xlsx', '2024-11-13 08:23:32.00', 5);
 
 -- --------------------------------------------------------
 
@@ -636,7 +672,7 @@ INSERT INTO `doc_uploaded` (`id_doc`, `file_name`, `datetime`, `user_id`) VALUES
 
 CREATE TABLE `employee` (
   `id_employee` int(10) UNSIGNED NOT NULL,
-  `emp_name` varchar(60) NOT NULL,
+  `emp_name` varchar(80) NOT NULL,
   `phone` varchar(20) NOT NULL,
   `email` varchar(60) NOT NULL,
   `address` varchar(255) NOT NULL
@@ -647,11 +683,13 @@ CREATE TABLE `employee` (
 --
 
 INSERT INTO `employee` (`id_employee`, `emp_name`, `phone`, `email`, `address`) VALUES
-(1, 'johan tumbal', '0888888', 'ayymail@lmao.com', 'jalan jalan aj'),
+(1, 'Johan', '0888888', 'ayymail@lmao.com', 'jalan jalan aj'),
 (2, 'Emma', '0812121211212', 'emma@mail.com', 'a random street name'),
-(3, 'Tumbal', '08080808', 'tumbal@mail.com', 'jalan gk tau'),
+(3, 'Oleg', '08080808', 'tumbal@mail.com', 'jalan gk tau'),
 (4, 'Freddy', '0821321321', 'freddymail@mail.com', 'somewhere in a city'),
-(5, 'Shioriiiin', '081684316487', 'shiorin@ayymail.com', 'idk somewhere a');
+(5, 'Shiorin', '081684316487', 'shiorin@ayymail.com', 'idk somewhere a'),
+(7, 'Mark', '080818123215', 'Mark@mail.com', 'idk somewhere in us continent'),
+(8, 'Manfred Albrecht Freiherr von Richthofen', '0812354612324', 'redbaronrulerofthesky@mail.com', 'somewhere in German');
 
 -- --------------------------------------------------------
 
@@ -671,15 +709,16 @@ CREATE TABLE `item` (
 --
 
 INSERT INTO `item` (`id_item`, `item_name`, `SKU`, `imagefile`) VALUES
-(11, 'Generic Phone', 'BOGD-44', '629_1730945999.jpg'),
-(12, 'Generic Laptop', 'OJWL-41', '826_1730358216.gif'),
-(13, 'Generic Keyboard', 'BNKH-93', '518_1730358229.gif'),
-(14, 'Mousey Mouse', 'RGTD-6', '731_1730358250.jpeg'),
-(15, 'Generic item for stress test', 'OTLP-31', '447_1730358126.webp'),
-(16, 'SKU unique check', 'UGSI-9059', '202_1730358264.jpeg'),
-(18, 'SKU new format check 2', 'WX95-54EB', '442_1730358314.webp'),
-(25, 'more pic test edit 2', 'UD31-64DI', '815_1730359753.webp'),
-(26, 'rbac test', 'PU87-69AN', '193_1730948742.gif');
+(11, 'Logitech Signature Slim Keyboard K950', 'BOGD-44', '736_1731394912.webp'),
+(12, 'Logitech MX Anywhere 3S', 'OJWL-41', '304_1731394932.webp'),
+(13, 'ThinkPad T14s Gen 4 (14″ AMD)', 'BNKH-93', '859_1731395020.jpg'),
+(14, 'Generic Mousepad Small', 'RGTD-6', '409_1731395120.jpeg'),
+(15, 'Sennheisser HD600', 'OTLP-31', '959_1731395082.jpeg'),
+(16, 'Shure SM7B', 'UGSI-9059', '121_1731395169.jpeg'),
+(18, 'TC-Helicon GOXLR', 'WX95-54EB', '903_1731395204.jpeg'),
+(25, 'USB-C Hub Multi Dongle', 'UD31-64DI', '624_1731395239.jpeg'),
+(26, 'Macbook Air M3', 'PU87-69AN', '116_1731395279.jpeg'),
+(27, 'Sony A7 iv', 'LV46-13GV', '302_1731460840.webp');
 
 -- --------------------------------------------------------
 
@@ -704,21 +743,21 @@ CREATE TABLE `item_unit` (
 
 INSERT INTO `item_unit` (`id_unit`, `id_item`, `status`, `id_wh`, `comment`, `serial_number`, `condition`, `updated_by`) VALUES
 (58, 11, 1, 7, 'rbac test 3', 'BOG5409', 1, 5),
-(59, 11, 1, 6, 'test add new unit', 'BOG-7848', 1, NULL),
+(59, 11, 1, 6, 'test add new unit', 'BOG-7848', 1, 1),
 (60, 11, 2, 5, 'finish repair test', 'BOG-2254', 1, 5),
 (61, 11, 3, NULL, 'test add new unit', 'BOG-0642', 3, 8),
-(62, 11, 1, 11, 'test rbac', 'BOG-6089', 2, 9),
-(63, 11, 1, 8, 'edit test', 'BOG-7894', 2, NULL),
-(64, 11, 2, 5, 'test add new unit', 'BOG-0790', 1, 5),
+(62, 11, 3, NULL, 'test rbac', 'BOG-6089', 2, 5),
+(63, 11, 1, 8, 'edit test', 'BOG-7894', 2, 1),
+(64, 11, 1, 5, 'test add new unit', 'BOG-0790', 1, 1),
 (65, 11, 3, NULL, 'test add new unit', 'BOG-0346', 2, 8),
 (66, 11, 3, NULL, 'test add new unit', 'BOG-3217', 3, 8),
-(67, 11, 1, 7, 'test add new unit', 'BOG-7480', 1, NULL),
+(67, 11, 1, 7, 'test add new unit', 'BOG-7480', 1, 1),
 (68, 11, 4, 7, 'test add new unit', 'BOG-4594', 4, 8),
-(69, 11, 1, 5, 'test add new unit', 'BOG-3363', 1, NULL),
+(69, 11, 1, 5, 'test add new unit', 'BOG-3363', 1, 1),
 (70, 11, 2, 7, 'test add new unit', 'BOG-2006', 1, 5),
-(71, 12, 1, 5, 'test add new unit', 'OJW-5143', 1, NULL),
+(71, 12, 1, 5, 'test add new unit', 'OJW-5143', 1, 1),
 (72, 12, 3, NULL, 'rbac test', 'OJW-5757', 3, 5),
-(73, 12, 1, 7, 'test add new unit', 'OJW-6303', 1, NULL),
+(73, 12, 1, 7, 'test add new unit', 'OJW-6303', 1, 1),
 (74, 13, 1, NULL, 'test add new unit', 'BNK-0338', 1, NULL),
 (75, 13, 1, 5, '', 'BNK-7156', 1, NULL),
 (76, 13, 1, 7, 'test add new unit', 'BNK-2251', 1, NULL),
@@ -732,7 +771,7 @@ INSERT INTO `item_unit` (`id_unit`, `id_item`, `status`, `id_wh`, `comment`, `se
 (84, 14, 1, 8, 'rbac test', 'RGT-1395', 1, 5),
 (85, 14, 1, 5, 'New Unit', 'RGT-9633', 1, NULL),
 (87, 11, 1, 5, 'mass upload test', 'BOG-670', 1, 5),
-(88, 11, 2, 6, 'mass upload test', 'BOG-389', 1, 1),
+(88, 11, 1, 6, 'mass upload test', 'BOG-389', 1, 1),
 (89, 11, 1, 7, 'mass upload test', 'BOG-460', 1, 5),
 (90, 11, 1, 8, 'mass upload test', 'BOG-932', 1, 5),
 (91, 11, 1, 9, 'mass upload test', 'BOG-623', 1, 5),
@@ -768,313 +807,66 @@ INSERT INTO `item_unit` (`id_unit`, `id_item`, `status`, `id_wh`, `comment`, `se
 (53307, 18, 1, 8, 'test add new unit', 'WX95-1911YK', 1, 4),
 (53308, 18, 2, 5, 'test add new unit  new autogenerate format', 'WX95-8225CZ-GH', 1, 4),
 (53309, 18, 1, 7, 'new format check', 'WX95-4898QB-TN', 1, 4),
-(53910, 15, 1, 10, 'huge rows bulk add', 'OTLP-0341TX-VW', 1, 4),
-(53911, 15, 1, 10, 'huge rows bulk add', 'OTLP-1777JP-NI', 1, 4),
-(53912, 15, 1, 10, 'huge rows bulk add', 'OTLP-2794KB-OI', 1, 4),
-(53913, 15, 1, 10, 'huge rows bulk add', 'OTLP-4273WV-ZV', 1, 4),
-(53914, 15, 1, 10, 'huge rows bulk add', 'OTLP-2127OT-MC', 1, 4),
-(53915, 15, 1, 10, 'huge rows bulk add', 'OTLP-7757BH-AH', 1, 4),
-(53916, 15, 1, 10, 'huge rows bulk add', 'OTLP-8494WD-LI', 1, 4),
-(53917, 15, 1, 10, 'huge rows bulk add', 'OTLP-8339FT-RZ', 1, 4),
-(53918, 15, 1, 10, 'huge rows bulk add', 'OTLP-6031UI-WJ', 1, 4),
-(53919, 15, 1, 10, 'huge rows bulk add', 'OTLP-6272VS-EK', 1, 4),
-(53920, 15, 1, 10, 'huge rows bulk add', 'OTLP-7921KX-NM', 1, 4),
-(53921, 15, 1, 10, 'huge rows bulk add', 'OTLP-7547VH-EE', 1, 4),
-(53922, 15, 1, 10, 'huge rows bulk add', 'OTLP-0042WY-NI', 1, 4),
-(53923, 15, 1, 10, 'huge rows bulk add', 'OTLP-6385ZI-DT', 1, 4),
-(53924, 15, 1, 10, 'huge rows bulk add', 'OTLP-7354KV-QJ', 1, 4),
-(53925, 15, 1, 10, 'huge rows bulk add', 'OTLP-1596IO-CJ', 1, 4),
-(53926, 15, 1, 10, 'huge rows bulk add', 'OTLP-2651WC-TF', 1, 4),
-(53927, 15, 1, 10, 'huge rows bulk add', 'OTLP-6860RL-OL', 1, 4),
-(53928, 15, 1, 10, 'huge rows bulk add', 'OTLP-7181SJ-ID', 1, 4),
-(53929, 15, 1, 10, 'huge rows bulk add', 'OTLP-6432BY-QX', 1, 4),
-(53930, 15, 1, 10, 'huge rows bulk add', 'OTLP-3536ZI-FC', 1, 4),
-(53931, 15, 1, 10, 'huge rows bulk add', 'OTLP-8779PD-XQ', 1, 4),
-(53932, 15, 1, 10, 'huge rows bulk add', 'OTLP-8998CX-ID', 1, 4),
-(53933, 15, 1, 10, 'huge rows bulk add', 'OTLP-4241TF-KP', 1, 4),
-(53934, 15, 1, 10, 'huge rows bulk add', 'OTLP-2678AN-UT', 1, 4),
-(53935, 15, 1, 10, 'huge rows bulk add', 'OTLP-7510OI-YS', 1, 4),
-(53936, 15, 1, 10, 'huge rows bulk add', 'OTLP-5085CA-DC', 1, 4),
-(53937, 15, 1, 10, 'huge rows bulk add', 'OTLP-1852PT-YA', 1, 4),
-(53938, 15, 1, 10, 'huge rows bulk add', 'OTLP-7071JR-ZH', 1, 4),
-(53939, 15, 1, 10, 'huge rows bulk add', 'OTLP-5303HD-OF', 1, 4),
-(53940, 15, 1, 10, 'huge rows bulk add', 'OTLP-4249KO-OS', 1, 4),
-(53941, 15, 1, 10, 'huge rows bulk add', 'OTLP-6706UO-PM', 1, 4),
-(53942, 15, 1, 10, 'huge rows bulk add', 'OTLP-5401DR-BF', 1, 4),
-(53943, 15, 1, 10, 'huge rows bulk add', 'OTLP-4646SQ-CC', 1, 4),
-(53944, 15, 1, 10, 'huge rows bulk add', 'OTLP-1027GO-GZ', 1, 4),
-(53945, 15, 1, 10, 'huge rows bulk add', 'OTLP-9846HE-BK', 1, 4),
-(53946, 15, 1, 10, 'huge rows bulk add', 'OTLP-9710HD-IN', 1, 4),
-(53947, 15, 1, 10, 'huge rows bulk add', 'OTLP-1409ZA-NE', 1, 4),
-(53948, 15, 1, 10, 'huge rows bulk add', 'OTLP-6342XR-KZ', 1, 4),
-(53949, 15, 1, 10, 'huge rows bulk add', 'OTLP-7150HQ-YM', 1, 4),
-(53950, 15, 1, 10, 'huge rows bulk add', 'OTLP-5914LD-DH', 1, 4),
-(53951, 15, 1, 10, 'huge rows bulk add', 'OTLP-4391DM-NT', 1, 4),
-(53952, 15, 1, 10, 'huge rows bulk add', 'OTLP-0507HU-LA', 1, 4),
-(53953, 15, 1, 10, 'huge rows bulk add', 'OTLP-6195NE-AS', 1, 4),
-(53954, 15, 1, 10, 'huge rows bulk add', 'OTLP-1808RN-UB', 1, 4),
-(53955, 15, 1, 10, 'huge rows bulk add', 'OTLP-6782QO-LO', 1, 4),
-(53956, 15, 1, 10, 'huge rows bulk add', 'OTLP-5102EX-KQ', 1, 4),
-(53957, 15, 1, 10, 'huge rows bulk add', 'OTLP-7900UL-OT', 1, 4),
-(53958, 15, 1, 10, 'huge rows bulk add', 'OTLP-5427GK-YQ', 1, 4),
-(53959, 15, 1, 10, 'huge rows bulk add', 'OTLP-7732GO-HR', 1, 4),
-(53960, 15, 1, 10, 'huge rows bulk add', 'OTLP-2640HB-AP', 1, 4),
-(53961, 15, 1, 10, 'huge rows bulk add', 'OTLP-0361RF-BH', 1, 4),
-(53962, 15, 1, 10, 'huge rows bulk add', 'OTLP-2743IV-WW', 1, 4),
-(53963, 15, 1, 10, 'huge rows bulk add', 'OTLP-5406ZF-VC', 1, 4),
-(53964, 15, 1, 10, 'huge rows bulk add', 'OTLP-4997LP-LM', 1, 4),
-(53965, 15, 1, 10, 'huge rows bulk add', 'OTLP-1409RH-HA', 1, 4),
-(53966, 15, 1, 10, 'huge rows bulk add', 'OTLP-8061GR-SC', 1, 4),
-(53967, 15, 1, 10, 'huge rows bulk add', 'OTLP-2990PG-UW', 1, 4),
-(53968, 15, 1, 10, 'huge rows bulk add', 'OTLP-5901UB-WU', 1, 4),
-(53969, 15, 1, 10, 'huge rows bulk add', 'OTLP-7985KN-LC', 1, 4),
-(53970, 15, 1, 10, 'huge rows bulk add', 'OTLP-9117HT-CR', 1, 4),
-(53971, 15, 1, 10, 'huge rows bulk add', 'OTLP-0765TO-IG', 1, 4),
-(53972, 15, 1, 10, 'huge rows bulk add', 'OTLP-0302LF-JT', 1, 4),
-(53973, 15, 1, 10, 'huge rows bulk add', 'OTLP-2205JI-AP', 1, 4),
-(53974, 15, 1, 10, 'huge rows bulk add', 'OTLP-8940IH-LH', 1, 4),
-(53975, 15, 1, 10, 'huge rows bulk add', 'OTLP-6422YO-IF', 1, 4),
-(53976, 15, 1, 10, 'huge rows bulk add', 'OTLP-7687ZD-AO', 1, 4),
-(53977, 15, 1, 10, 'huge rows bulk add', 'OTLP-5123PA-OA', 1, 4),
-(53978, 15, 1, 10, 'huge rows bulk add', 'OTLP-0263LF-PY', 1, 4),
-(53979, 15, 1, 10, 'huge rows bulk add', 'OTLP-9131TL-TX', 1, 4),
-(53980, 15, 1, 10, 'huge rows bulk add', 'OTLP-3138OO-LS', 1, 4),
-(53981, 15, 1, 10, 'huge rows bulk add', 'OTLP-9965DF-WS', 1, 4),
-(53982, 15, 1, 10, 'huge rows bulk add', 'OTLP-0735FM-JO', 1, 4),
-(53983, 15, 1, 10, 'huge rows bulk add', 'OTLP-0906UP-QF', 1, 4),
-(53984, 15, 1, 10, 'huge rows bulk add', 'OTLP-3415OW-TD', 1, 4),
-(53985, 15, 1, 10, 'huge rows bulk add', 'OTLP-1858HJ-UU', 1, 4),
-(53986, 15, 1, 10, 'huge rows bulk add', 'OTLP-6964XA-TF', 1, 4),
-(53987, 15, 1, 10, 'huge rows bulk add', 'OTLP-3319ZK-XQ', 1, 4),
-(53988, 15, 1, 10, 'huge rows bulk add', 'OTLP-5379EV-JZ', 1, 4),
-(53989, 15, 1, 10, 'huge rows bulk add', 'OTLP-4965TA-YZ', 1, 4),
-(53990, 15, 1, 10, 'huge rows bulk add', 'OTLP-9968RT-OZ', 1, 4),
-(53991, 15, 1, 10, 'huge rows bulk add', 'OTLP-7614FT-QQ', 1, 4),
-(53992, 15, 1, 10, 'huge rows bulk add', 'OTLP-0944VL-IA', 1, 4),
-(53993, 15, 1, 10, 'huge rows bulk add', 'OTLP-4801BX-YU', 1, 4),
-(53994, 15, 1, 10, 'huge rows bulk add', 'OTLP-8122JK-BQ', 1, 4),
-(53995, 15, 1, 10, 'huge rows bulk add', 'OTLP-2982HC-XG', 1, 4),
-(53996, 15, 1, 10, 'huge rows bulk add', 'OTLP-9838HE-OR', 1, 4),
-(53997, 15, 1, 10, 'huge rows bulk add', 'OTLP-1807VS-MH', 1, 4),
-(53998, 15, 1, 10, 'huge rows bulk add', 'OTLP-6555MK-ZZ', 1, 4),
-(53999, 15, 1, 10, 'huge rows bulk add', 'OTLP-1030OS-EZ', 1, 4),
-(54000, 15, 1, 10, 'huge rows bulk add', 'OTLP-1962GU-CN', 1, 4),
-(54001, 15, 1, 10, 'huge rows bulk add', 'OTLP-3216WO-WV', 1, 4),
-(54002, 15, 1, 10, 'huge rows bulk add', 'OTLP-9136KW-FO', 1, 4),
-(54003, 15, 1, 10, 'huge rows bulk add', 'OTLP-2539TW-KZ', 1, 4),
-(54004, 15, 1, 10, 'huge rows bulk add', 'OTLP-3129DW-HE', 1, 4),
-(54005, 15, 1, 10, 'huge rows bulk add', 'OTLP-0556DD-HB', 1, 4),
-(54006, 15, 1, 10, 'huge rows bulk add', 'OTLP-6420OR-OY', 1, 4),
-(54007, 15, 1, 10, 'huge rows bulk add', 'OTLP-8429DW-HA', 1, 4),
-(54008, 15, 1, 10, 'huge rows bulk add', 'OTLP-4727OX-TN', 1, 4),
-(54009, 15, 1, 10, 'huge rows bulk add', 'OTLP-7079HY-OO', 1, 4),
-(54010, 15, 1, 10, 'huge rows bulk add', 'OTLP-3914YK-ZR', 1, 4),
-(54011, 15, 1, 10, 'huge rows bulk add', 'OTLP-5974BH-NM', 1, 4),
-(54012, 15, 1, 10, 'huge rows bulk add', 'OTLP-1246OQ-CN', 1, 4),
-(54013, 15, 1, 10, 'huge rows bulk add', 'OTLP-5332KS-DS', 1, 4),
-(54014, 15, 1, 10, 'huge rows bulk add', 'OTLP-9531GV-YJ', 1, 4),
-(54015, 15, 1, 10, 'huge rows bulk add', 'OTLP-0308WG-HR', 1, 4),
-(54016, 15, 1, 10, 'huge rows bulk add', 'OTLP-3913LU-AF', 1, 4),
-(54017, 15, 1, 10, 'huge rows bulk add', 'OTLP-3966BP-KQ', 1, 4),
-(54018, 15, 1, 10, 'huge rows bulk add', 'OTLP-4696SQ-BB', 1, 4),
-(54019, 15, 1, 10, 'huge rows bulk add', 'OTLP-7008OH-LZ', 1, 4),
-(54020, 15, 1, 10, 'huge rows bulk add', 'OTLP-2254QW-XY', 1, 4),
-(54021, 15, 1, 10, 'huge rows bulk add', 'OTLP-5712QK-CF', 1, 4),
-(54022, 15, 1, 10, 'huge rows bulk add', 'OTLP-3389QY-KC', 1, 4),
-(54023, 15, 1, 10, 'huge rows bulk add', 'OTLP-1516KM-OF', 1, 4),
-(54024, 15, 1, 10, 'huge rows bulk add', 'OTLP-1598GX-BY', 1, 4),
-(54025, 15, 1, 10, 'huge rows bulk add', 'OTLP-9822UJ-SF', 1, 4),
-(54026, 15, 1, 10, 'huge rows bulk add', 'OTLP-5145AO-JP', 1, 4),
-(54027, 15, 1, 10, 'huge rows bulk add', 'OTLP-0573TX-BG', 1, 4),
-(54028, 15, 1, 10, 'huge rows bulk add', 'OTLP-0697VO-YX', 1, 4),
-(54029, 15, 1, 10, 'huge rows bulk add', 'OTLP-4377JP-EH', 1, 4),
-(54030, 15, 1, 10, 'huge rows bulk add', 'OTLP-7120LF-LJ', 1, 4),
-(54031, 15, 1, 10, 'huge rows bulk add', 'OTLP-7620VU-EJ', 1, 4),
-(54032, 15, 1, 10, 'huge rows bulk add', 'OTLP-3230WR-WQ', 1, 4),
-(54033, 15, 1, 10, 'huge rows bulk add', 'OTLP-9931GT-RZ', 1, 4),
-(54034, 15, 1, 10, 'huge rows bulk add', 'OTLP-5886CP-LI', 1, 4),
-(54035, 15, 1, 10, 'huge rows bulk add', 'OTLP-3236UT-SX', 1, 4),
-(54036, 15, 1, 10, 'huge rows bulk add', 'OTLP-8152LA-OZ', 1, 4),
-(54037, 15, 1, 10, 'huge rows bulk add', 'OTLP-7004UT-IR', 1, 4),
-(54038, 15, 1, 10, 'huge rows bulk add', 'OTLP-2785UW-KU', 1, 4),
-(54039, 15, 1, 10, 'huge rows bulk add', 'OTLP-6708RP-KI', 1, 4),
-(54040, 15, 1, 10, 'huge rows bulk add', 'OTLP-3766CL-TI', 1, 4),
-(54041, 15, 1, 10, 'huge rows bulk add', 'OTLP-4532YG-KN', 1, 4),
-(54042, 15, 1, 10, 'huge rows bulk add', 'OTLP-5258VW-ZQ', 1, 4),
-(54043, 15, 1, 10, 'huge rows bulk add', 'OTLP-0827YQ-AP', 1, 4),
-(54044, 15, 1, 10, 'huge rows bulk add', 'OTLP-5100SO-OA', 1, 4),
-(54045, 15, 1, 10, 'huge rows bulk add', 'OTLP-3711RN-YL', 1, 4),
-(54046, 15, 1, 10, 'huge rows bulk add', 'OTLP-1751QE-RL', 1, 4),
-(54047, 15, 1, 10, 'huge rows bulk add', 'OTLP-7392ML-GP', 1, 4),
-(54048, 15, 1, 10, 'huge rows bulk add', 'OTLP-1705AI-OV', 1, 4),
-(54049, 15, 1, 10, 'huge rows bulk add', 'OTLP-5500QB-VE', 1, 4),
-(54050, 15, 1, 10, 'huge rows bulk add', 'OTLP-4831CQ-UU', 1, 4),
-(54051, 15, 1, 10, 'huge rows bulk add', 'OTLP-2020WR-VZ', 1, 4),
-(54052, 15, 1, 10, 'huge rows bulk add', 'OTLP-7971AI-NQ', 1, 4),
-(54053, 15, 1, 10, 'huge rows bulk add', 'OTLP-8282EK-TL', 1, 4),
-(54054, 15, 1, 10, 'huge rows bulk add', 'OTLP-4381NQ-WG', 1, 4),
-(54055, 15, 1, 10, 'huge rows bulk add', 'OTLP-3618XE-WO', 1, 4),
-(54056, 15, 1, 10, 'huge rows bulk add', 'OTLP-7813UY-RR', 1, 4),
-(54057, 15, 1, 10, 'huge rows bulk add', 'OTLP-0657WA-AN', 1, 4),
-(54058, 15, 1, 10, 'huge rows bulk add', 'OTLP-7280GX-YZ', 1, 4),
-(54059, 15, 1, 10, 'huge rows bulk add', 'OTLP-3325UC-XD', 1, 4),
-(54060, 15, 1, 10, 'huge rows bulk add', 'OTLP-6451OF-WS', 1, 4),
-(54061, 15, 1, 10, 'huge rows bulk add', 'OTLP-7745OB-MV', 1, 4),
-(54062, 15, 1, 10, 'huge rows bulk add', 'OTLP-9978PV-GF', 1, 4),
-(54063, 15, 1, 10, 'huge rows bulk add', 'OTLP-3480EV-YX', 1, 4),
-(54064, 15, 1, 10, 'huge rows bulk add', 'OTLP-8138QE-CN', 1, 4),
-(54065, 15, 1, 10, 'huge rows bulk add', 'OTLP-4443CS-DU', 1, 4),
-(54066, 15, 1, 10, 'huge rows bulk add', 'OTLP-9048IH-IM', 1, 4),
-(54067, 15, 1, 10, 'huge rows bulk add', 'OTLP-7324DQ-MN', 1, 4),
-(54068, 15, 1, 10, 'huge rows bulk add', 'OTLP-7726PI-JQ', 1, 4),
-(54069, 15, 1, 10, 'huge rows bulk add', 'OTLP-2823VT-AP', 1, 4),
-(54070, 15, 1, 10, 'huge rows bulk add', 'OTLP-9403JO-NV', 1, 4),
-(54071, 15, 1, 10, 'huge rows bulk add', 'OTLP-6290XD-LB', 1, 4),
-(54072, 15, 1, 10, 'huge rows bulk add', 'OTLP-7863EF-YI', 1, 4),
-(54073, 15, 1, 10, 'huge rows bulk add', 'OTLP-4511PW-IF', 1, 4),
-(54074, 15, 1, 10, 'huge rows bulk add', 'OTLP-5003EU-SB', 1, 4),
-(54075, 15, 1, 10, 'huge rows bulk add', 'OTLP-5562MR-OQ', 1, 4),
-(54076, 15, 1, 10, 'huge rows bulk add', 'OTLP-0094PD-FK', 1, 4),
-(54077, 15, 1, 10, 'huge rows bulk add', 'OTLP-4009UX-SX', 1, 4),
-(54078, 15, 1, 10, 'huge rows bulk add', 'OTLP-7781BO-SW', 1, 4),
-(54079, 15, 1, 10, 'huge rows bulk add', 'OTLP-4542MT-DP', 1, 4),
-(54080, 15, 1, 10, 'huge rows bulk add', 'OTLP-1823NK-QX', 1, 4),
-(54081, 15, 1, 10, 'huge rows bulk add', 'OTLP-0889GK-ME', 1, 4),
-(54082, 15, 1, 10, 'huge rows bulk add', 'OTLP-8629RF-WG', 1, 4),
-(54083, 15, 1, 10, 'huge rows bulk add', 'OTLP-3311QQ-IZ', 1, 4),
-(54084, 15, 1, 10, 'huge rows bulk add', 'OTLP-9941FS-XI', 1, 4),
-(54085, 15, 1, 10, 'huge rows bulk add', 'OTLP-3310JI-XK', 1, 4),
-(54086, 15, 1, 10, 'huge rows bulk add', 'OTLP-6275FN-JQ', 1, 4),
-(54087, 15, 1, 10, 'huge rows bulk add', 'OTLP-3825RF-HA', 1, 4),
-(54088, 15, 1, 10, 'huge rows bulk add', 'OTLP-3957AA-TY', 1, 4),
-(54089, 15, 1, 10, 'huge rows bulk add', 'OTLP-2460SF-OW', 1, 4),
-(54090, 15, 1, 10, 'huge rows bulk add', 'OTLP-2190GU-HB', 1, 4),
-(54091, 15, 1, 10, 'huge rows bulk add', 'OTLP-3469YA-EO', 1, 4),
-(54092, 15, 1, 10, 'huge rows bulk add', 'OTLP-6239MO-VQ', 1, 4),
-(54093, 15, 1, 10, 'huge rows bulk add', 'OTLP-8676KM-HW', 1, 4),
-(54094, 15, 1, 10, 'huge rows bulk add', 'OTLP-5159OV-VZ', 1, 4),
-(54095, 15, 1, 10, 'huge rows bulk add', 'OTLP-0225IO-ON', 1, 4),
-(54096, 15, 1, 10, 'huge rows bulk add', 'OTLP-9324MF-OU', 1, 4),
-(54097, 15, 1, 10, 'huge rows bulk add', 'OTLP-0415WV-FS', 1, 4),
-(54098, 15, 1, 10, 'huge rows bulk add', 'OTLP-1832MW-CW', 1, 4),
-(54099, 15, 1, 10, 'huge rows bulk add', 'OTLP-6614RZ-LT', 1, 4),
-(54100, 15, 1, 10, 'huge rows bulk add', 'OTLP-5021WC-DV', 1, 4),
-(54101, 15, 1, 10, 'huge rows bulk add', 'OTLP-1219EL-NM', 1, 4),
-(54102, 15, 1, 10, 'huge rows bulk add', 'OTLP-3098AO-PI', 1, 4),
-(54103, 15, 1, 10, 'huge rows bulk add', 'OTLP-9378DQ-UJ', 1, 4),
-(54104, 15, 1, 10, 'huge rows bulk add', 'OTLP-3477NU-VU', 1, 4),
-(54105, 15, 1, 10, 'huge rows bulk add', 'OTLP-2216JF-YP', 1, 4),
-(54106, 15, 1, 10, 'huge rows bulk add', 'OTLP-1794LV-UM', 1, 4),
-(54107, 15, 1, 10, 'huge rows bulk add', 'OTLP-4027II-WH', 1, 4),
-(54108, 15, 1, 10, 'huge rows bulk add', 'OTLP-4189YU-ZL', 1, 4),
-(54109, 15, 1, 10, 'huge rows bulk add', 'OTLP-4503AB-OT', 1, 4),
-(54110, 15, 1, 10, 'huge rows bulk add', 'OTLP-5373WL-OS', 1, 4),
-(54111, 15, 1, 10, 'huge rows bulk add', 'OTLP-0846LV-FE', 1, 4),
-(54112, 15, 1, 10, 'huge rows bulk add', 'OTLP-8558SC-HY', 1, 4),
-(54113, 15, 1, 10, 'huge rows bulk add', 'OTLP-4633KX-ZW', 1, 4),
-(54114, 15, 1, 10, 'huge rows bulk add', 'OTLP-7124AD-BW', 1, 4),
-(54115, 15, 1, 10, 'huge rows bulk add', 'OTLP-4002QF-NS', 1, 4),
-(54116, 15, 1, 10, 'huge rows bulk add', 'OTLP-5423HJ-FF', 1, 4),
-(54117, 15, 1, 10, 'huge rows bulk add', 'OTLP-0866OX-RO', 1, 4),
-(54118, 15, 1, 10, 'huge rows bulk add', 'OTLP-2619NZ-YT', 1, 4),
-(54119, 15, 1, 10, 'huge rows bulk add', 'OTLP-1644YB-LY', 1, 4),
-(54120, 15, 1, 10, 'huge rows bulk add', 'OTLP-2273JD-MD', 1, 4),
-(54121, 15, 1, 10, 'huge rows bulk add', 'OTLP-0991EH-EM', 1, 4),
-(54122, 15, 1, 10, 'huge rows bulk add', 'OTLP-5321LL-FD', 1, 4),
-(54123, 15, 1, 10, 'huge rows bulk add', 'OTLP-4158OP-RB', 1, 4),
-(54124, 15, 1, 10, 'huge rows bulk add', 'OTLP-6805PN-UJ', 1, 4),
-(54125, 15, 1, 10, 'huge rows bulk add', 'OTLP-4819AB-RW', 1, 4),
-(54126, 15, 1, 10, 'huge rows bulk add', 'OTLP-1562OR-AM', 1, 4),
-(54127, 15, 1, 10, 'huge rows bulk add', 'OTLP-5598WJ-ZU', 1, 4),
-(54128, 15, 1, 10, 'huge rows bulk add', 'OTLP-9133QM-VJ', 1, 4),
-(54129, 15, 1, 10, 'huge rows bulk add', 'OTLP-6977IV-DF', 1, 4),
-(54130, 15, 1, 10, 'huge rows bulk add', 'OTLP-6584KN-EC', 1, 4),
-(54131, 15, 1, 10, 'huge rows bulk add', 'OTLP-6966KO-UE', 1, 4),
-(54132, 15, 1, 10, 'huge rows bulk add', 'OTLP-7330EU-RQ', 1, 4),
-(54133, 15, 1, 10, 'huge rows bulk add', 'OTLP-7395EB-KE', 1, 4),
-(54134, 15, 1, 10, 'huge rows bulk add', 'OTLP-4033JA-FD', 1, 4),
-(54135, 15, 1, 10, 'huge rows bulk add', 'OTLP-4098CS-NY', 1, 4),
-(54136, 15, 1, 10, 'huge rows bulk add', 'OTLP-0672HD-QR', 1, 4),
-(54137, 15, 1, 10, 'huge rows bulk add', 'OTLP-2472YA-CP', 1, 4),
-(54138, 15, 1, 10, 'huge rows bulk add', 'OTLP-1286RM-TV', 1, 4),
-(54139, 15, 1, 10, 'huge rows bulk add', 'OTLP-4024LI-QJ', 1, 4),
-(54140, 15, 1, 10, 'huge rows bulk add', 'OTLP-9300QC-CV', 1, 4),
-(54141, 15, 1, 10, 'huge rows bulk add', 'OTLP-0066IE-RF', 1, 4),
-(54142, 15, 1, 10, 'huge rows bulk add', 'OTLP-5527VR-ER', 1, 4),
-(54143, 15, 1, 10, 'huge rows bulk add', 'OTLP-6515RT-TI', 1, 4),
-(54144, 15, 1, 10, 'huge rows bulk add', 'OTLP-5637VW-JK', 1, 4),
-(54145, 15, 1, 10, 'huge rows bulk add', 'OTLP-2780FW-MW', 1, 4),
-(54146, 15, 1, 10, 'huge rows bulk add', 'OTLP-7710MT-OC', 1, 4),
-(54147, 15, 1, 10, 'huge rows bulk add', 'OTLP-7234CX-EC', 1, 4),
-(54148, 15, 1, 10, 'huge rows bulk add', 'OTLP-5512DP-KH', 1, 4),
-(54149, 15, 1, 10, 'huge rows bulk add', 'OTLP-7208PG-YR', 1, 4),
-(54150, 15, 1, 10, 'huge rows bulk add', 'OTLP-4505ED-OC', 1, 4),
-(54151, 15, 1, 10, 'huge rows bulk add', 'OTLP-2516AY-UG', 1, 4),
-(54152, 15, 1, 10, 'huge rows bulk add', 'OTLP-2846DK-RB', 1, 4),
-(54153, 15, 1, 10, 'huge rows bulk add', 'OTLP-4046YD-GV', 1, 4),
-(54154, 15, 1, 10, 'huge rows bulk add', 'OTLP-0472AZ-TX', 1, 4),
-(54155, 15, 1, 10, 'huge rows bulk add', 'OTLP-4892BR-FG', 1, 4),
-(54156, 15, 1, 10, 'huge rows bulk add', 'OTLP-8646MH-KN', 1, 4),
-(54157, 15, 1, 10, 'huge rows bulk add', 'OTLP-6037IT-UE', 1, 4),
-(54158, 15, 1, 10, 'huge rows bulk add', 'OTLP-3755AY-NR', 1, 4),
-(54159, 15, 1, 10, 'huge rows bulk add', 'OTLP-2385JB-OD', 1, 4),
-(54160, 15, 1, 10, 'huge rows bulk add', 'OTLP-3005GM-UN', 1, 4),
-(54161, 15, 1, 10, 'huge rows bulk add', 'OTLP-3677YM-KA', 1, 4),
-(54162, 15, 1, 10, 'huge rows bulk add', 'OTLP-5855ZL-LY', 1, 4),
-(54163, 15, 1, 10, 'huge rows bulk add', 'OTLP-1460EX-KS', 1, 4),
-(54164, 15, 1, 10, 'huge rows bulk add', 'OTLP-2996AH-MW', 1, 4),
-(54165, 15, 1, 10, 'huge rows bulk add', 'OTLP-1613IO-RJ', 1, 4),
-(54166, 15, 1, 10, 'huge rows bulk add', 'OTLP-4640FX-ND', 1, 4),
-(54167, 15, 1, 10, 'huge rows bulk add', 'OTLP-5648YA-TP', 1, 4),
-(54168, 15, 1, 10, 'huge rows bulk add', 'OTLP-2672ZV-BE', 1, 4),
-(54169, 15, 1, 10, 'huge rows bulk add', 'OTLP-3727EW-TK', 1, 4),
-(54170, 15, 1, 10, 'huge rows bulk add', 'OTLP-4118HU-SW', 1, 4),
-(54171, 15, 1, 10, 'huge rows bulk add', 'OTLP-1728GS-OC', 1, 4),
-(54172, 15, 1, 10, 'huge rows bulk add', 'OTLP-8610FW-BW', 1, 4),
-(54173, 15, 1, 10, 'huge rows bulk add', 'OTLP-5770ZB-HQ', 1, 4),
-(54174, 15, 1, 10, 'huge rows bulk add', 'OTLP-8861RV-SM', 1, 4),
-(54175, 15, 1, 10, 'huge rows bulk add', 'OTLP-5248NT-VK', 1, 4),
-(54176, 15, 1, 10, 'huge rows bulk add', 'OTLP-3199UB-BQ', 1, 4),
-(54177, 15, 1, 10, 'huge rows bulk add', 'OTLP-2750OC-EN', 1, 4),
-(54178, 15, 1, 10, 'huge rows bulk add', 'OTLP-2213IT-LH', 1, 4),
-(54179, 15, 1, 10, 'huge rows bulk add', 'OTLP-3304VI-CS', 1, 4),
-(54180, 15, 1, 10, 'huge rows bulk add', 'OTLP-6310GF-BG', 1, 4),
-(54181, 15, 1, 10, 'huge rows bulk add', 'OTLP-1792XN-RJ', 1, 4),
-(54182, 15, 1, 10, 'huge rows bulk add', 'OTLP-1115YF-KM', 1, 4),
-(54183, 15, 1, 10, 'huge rows bulk add', 'OTLP-5058RF-DD', 1, 4),
-(54184, 15, 1, 10, 'huge rows bulk add', 'OTLP-3575OP-MA', 1, 4),
-(54185, 15, 1, 10, 'huge rows bulk add', 'OTLP-1289DV-LT', 1, 4),
-(54186, 15, 1, 10, 'huge rows bulk add', 'OTLP-8680QV-UE', 1, 4),
-(54187, 15, 1, 10, 'huge rows bulk add', 'OTLP-4090HE-PP', 1, 4),
-(54188, 15, 1, 10, 'huge rows bulk add', 'OTLP-5143AT-EW', 1, 4),
-(54189, 15, 1, 10, 'huge rows bulk add', 'OTLP-1401IF-WZ', 1, 4),
-(54190, 15, 1, 10, 'huge rows bulk add', 'OTLP-4020FE-LL', 1, 4),
-(54191, 15, 1, 10, 'huge rows bulk add', 'OTLP-9365SK-XD', 1, 4),
-(54192, 15, 1, 10, 'huge rows bulk add', 'OTLP-4322ZO-KS', 1, 4),
-(54193, 15, 1, 10, 'huge rows bulk add', 'OTLP-1956ZC-LC', 1, 4),
-(54194, 15, 1, 10, 'huge rows bulk add', 'OTLP-7279LB-CO', 1, 4),
-(54195, 15, 1, 10, 'huge rows bulk add', 'OTLP-6687IZ-TD', 1, 4),
-(54196, 15, 1, 10, 'huge rows bulk add', 'OTLP-7350ID-ZM', 1, 4),
-(54197, 15, 1, 10, 'huge rows bulk add', 'OTLP-8276FN-PE', 1, 4),
-(54198, 15, 1, 10, 'huge rows bulk add', 'OTLP-1139EM-PC', 1, 4),
-(54199, 15, 1, 10, 'huge rows bulk add', 'OTLP-7983SY-KF', 1, 4),
-(54200, 15, 1, 10, 'huge rows bulk add', 'OTLP-8271YX-YV', 1, 4),
-(54201, 15, 1, 10, 'huge rows bulk add', 'OTLP-7071VG-UE', 1, 4),
-(54202, 15, 1, 10, 'huge rows bulk add', 'OTLP-5055TD-BN', 1, 4),
-(54203, 15, 1, 10, 'huge rows bulk add', 'OTLP-4713XB-IS', 1, 4),
-(54204, 15, 1, 10, 'huge rows bulk add', 'OTLP-9614OS-RS', 1, 4),
-(54205, 15, 1, 10, 'huge rows bulk add', 'OTLP-3087UE-EX', 1, 4),
-(54206, 15, 1, 10, 'huge rows bulk add', 'OTLP-2135YY-QP', 1, 4),
-(54207, 15, 1, 10, 'huge rows bulk add', 'OTLP-6020ZM-HC', 1, 4),
-(54208, 15, 1, 10, 'huge rows bulk add', 'OTLP-7705PR-XH', 1, 4),
-(54209, 15, 1, 10, 'huge rows bulk add', 'OTLP-5084WI-DZ', 1, 4),
 (54210, 26, 1, 5, 'rbac test', 'PU87-3865SB-CB', 1, 5),
 (54211, 26, 1, 5, 'rbac test webvimark bulk', 'PU87-2604YU-GG', 1, 5),
 (54212, 26, 1, 6, 'rbac test webvimark bulk', 'PU87-5165WZ-FF', 1, 5),
 (54213, 26, 1, 7, 'rbac test webvimark bulk', 'PU87-2309CI-BE', 1, 5),
 (54214, 26, 1, 8, 'rbac test webvimark bulk', 'PU87-7290MP-OU', 1, 5),
 (54215, 26, 1, 9, 'rbac test webvimark bulk', 'PU87-2368QM-AM', 1, 5),
-(54216, 26, 1, 10, 'rbac test webvimark bulk', 'PU87-5412DB-WD', 1, 5);
+(54216, 26, 1, 10, 'rbac test webvimark bulk', 'PU87-5412DB-WD', 1, 5),
+(54217, 12, 1, 9, 'return test demo 1', 'OJWL-5502BT-GD', 1, 5),
+(54218, 12, 1, 10, 'test add new unit 222', 'OJWL-8475IX-GL', 1, 1),
+(54219, 27, 1, 5, 'test add new unit', 'LV46-8908QM-BG', 1, 5),
+(54220, 27, 1, 6, 'New Unit', 'LV46-4496ZX-VF', 1, 5),
+(54221, 25, 1, 5, 'test add new unit', 'UD31-2295XN-UY', 1, 5),
+(54222, 15, 1, 5, 'test', 'OTLP-6254BO-BY', 1, 5),
+(54223, 15, 1, 6, 'test', 'OTLP-9868UR-CE', 1, 5),
+(54224, 15, 1, 7, 'test', 'OTLP-6484BD-UW', 1, 5),
+(54225, 15, 1, 8, 'test', 'OTLP-3005PX-FQ', 1, 5),
+(54226, 15, 1, 9, 'test', 'OTLP-1691EA-WY', 1, 5),
+(54227, 15, 1, 10, 'test', 'OTLP-4385YA-XN', 1, 5),
+(54228, 15, 1, 11, 'test', 'OTLP-7802QJ-RP', 1, 5),
+(54229, 15, 1, 13, 'test', 'OTLP-4704VS-VK', 1, 5),
+(54230, 25, 1, 5, 'test', 'UD31-6957PS-FN', 1, 5),
+(54231, 25, 1, 6, 'test', 'UD31-0624QS-XH', 1, 5),
+(54232, 25, 1, 7, 'test', 'UD31-6126LI-SG', 1, 5),
+(54233, 25, 1, 8, 'test', 'UD31-2747EZ-YV', 1, 5),
+(54234, 25, 1, 9, 'test', 'UD31-2473BK-VC', 1, 5),
+(54235, 25, 1, 10, 'test', 'UD31-6379RS-DV', 1, 5),
+(54236, 25, 1, 11, 'test', 'UD31-6465XI-OX', 1, 5),
+(54237, 25, 1, 13, 'test', 'UD31-7610JF-TN', 1, 5),
+(54238, 18, 1, 5, 'test', 'WX95-7528VL-SU', 1, 5),
+(54239, 18, 1, 6, 'test', 'WX95-0322WC-UD', 1, 5),
+(54240, 18, 1, 7, 'test', 'WX95-6061ZE-LL', 1, 5),
+(54241, 18, 1, 8, 'test', 'WX95-6813WW-KD', 1, 5),
+(54242, 18, 1, 9, 'test', 'WX95-1630WR-EN', 1, 5),
+(54243, 18, 1, 10, 'test', 'WX95-9020QW-JY', 1, 5),
+(54244, 18, 1, 11, 'test', 'WX95-0517GE-GT', 1, 5),
+(54245, 18, 1, 13, 'test', 'WX95-8865TB-IV', 1, 5),
+(54246, 27, 1, 5, 'test', 'LV46-5078AR-YB', 1, 5),
+(54247, 27, 1, 6, 'test', 'LV46-9572BZ-SW', 1, 5),
+(54248, 27, 1, 7, 'test', 'LV46-8071NF-CJ', 1, 5),
+(54249, 27, 1, 8, 'test', 'LV46-1354WC-EB', 1, 5),
+(54250, 27, 1, 9, 'test', 'LV46-1770ND-MO', 1, 5),
+(54251, 27, 1, 10, 'test', 'LV46-7495GJ-LF', 1, 5),
+(54252, 27, 1, 11, 'test', 'LV46-6755FE-ZK', 1, 5),
+(54253, 27, 1, 13, 'test', 'LV46-7798ZZ-GH', 1, 5),
+(54254, 26, 1, 5, 'test', 'PU87-0283HB-SQ', 1, 5),
+(54255, 26, 1, 6, 'test', 'PU87-2761DF-DP', 1, 5),
+(54256, 26, 1, 7, 'test', 'PU87-8835FS-CY', 1, 5),
+(54257, 26, 1, 8, 'test', 'PU87-5616TH-JV', 1, 5),
+(54258, 26, 1, 9, 'test', 'PU87-5813OA-GJ', 1, 5),
+(54259, 26, 1, 10, 'test', 'PU87-2753OL-JQ', 1, 5),
+(54260, 26, 1, 11, 'test', 'PU87-7408EE-YS', 1, 5),
+(54261, 26, 1, 13, 'test', 'PU87-9607QD-DW', 1, 5),
+(54262, 16, 1, 5, 'test', 'UGSI-8274JB-CA', 1, 5),
+(54263, 16, 1, 6, 'test', 'UGSI-8526JK-PU', 1, 5),
+(54264, 16, 1, 7, 'test', 'UGSI-0756VM-UW', 1, 5),
+(54265, 16, 1, 8, 'test', 'UGSI-7763YA-KY', 1, 5),
+(54266, 16, 1, 9, 'test', 'UGSI-8200TC-UN', 1, 5),
+(54267, 16, 1, 10, 'test', 'UGSI-4665OJ-EU', 1, 5),
+(54268, 16, 1, 11, 'test', 'UGSI-8632EA-RL', 1, 5),
+(54269, 16, 1, 13, 'test', 'UGSI-4969KT-HK', 1, 5);
 
 -- --------------------------------------------------------
 
@@ -1110,7 +902,7 @@ INSERT INTO `lending` (`id_lending`, `id_unit`, `user_id`, `id_employee`, `type`
 (41, 64, 8, 2, 2, '2024-10-30'),
 (42, 84, 5, 4, 2, '2024-10-30'),
 (43, 84, 5, 1, 2, '2024-11-07'),
-(44, 64, 5, 2, 1, '2024-10-31'),
+(44, 64, 5, 2, 2, '2024-11-12'),
 (45, 70, 5, 1, 1, '2024-10-31'),
 (46, 60, 5, 1, 1, '2024-10-31'),
 (47, 95, 5, 1, 1, '2024-10-31'),
@@ -1118,7 +910,13 @@ INSERT INTO `lending` (`id_lending`, `id_unit`, `user_id`, `id_employee`, `type`
 (49, 53308, 4, 2, 1, '2024-10-31'),
 (50, 96, 5, 2, 1, '2024-11-07'),
 (51, 88, 1, 5, 1, '2024-11-08'),
-(52, 88, 1, 5, 1, '2024-11-08');
+(52, 88, 1, 5, 2, '2024-11-11'),
+(53, 54217, 1, 5, 2, '2024-11-11'),
+(54, 54217, 1, 4, 2, '2024-11-11'),
+(55, 54217, 5, 5, 2, '2024-11-11'),
+(56, 93, 5, 5, 2, '2024-11-11'),
+(57, 88, 1, 5, 2, '2024-11-12'),
+(58, 59, 1, 7, 2, '2024-11-12');
 
 -- --------------------------------------------------------
 
@@ -1267,7 +1065,33 @@ INSERT INTO `unit_log` (`id_log`, `id_unit`, `content`, `update_at`) VALUES
 (82, 72, 'Unit OJW-5757 sent for repair by tumbaladmin', '2024-11-07 10:23:16.000000'),
 (83, 62, 'Unit BOG-6089 repaired. Taken to warehouse by bobtherepairman', '2024-11-07 10:44:01.000000'),
 (84, 88, 'Unit BOG-389 lent to Shioriiiin by superadmin', '2024-11-08 09:10:13.000000'),
-(85, 88, 'Unit BOG-389 lent to Shioriiiin by superadmin', '2024-11-08 09:10:13.000000');
+(85, 88, 'Unit BOG-389 lent to Shioriiiin by superadmin', '2024-11-08 09:10:13.000000'),
+(86, 59, 'Unit BOG-7848 updated by superadmin', '2024-11-11 10:41:21.000000'),
+(87, 63, 'Unit BOG-7894 updated by superadmin', '2024-11-11 10:41:34.000000'),
+(88, 63, 'Unit BOG-7894 updated by superadmin', '2024-11-11 10:41:35.000000'),
+(89, 67, 'Unit BOG-7480 updated by superadmin', '2024-11-11 10:41:42.000000'),
+(90, 69, 'Unit BOG-3363 updated by superadmin', '2024-11-11 10:41:47.000000'),
+(91, 54218, 'Unit OJWL-8475IX-GL added by superadmin', '2024-11-11 10:51:35.000000'),
+(92, 71, 'Unit OJW-5143 updated by superadmin', '2024-11-11 10:54:02.000000'),
+(93, 73, 'Unit OJW-6303 updated by superadmin', '2024-11-11 10:54:10.000000'),
+(94, 54217, 'Unit OJWL-5502BT-GD lent to Shioriiiin by superadmin', '2024-11-11 10:57:00.000000'),
+(95, 54217, 'Unit OJWL-5502BT-GD returned by Shioriiiin, recieved by superadmin', '2024-11-11 13:37:47.000000'),
+(96, 54217, 'Unit OJWL-5502BT-GD lent to Freddy by superadmin', '2024-11-11 13:38:47.000000'),
+(97, 54217, 'Unit OJWL-5502BT-GD returned by Freddy, recieved by franzferdinand', '2024-11-11 13:55:20.000000'),
+(98, 54217, 'Unit OJWL-5502BT-GD lent to Shioriiiin by franzferdinand', '2024-11-11 13:55:30.000000'),
+(99, 54217, 'Unit OJWL-5502BT-GD returned by Shioriiiin, recieved by franzferdinand', '2024-11-11 13:56:24.000000'),
+(100, 93, 'Unit BOG-263 lent to Shioriiiin by franzferdinand', '2024-11-11 13:58:18.000000'),
+(101, 93, 'Unit BOG-263 returned by Shioriiiin, recieved by franzferdinand', '2024-11-11 13:58:42.000000'),
+(102, 88, 'Unit BOG-389 returned by Shioriiiin, recieved by franzferdinand', '2024-11-11 13:58:49.000000'),
+(103, 88, 'Unit BOG-389 lent to Shioriiiin by superadmin', '2024-11-12 08:15:29.000000'),
+(104, 59, 'Unit BOG-7848 lent to Shioweeen by superadmin', '2024-11-12 08:15:41.000000'),
+(105, 59, 'Unit BOG-7848 returned by Shioweeen, recieved by superadmin', '2024-11-12 08:15:53.000000'),
+(106, 88, 'Unit BOG-389 returned by Shioriiiin, recieved by superadmin', '2024-11-12 08:16:05.000000'),
+(107, 64, 'Unit BOG-0790 returned by Emma, recieved by superadmin', '2024-11-12 08:16:09.000000'),
+(108, 62, 'Unit BOG-6089 sent for repair by franzferdinand', '2024-11-12 08:32:18.000000'),
+(109, 54219, 'New unit LV46-8908QM-BG added by franzferdinand', '2024-11-13 08:21:02.000000'),
+(110, 54220, 'New unit LV46-4496ZX-VF added by franzferdinand', '2024-11-13 08:21:08.000000'),
+(111, 54221, 'New unit UD31-2295XN-UY added by franzferdinand', '2024-11-13 08:21:19.000000');
 
 -- --------------------------------------------------------
 
@@ -1299,7 +1123,6 @@ INSERT INTO `user` (`id`, `username`, `password_hash`, `status`, `superadmin`, `
 (1, 'superadmin', '$2y$13$bp2w2.mTeJ/ORRVlEjA.jOHw0o49vwAJ.A15RTPjnSyk05M.20ZyS', 1, 1, '0000-00-00 00:00:00.00', '0000-00-00 00:00:00.00', NULL, 'super@mail.com', 'OtBMG-3O_ULHaEMKmM_pZIPvia1k_js_', '', 1, ''),
 (4, 'appadmin', '$2y$13$.X94ue5lX8Yt10motmlym.HyhumhiBXBZ7leukSITV7e9sTgLjNrK', 1, 0, '2024-10-28 13:20:22.00', '0000-00-00 00:00:00.00', '::1', 'bogosbinted@mail.com', 'pUwr74uXpIAq5h1XQU-3y3PuplNbm2P8', '', 1, ''),
 (5, 'franzferdinand', '$2y$13$QEUqv2hQRuKQ2uFtNfXbcuPoiz2pyiZsn1kpv3RfboEQEdA8MZC9e', 1, 0, '2024-10-28 14:32:42.00', '0000-00-00 00:00:00.00', '::1', 'ferdinand@mail.com', 'LZN0hVpdM-xAb6SA0AEALIcxiVeCAS5H', '', 1, ''),
-(7, 'tumbalsekian', '$2y$13$rPtXOmHZqZ8Z1XSHkF/fvuhEi30Z45e2J6J.TqpVsq9UU.Y6Ozmoe', 1, 0, '2024-10-30 08:17:03.00', '2024-10-30 08:17:03.00', '::1', 'bogusmail@mail.com', 'IGsAN_oI96DsHjpzgo98gLc5hMd7dGJ4', '', 1, ''),
 (8, 'warehouse@mail.com', '$2y$13$XZ6TofHa8d5cAMutTqSMs.QzdqeRCGMeRs3ZfqoMQCWveNyOjdTs2', 1, 0, '2024-10-30 08:40:40.00', '0000-00-00 00:00:00.00', '::1', 'fred@mail.com', 'JGU2pLcVye5PBUUqBlGuB7h1M8c6gkrx', '', 1, ''),
 (9, 'bobtherepairman', '$2y$13$0FJ7ZV.5Th2sydV4mDEP2u81kx56ocrbVEFZomEzdjK6xPfRt0xGa', 1, 0, '0000-00-00 00:00:00.00', '0000-00-00 00:00:00.00', '::1', 'bobrepair@mail.com', 'MbIXLNVCI6OHZFAZgwzyyLXTeiaVd6At', '', 1, ''),
 (10, 'bogosbinted', '$2y$13$byH/Orep9xl5ZWDL1IMtH.1NRxOm2IK/s9vDxODkiEp7o2gJ9TuZ2', 1, 0, '0000-00-00 00:00:00.00', '0000-00-00 00:00:00.00', '::1', 'bogosbinted@alien.com', 'LMStQ2EH_AMPtTfWSbwc9Li493FfLSTY', '', 1, ''),
@@ -1362,7 +1185,32 @@ INSERT INTO `user_visit_log` (`id`, `token`, `ip`, `language`, `user_agent`, `us
 (31, '672d84ff293ca', '::1', 'en', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36 Edg/130.0.0.0', 10, 1731036415, 'Chrome', 'Windows'),
 (32, '672d850843ba3', '::1', 'en', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36 Edg/130.0.0.0', 5, 1731036424, 'Chrome', 'Windows'),
 (33, '672d86868f007', '::1', 'en', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36 Edg/130.0.0.0', 4, 1731036806, 'Chrome', 'Windows'),
-(34, '672d8742e61f7', '::1', 'en', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36 Edg/130.0.0.0', 5, 1731036994, 'Chrome', 'Windows');
+(34, '672d8742e61f7', '::1', 'en', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36 Edg/130.0.0.0', 5, 1731036994, 'Chrome', 'Windows'),
+(35, '672d8b9728c31', '::1', 'en', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36 Edg/131.0.0.0', 5, 1731038103, 'Chrome', 'Windows'),
+(36, '672d8ce8234f1', '::1', 'en', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36 Edg/131.0.0.0', 1, 1731038440, 'Chrome', 'Windows'),
+(37, '672d8dfce99b4', '::1', 'en', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0.0.0 Safari/537.36 Edg/130.0.0.0', 10, 1731038716, 'Chrome', 'Windows'),
+(38, '67315a5579f86', '::1', 'en', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36 Edg/131.0.0.0', 1, 1731287637, 'Chrome', 'Windows'),
+(39, '673161bb0d07e', '::1', 'en', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36 Edg/131.0.0.0', 10, 1731289531, 'Chrome', 'Windows'),
+(40, '673164f703a23', '::1', 'en', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36 Edg/131.0.0.0', 1, 1731290359, 'Chrome', 'Windows'),
+(41, '6731687eb8890', '::1', 'en', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36 Edg/131.0.0.0', 5, 1731291262, 'Chrome', 'Windows'),
+(42, '6731751f8a0aa', '::1', 'en', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36 Edg/131.0.0.0', 1, 1731294495, 'Chrome', 'Windows'),
+(43, '6731a3ad86b2c', '::1', 'en', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36 Edg/131.0.0.0', 10, 1731306413, 'Chrome', 'Windows'),
+(44, '6731aa3f0e91b', '::1', 'en', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36 Edg/131.0.0.0', 5, 1731308095, 'Chrome', 'Windows'),
+(45, '6732ab845e8c9', '::1', 'en', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36 Edg/131.0.0.0', 1, 1731373956, 'Chrome', 'Windows'),
+(46, '6732acf4ea9cd', '::1', 'en', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36 Edg/131.0.0.0', 10, 1731374324, 'Chrome', 'Windows'),
+(47, '6732afa4450ca', '::1', 'en', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36 Edg/131.0.0.0', 5, 1731375012, 'Chrome', 'Windows'),
+(48, '6732b0d9e8250', '::1', 'en', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36 Edg/131.0.0.0', 11, 1731375321, 'Chrome', 'Windows'),
+(49, '6732b0dab1ec6', '::1', 'en', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36 Edg/131.0.0.0', 11, 1731375322, 'Chrome', 'Windows'),
+(50, '6732b9632abe5', '::1', 'en', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36 Edg/131.0.0.0', 11, 1731377507, 'Chrome', 'Windows'),
+(51, '6732bb292fbbe', '::1', 'en', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36 Edg/131.0.0.0', 11, 1731377961, 'Chrome', 'Windows'),
+(52, '6732c64469c9b', '::1', 'en', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36 Edg/131.0.0.0', 1, 1731380804, 'Chrome', 'Windows'),
+(53, '6732d039c4535', '::1', 'en', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36 Edg/131.0.0.0', 1, 1731383353, 'Chrome', 'Windows'),
+(54, '6732d1633d2e9', '::1', 'en', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36 Edg/131.0.0.0', 1, 1731383651, 'Chrome', 'Windows'),
+(55, '6732f1799957b', '::1', 'en', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36 Edg/131.0.0.0', 5, 1731391865, 'Chrome', 'Windows'),
+(56, '6733fe076394c', '::1', 'en', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36 Edg/131.0.0.0', 1, 1731460615, 'Chrome', 'Windows'),
+(57, '6733fe136345e', '::1', 'en', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36 Edg/131.0.0.0', 5, 1731460627, 'Chrome', 'Windows'),
+(58, '67340022e2456', '::1', 'en', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36 Edg/131.0.0.0', 9, 1731461154, 'Chrome', 'Windows'),
+(59, '673400972f908', '::1', 'en', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36 Edg/131.0.0.0', 5, 1731461271, 'Chrome', 'Windows');
 
 -- --------------------------------------------------------
 
@@ -1381,13 +1229,14 @@ CREATE TABLE `warehouse` (
 --
 
 INSERT INTO `warehouse` (`id_wh`, `wh_name`, `wh_address`) VALUES
-(5, 'schlesierland', 'somewhere in schlesierland'),
-(6, 'Bavaria', 'somewhere in bavaria'),
-(7, 'Brandenburg', 'somewhere in brandenburg'),
-(8, 'Azores', 'somewhere in azores in the middle of atlantic ocean'),
-(9, 'Samoa', 'somewhere in samoa'),
-(10, 'Hugh Mongus Warehouse', 'for testing. adding units in massive bulk'),
-(11, 'His Highness, His Excellency\'s Royal Storage 1', 'somewhere in a city');
+(5, 'JOG Condongcatur', 'Jl Gk tau, Condongcatur, Sleman'),
+(6, 'Semarang Office', 'somewhere in semarang'),
+(7, 'JKT Headquarter', 'somewhere in Jaksel'),
+(8, 'Wonosobo Office Wh', 'somewhere in wonosobo'),
+(9, 'PWT Office Wh', 'somewhere in pwt'),
+(10, 'CLP Office Wh', 'somewhere in CLP'),
+(11, 'SRBY Office Wh', 'somewhere in surabaya'),
+(13, 'BDG Office Wh', 'somewhere in a bandung');
 
 --
 -- Indexes for dumped tables
@@ -1534,31 +1383,31 @@ ALTER TABLE `condition_lookup`
 -- AUTO_INCREMENT for table `doc_uploaded`
 --
 ALTER TABLE `doc_uploaded`
-  MODIFY `id_doc` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_doc` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `employee`
 --
 ALTER TABLE `employee`
-  MODIFY `id_employee` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id_employee` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `item`
 --
 ALTER TABLE `item`
-  MODIFY `id_item` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
+  MODIFY `id_item` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 
 --
 -- AUTO_INCREMENT for table `item_unit`
 --
 ALTER TABLE `item_unit`
-  MODIFY `id_unit` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=54217;
+  MODIFY `id_unit` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=54270;
 
 --
 -- AUTO_INCREMENT for table `lending`
 --
 ALTER TABLE `lending`
-  MODIFY `id_lending` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=53;
+  MODIFY `id_lending` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=59;
 
 --
 -- AUTO_INCREMENT for table `lending_type_lookup`
@@ -1576,7 +1425,7 @@ ALTER TABLE `status_lookup`
 -- AUTO_INCREMENT for table `unit_log`
 --
 ALTER TABLE `unit_log`
-  MODIFY `id_log` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=86;
+  MODIFY `id_log` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=112;
 
 --
 -- AUTO_INCREMENT for table `user`
@@ -1588,13 +1437,13 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `user_visit_log`
 --
 ALTER TABLE `user_visit_log`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=60;
 
 --
 -- AUTO_INCREMENT for table `warehouse`
 --
 ALTER TABLE `warehouse`
-  MODIFY `id_wh` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id_wh` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- Constraints for dumped tables
