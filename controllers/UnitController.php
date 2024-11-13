@@ -22,6 +22,8 @@ use app\models\UploadForm;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use yii\web\UploadedFile;
 use app\models\DocUploaded;
+use app\models\StatusLookup;
+use app\models\ConditionLookup;
 
 /**
  * UnitController implements the CRUD actions for ItemUnit model.
@@ -103,6 +105,10 @@ class UnitController extends Controller
    
        // Initialize search model
        $searchModel = new DamagedSearch();
+
+       $statusList = StatusLookup::getStatusList();
+       $conditionList = ConditionLookup::getConditionList();
+       $warehouseList = Warehouse::getWarehouseList();
    
        // Filter the data based on search input
        $dataProvider = $searchModel->search(\Yii::$app->request->queryParams, $damagedlist);
@@ -110,6 +116,9 @@ class UnitController extends Controller
        return $this->render('damaged', [
            'searchModel' => $searchModel,
            'dataProvider' => $dataProvider,
+           'statusList' => $statusList,
+           'conditionList' => $conditionList,
+           'warehouseList' => $warehouseList,
        ]);
    }
    
@@ -119,10 +128,18 @@ class UnitController extends Controller
         
         // Load the query parameters and filter accordingly
         $dataProvider = $searchModel->searchRepair(Yii::$app->request->queryParams);
+
+        $statusList = StatusLookup::getStatusList();
+        $conditionList = ConditionLookup::getConditionList();
+        $warehouseList = Warehouse::getWarehouseList();
+
     
         return $this->render('repair', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'statusList' => $statusList,
+            'conditionList' => $conditionList,
+            'warehouseList' => $warehouseList,
         ]);
     }
 

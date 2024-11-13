@@ -7,6 +7,7 @@ use yii\helpers\Url;
 use yii\grid\ActionColumn;
 use yii\grid\GridView;
 use yii\widgets\ActiveForm;
+use kartik\select2\Select2;
 
 /** @var yii\web\View $this */
 /** @var app\models\LogSearch $searchModel */
@@ -35,9 +36,31 @@ $this->params['breadcrumbs'][] = $this->title;
     'filterModel' => $searchModel,
     'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
-            'condition',
+            [
+                'attribute' => 'condition',
+                'filter' => Select2::widget([
+                    'model' => $searchModel,
+                    'attribute' => 'condition',
+                    'data' => $conditionList, 
+                    'options' => ['placeholder' => 'Select Unit Condition'],
+                    'pluginOptions' => [
+                        'allowClear' => true,
+                    ],
+                ]),
+            ],
             'serial_number',
-            'status',
+            [
+                'attribute' => 'status',
+                'filter' => Select2::widget([
+                    'model' => $searchModel,
+                    'attribute' => 'status',
+                    'data' => $statusList, 
+                    'options' => ['placeholder' => 'Select Status'],
+                    'pluginOptions' => [
+                        'allowClear' => true,
+                    ],
+                ]),
+            ],
             'updated_by',
             'comment',
             [
