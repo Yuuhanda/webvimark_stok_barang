@@ -32,7 +32,11 @@ $this->params['breadcrumbs'][] = $this->title;
             
             'item_name',
             'SKU',
-            'available',
+            [
+                'attribute' => 'available',
+                'contentOptions' => ['style' => 'width: 80px; text-align: right;'], // Adjust width as needed
+                'filter' => false, // Disable filter for this column
+            ],
             
             // Custom action buttons
             [
