@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 13, 2024 at 02:43 AM
+-- Generation Time: Nov 13, 2024 at 03:07 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -662,7 +662,10 @@ INSERT INTO `doc_uploaded` (`id_doc`, `file_name`, `datetime`, `user_id`) VALUES
 (5, 'bulk_unit904_1731460975.xlsx', '2024-11-13 08:22:55.00', 5),
 (6, 'bulk_unit264_1731460985.xlsx', '2024-11-13 08:23:05.00', 5),
 (7, 'bulk_unit839_1731461003.xlsx', '2024-11-13 08:23:23.00', 5),
-(8, 'bulk_unit554_1731461012.xlsx', '2024-11-13 08:23:32.00', 5);
+(8, 'bulk_unit554_1731461012.xlsx', '2024-11-13 08:23:32.00', 5),
+(9, 'bulk_unit239_1731462562.xlsx', '2024-11-13 08:49:23.00', 1),
+(10, 'bulk_unit658_1731462574.xlsx', '2024-11-13 08:49:34.00', 1),
+(11, 'bulk_unit375_1731462584.xlsx', '2024-11-13 08:49:44.00', 1);
 
 -- --------------------------------------------------------
 
@@ -866,7 +869,31 @@ INSERT INTO `item_unit` (`id_unit`, `id_item`, `status`, `id_wh`, `comment`, `se
 (54266, 16, 1, 9, 'test', 'UGSI-8200TC-UN', 1, 5),
 (54267, 16, 1, 10, 'test', 'UGSI-4665OJ-EU', 1, 5),
 (54268, 16, 1, 11, 'test', 'UGSI-8632EA-RL', 1, 5),
-(54269, 16, 1, 13, 'test', 'UGSI-4969KT-HK', 1, 5);
+(54269, 16, 1, 13, 'test', 'UGSI-4969KT-HK', 1, 5),
+(54270, 12, 1, 5, 'test', 'OJWL-7989IY-HU', 1, 1),
+(54271, 12, 1, 6, 'test', 'OJWL-5470WJ-CG', 1, 1),
+(54272, 12, 1, 7, 'test', 'OJWL-8753DP-WY', 1, 1),
+(54273, 12, 1, 8, 'test', 'OJWL-8515JX-UA', 1, 1),
+(54274, 12, 1, 9, 'test', 'OJWL-9424ZL-YF', 1, 1),
+(54275, 12, 1, 10, 'test', 'OJWL-5845MT-YT', 1, 1),
+(54276, 12, 1, 11, 'test', 'OJWL-2147TY-ES', 1, 1),
+(54277, 12, 1, 13, 'test', 'OJWL-1291FP-XS', 1, 1),
+(54278, 13, 1, 5, 'test', 'BNKH-3552UP-MF', 1, 1),
+(54279, 13, 1, 6, 'test', 'BNKH-5747BQ-ZN', 1, 1),
+(54280, 13, 1, 7, 'test', 'BNKH-2040HN-PN', 1, 1),
+(54281, 13, 1, 8, 'test', 'BNKH-6102NJ-AK', 1, 1),
+(54282, 13, 1, 9, 'test', 'BNKH-6726KV-TH', 1, 1),
+(54283, 13, 1, 10, 'test', 'BNKH-9718LO-CR', 1, 1),
+(54284, 13, 1, 11, 'test', 'BNKH-5182SN-PQ', 1, 1),
+(54285, 13, 1, 13, 'test', 'BNKH-0528TR-OM', 1, 1),
+(54286, 15, 1, 5, 'test', 'OTLP-9395UE-XV', 1, 1),
+(54287, 15, 1, 6, 'test', 'OTLP-4912SZ-IQ', 1, 1),
+(54288, 15, 1, 7, 'test', 'OTLP-2136XV-LM', 1, 1),
+(54289, 15, 1, 8, 'test', 'OTLP-8406II-PM', 1, 1),
+(54290, 15, 1, 9, 'test', 'OTLP-3077KG-YN', 1, 1),
+(54291, 15, 1, 10, 'test', 'OTLP-6327FY-DG', 1, 1),
+(54292, 15, 1, 11, 'test', 'OTLP-2460VW-BH', 1, 1),
+(54293, 15, 1, 13, 'test', 'OTLP-6074SC-IH', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -1383,7 +1410,7 @@ ALTER TABLE `condition_lookup`
 -- AUTO_INCREMENT for table `doc_uploaded`
 --
 ALTER TABLE `doc_uploaded`
-  MODIFY `id_doc` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id_doc` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `employee`
@@ -1401,7 +1428,7 @@ ALTER TABLE `item`
 -- AUTO_INCREMENT for table `item_unit`
 --
 ALTER TABLE `item_unit`
-  MODIFY `id_unit` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=54270;
+  MODIFY `id_unit` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=54294;
 
 --
 -- AUTO_INCREMENT for table `lending`
