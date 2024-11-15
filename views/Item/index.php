@@ -32,6 +32,7 @@ $this->params['breadcrumbs'][] = $this->title;
             
             'item_name',
             'SKU',
+            'category',
             [
                 'attribute' => 'available',
                 'contentOptions' => ['style' => 'width: 80px; text-align: right;'], // Adjust width as needed
@@ -52,7 +53,6 @@ $this->params['breadcrumbs'][] = $this->title;
                 'contentOptions' => ['style' => 'width: 80px; text-align: right;'], // Adjust width as needed
                 'filter' => false, // Disable filter for this column
             ],
-            
             [
                 'class' => 'yii\grid\ActionColumn',
                 'template' => '{viewImage} {whdist} {detail} {edit}',

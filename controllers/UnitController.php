@@ -171,7 +171,7 @@ class UnitController extends Controller
                     }
                     if ($item !== null && !empty($item->SKU)) {
                         // Get the first 3 characters of the SKU
-                        $skuPrefix = substr($item->SKU, 0, 4);
+                        $skuPrefix = $item->SKU;
                         
                         // Combine the SKU prefix and the random number to create the serial number
                         $model->serial_number = $row['B'] ?? $this->generateUniqueSerialNumber($skuPrefix);
@@ -610,13 +610,25 @@ class UnitController extends Controller
 
     protected function generateUniqueSerialNumber($skuPrefix)
     {
-        do {
-            $randomStr = strtoupper(substr(preg_replace('/[^A-Z]/', '', Yii::$app->security->generateRandomString()), 0, 2));
-            $randomStr2 = strtoupper(substr(preg_replace('/[^A-Z]/', '', Yii::$app->security->generateRandomString()), 0, 2));
-            $serialNumber = $skuPrefix . '-' . random_int(0, 9). random_int(0, 9). random_int(0, 9). random_int(0, 9). $randomStr.'-'.$randomStr2;
-        } while (ItemUnit::find()->where(['serial_number' => $serialNumber])->exists());
-
-        return $serialNumber;
+        // Find the maximum current number with the same prefix
+        $latestSerial = ItemUnit::find()
+            ->select(['serial_number'])
+            ->where(['like', 'serial_number', "{$skuPrefix}-%", false])
+            ->orderBy(['serial_number' => SORT_DESC])
+            ->one();
+        
+        if ($latestSerial) {
+            // Extract the numeric part and increment it by 1
+            $currentNumber = (int) substr($latestSerial->serial_number, -4);
+            $newNumber = str_pad($currentNumber + 1, 4, '0', STR_PAD_LEFT);
+        } else {
+            // Start with 0001 if no previous serial number exists
+            $newNumber = '0001';
+        }
+    
+        // Construct the new serial number
+        return $skuPrefix . '-' . $newNumber;
     }
+    
     
 }

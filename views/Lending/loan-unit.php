@@ -1,5 +1,6 @@
 <?php
 
+use Codeception\Step\Action;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use yii\helpers\ArrayHelper;
@@ -12,16 +13,24 @@ use kartik\select2\Select2;
 /** @var array $avalunit */
 $this->title = 'Loan A Unit';
 $this->params['breadcrumbs'][] = $this->title;
+//['action' => ['lending/create']]
 ?>
 
 <div class="loan-unit">
 <h1><?= Html::encode($this->title) ?></h1>
-    <?php $form = ActiveForm::begin(['action' => ['lending/create']]); ?>
+    <?php $form = ActiveForm::begin([
+    'options' => [
+        'enctype' => 'multipart/form-data' // required for file uploads
+    ],
+    'enableClientValidation' => true,
+    'enableAjaxValidation' => false, // Set to true if you need AJAX validation
+]); ?>
 
 
     
     <!-- Dropdown for available units -->
-    <?= $form->field($model, 'id_unit')->widget(Select2::class, [
+    <?= $form->field($model, 'id_unit', [
+    'labelOptions' => ['label' => 'Select Unit']])->widget(Select2::class, [
         'data' => ArrayHelper::map($avalunit, 'id_unit', function($unit) {
             return $unit['serial_number'] . ' (' . $unit['condition_name'] . ')';
         }),
@@ -47,6 +56,10 @@ $this->params['breadcrumbs'][] = $this->title;
         ],
     ])->label('Employee') ?>
 
+    <!-- Image Upload Field -->
+    <?= $form->field($uploadModel, 'imageFile')->fileInput()->label('Picture')->error() ?>
+
+    
     <div class="form-group">
         <?= Html::submitButton('Submit', ['class' => 'btn btn-primary']) ?>
     </div>

@@ -37,13 +37,15 @@ class Lending extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id_unit', 'user_id', 'id_employee', 'type', 'date'], 'required'],
+            [['id_unit', 'user_id', 'id_employee', 'type', 'date', 'pic_loan', 'pic_return'], 'required'],
             [['id_unit', 'user_id', 'id_employee', 'type'], 'integer'],
             [['date'], 'safe'],
             [['id_unit'], 'exist', 'skipOnError' => true, 'targetClass' => ItemUnit::class, 'targetAttribute' => ['id_unit' => 'id_unit']],
             [['type'], 'exist', 'skipOnError' => true, 'targetClass' => LendingTypeLookup::class, 'targetAttribute' => ['type' => 'id_type']],
             [['id_employee'], 'exist', 'skipOnError' => true, 'targetClass' => Employee::class, 'targetAttribute' => ['id_employee' => 'id_employee']],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::class, 'targetAttribute' => ['user_id' => 'id']],
+            ['pic_loan', 'string', 'max' => 255],
+            ['pic_return', 'string', 'max' => 255],
         ];
     }
 

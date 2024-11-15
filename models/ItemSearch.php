@@ -15,6 +15,7 @@ class ItemSearch extends Model
     public $lost;
     public $id_item;
     public $imagefile;
+    public $category; 
 
     /**
      * Rules for validation (optional, add any specific rules if necessary)
@@ -22,7 +23,7 @@ class ItemSearch extends Model
     public function rules()
     {
         return [
-            [['item_name', 'SKU', 'imagefile'], 'safe'],
+            [['item_name', 'SKU', 'imagefile', 'category'], 'safe'],
             [['available', 'in_use', 'in_repair', 'lost', 'id_item'], 'integer'],
         ];
     }
@@ -37,6 +38,7 @@ class ItemSearch extends Model
             ->select([
                 'item_name' => 'item.item_name',
                 'SKU' => 'item.SKU',
+                'category' => 'item_category.category_name',
                 'available' => 'COUNT(CASE WHEN TRIM(item_unit.status) = "1" AND item_unit.condition != 4 AND item_unit.condition != 5 THEN 1 END)',
                 'in_use' => 'COUNT(CASE WHEN TRIM(item_unit.status) = "2" THEN 1 END)',
                 'in_repair' => 'COUNT(CASE WHEN TRIM(item_unit.status) = "3" THEN 1 END)',
@@ -46,6 +48,7 @@ class ItemSearch extends Model
             ])
             ->from('item')
             ->leftJoin('item_unit', 'item.id_item = item_unit.id_item')
+            ->leftJoin('item_category', 'item.id_category = item_category.id_category')
             ->groupBy('item.id_item');
 
         // Load the search parameters
@@ -59,8 +62,8 @@ class ItemSearch extends Model
 
         // Add conditions based on filters (optional)
         $query->andFilterWhere(['like', 'item.item_name', $this->item_name])
-              ->andFilterWhere(['like', 'item.SKU', $this->SKU]);
-
+              ->andFilterWhere(['like', 'item.SKU', $this->SKU])
+              ->andFilterHaving(['like', 'category', $this->category]);
         // Execute the query and return an ArrayDataProvider
         $command = $query->createCommand();
         $results = $command->queryAll();

@@ -79,6 +79,7 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
                             'template' => '<a href="#" class="nav-link">{label}</a>',
                             'items' => [
                                 ['label' => 'Master Inventory', 'url' => ['/item/index'], 'options' => ['class' => 'nav-item']], //dropdown item
+                                ['label' => 'Item Category', 'url' => ['/category/index'], 'options' => ['class' => 'nav-item']], //dropdown item
                                 ['label' => 'Manage Unit', 'url' => ['/unit/index'], 'options' => ['class' => 'nav-item']], //dropdown item
                                 ['label' => 'Bulk Upload History', 'url' => ['/docs/index'], 'options' => ['class' => 'nav-item']], //dropdown item
                                 ['label' => 'Unit Usage Log', 'url' => ['/log/index'], 'options' => ['class' => 'nav-item']], //dropdown item
