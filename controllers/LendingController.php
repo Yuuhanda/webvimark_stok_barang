@@ -9,6 +9,7 @@ use app\models\User;
 use app\models\Lending;
 use app\models\LendingSearch;
 use app\models\UnitSearch;
+use app\models\UploadPicture;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -16,6 +17,7 @@ use yii\data\ArrayDataProvider;
 use Yii;
 use app\models\Warehouse;
 use yii\filters\AccessControl;
+use yii\web\UploadedFile;
 
 /**
  * LendingController implements the CRUD actions for Lending model.
@@ -59,20 +61,58 @@ class LendingController extends Controller
         //$user = new \app\models\User();
         $unitmodel = new \app\models\ItemUnit();
         $avalunit = $unitmodel->getAvailableUnit($id_item);
+        $uploadModel = new UploadPicture();
 
         $model->type = 1;
         
         $emplist = \yii\helpers\ArrayHelper::map($employee, 'id_employee', 'emp_name');
 
-        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
-            // Save the model here or handle it as needed
-            return;
+        if ($model->load(Yii::$app->request->post()) && $model->validate() && $uploadModel->load(Yii::$app->request->post()) && $uploadModel->validate()) {
+            $uploadModel->imageFile = UploadedFile::getInstance($uploadModel, 'imageFile');
+            Yii::debug($uploadModel->imageFile, __METHOD__); // Check if pic_loan is received correctly
+
+            if ($uploadModel->imageFile) {
+                $imageFileName = $uploadModel->uploadLoan();
+                if ($imageFileName) {
+                    $model->pic_loan = $imageFileName;
+                }
+            } else {
+                Yii::$app->session->setFlash('error', 'Please upload a picture.');
+                return $this->refresh(); // Reload the form to show the error
+            }
+
+            if ($this->request->isPost) {
+                $model->date = date('Y-m-d');
+                $user = Yii::$app->user->identity;
+                $model->user_id = $user->id;
+        
+                // Update the item_unit status where id_unit matches the one in the Lending model
+                $itemUnit = ItemUnit::findOne($model->id_unit);
+                if ($itemUnit !== null) {
+                    $itemUnit->updated_by =  Yii::$app->user->identity->id;
+                    $itemUnit->status = 2; // Update the status
+                    $itemUnit->save();
+                }
+        
+                if ($model->save()) {
+                    $logController = new LogController('log', Yii::$app);
+                    $logController->actionLendingLog($model->id_unit, $model->id_employee);
+                    Yii::$app->session->setFlash('success', 'Unit '. $itemUnit->serial_number .' loaned.');
+                    return $this->redirect(['index']);
+                } else {
+                    Yii::error($model->errors); // Log errors if save fails
+                    Yii::error($model->errors, __METHOD__);
+                    Yii::$app->session->setFlash('error', 'Failed to save the loan unit.');
+                }
+            }
         }
+        
 
         return $this->render('loan-unit', [
             'model' => $model,
             'avalunit' => $avalunit,
             'emplist' => $emplist,
+            'uploadModel' => $uploadModel, 
         ]);
     }
 
@@ -110,12 +150,13 @@ class LendingController extends Controller
     public function actionCreate()
     {
         $model = new Lending();
+        $uploadModel = new UploadPicture();
     
         if ($this->request->isPost) {
             $model->date = date('Y-m-d');
             $user = Yii::$app->user->identity;
             $model->user_id = $user->id;
-            if ($model->load($this->request->post()) && $model->save()) {
+            if ($model->load($this->request->post())) {
                 // Update the item_unit status where id_unit matches the one in the Lending model
                 $itemUnit = ItemUnit::findOne($model->id_unit); // Assuming you have id_unit in the Lending model
                 if ($itemUnit !== null) {
@@ -124,6 +165,14 @@ class LendingController extends Controller
                     $itemUnit->status = 2; // Update the status
                     $itemUnit->save(); // Save the changes
                 }
+                // Save the uploaded image
+                if ($uploadModel->pic_loan && $uploadModel->validate()) {
+                    $imageFileName = $uploadModel->uploadLoan();
+                    if ($imageFileName) {
+                        $model->pic_loan = $imageFileName; // assuming `image` is a field in Item table
+                    }
+                }
+                $model->save();
                 $logController = new LogController('log', Yii::$app); // Pass the required parameters to the controller
                 $logController->actionLendingLog($model->id_unit, $model->id_employee); // Call with correct parameters
                 Yii::$app->session->setFlash('success', 'Unit'. $itemUnit->serial_number .'loaned.');
@@ -132,9 +181,10 @@ class LendingController extends Controller
         } else {
             $model->loadDefaultValues();
         }
-    
-        return $this->render('create', [
+
+        return $this->render('loan-unit', [
             'model' => $model,
+            'uploadModel' => $uploadModel, 
         ]);
     }
     

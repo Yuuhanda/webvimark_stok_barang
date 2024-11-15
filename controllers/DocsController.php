@@ -153,4 +153,25 @@ class DocsController extends Controller
             'fileName' => $file_name,
         ]);
     }
+
+    public function actionAutoDeleteOldDocs()
+    {
+        $path = Yii::getAlias('@web/document');
+        $files = glob($path . '/*'); // Fetch all files in the directory
+
+        foreach ($files as $file) {
+            if (is_file($file)) {
+                $fileAge = time() - filemtime($file); // Calculate file age
+                $oneYear = 365 * 24 * 60 * 60; // One year in seconds
+
+                if ($fileAge > $oneYear) {
+                    unlink($file); // Delete file if it's older than a year
+                }
+            }
+        }
+
+        Yii::$app->session->setFlash('success', 'Old documents have been deleted.');
+        return $this->redirect(['index']);
+    }
+
 }

@@ -15,7 +15,8 @@ $this->params['breadcrumbs'][] = $this->title;
     
     <?= $this->render('_form', [
         'model' => $model,
-        'uploadModel' => $uploadModel, // Pass the $uploadModel here
+        'uploadModel' => $uploadModel, 
+        'category' => $category, 
     ]) ?>
 
 

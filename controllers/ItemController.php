@@ -19,6 +19,7 @@ use app\models\User;
 use app\models\Employee;
 use app\models\Warehouse;
 use app\models\ConditionLookup;
+use app\models\ItemCategory;
 use app\models\StatusLookup;
 /**
  * ItemController implements the CRUD actions for Item model.
@@ -123,51 +124,77 @@ class ItemController extends Controller
     {
         $model = new Item();
         $uploadModel = new UploadPicture();
-
+        $category = ItemCategory::getCategoryList(); // Should return `id_category`, `category_name`, and `cat_code`
+    
         if (Yii::$app->request->isPost) {
             $model->load(Yii::$app->request->post());
             $uploadModel->imageFile = UploadedFile::getInstance($uploadModel, 'imageFile');
-
+    
             // Generate SKU if empty
             if (empty($model->SKU)) {
-                $model->SKU = $this->generateSKU();
+                $id_cat = $model->id_category;
+                $cat_code = ItemCategory::find()
+                    ->select(['cat_code'])
+                    ->where(['id_category' => $id_cat])
+                    ->scalar(); // scalar() will directly return the 'cat_code' value
+                $model->SKU = $this->generateSKU($cat_code);
             }
-
+    
             // Save the uploaded image
             if ($uploadModel->imageFile && $uploadModel->validate()) {
                 $imageFileName = $uploadModel->upload();
                 if ($imageFileName) {
-                    $model->imagefile = $imageFileName; // assuming `image` is a field in Item table
+                    $model->imagefile = $imageFileName;
                 }
             }
-
+    
             if ($model->save()) {
-                Yii::$app->session->setFlash('success', 'Item Added successfully.');
+                Yii::$app->session->setFlash('success', 'Item added successfully.');
                 return $this->redirect(['index']);
             }
         }
-
+    
         return $this->render('create', [
             'model' => $model,
             'uploadModel' => $uploadModel,
+            'category' => $category,
         ]);
     }
+    
 
     
     public function actionPicUpload(){
         //code here
     }
 
-    protected function generateSKU(){
-        do {
-            $randomStr = strtoupper(substr(preg_replace('/[^A-Z]/', '', Yii::$app->security->generateRandomString()), 0, 2));
-            $randomStr2 = strtoupper(substr(preg_replace('/[^A-Z]/', '', Yii::$app->security->generateRandomString()), 0, 2));
-            $autosku = $randomStr . random_int(0, 9) . random_int(0, 9) .'-' .  random_int(0, 9) . random_int(0, 9). $randomStr2;
-        } while (Item::find()->where(['SKU' => $autosku])->exists());
-
+    protected function generateSKU($cat_code) {
+        // Get the current year and calculate the corresponding alphabet letter
+        $currentYear = (int) date('Y');
+        $startYear = 2024; // Define the start year where 'A' represents 2024
+        $yearOffset = $currentYear - $startYear;
+    
+        // Ensure the offset is within 0 to 25 (A-Z), cycling back if exceeding 'Z'
+        $letter = chr(65 + ($yearOffset % 26)); // 65 is ASCII for 'A'
+    
+        // Get the last generated SKU for the category and increment it for a new serialized number
+        $lastSKU = Item::find()->where(['LIKE', 'SKU', $cat_code . $letter])->orderBy(['SKU' => SORT_DESC])->one();
+        $lastSerial = 1; // Default if no prior SKU exists for this category/year
+    
+        if ($lastSKU !== null) {
+            $lastSerial = (int) substr($lastSKU->SKU, -4) + 1;
+        }
+    
+        // Ensure 4-digit format with leading zeros
+        $serialStr = str_pad($lastSerial, 4, '0', STR_PAD_LEFT);
+    
+        // Combine parts to create the SKU
+        $autosku = $cat_code . $letter . '-' . $serialStr;
+    
         return $autosku;
     }
-
+    
+    
+    
 
     /**
      * Updates an existing Item model.
@@ -180,13 +207,21 @@ class ItemController extends Controller
     {
         $model = $this->findModel($id_item);
         $uploadModel = new UploadPicture();
+        $category = ItemCategory::getCategoryList(); // Should return `id_category`, `category_name`, and `cat_code`
+
         if ($this->request->isPost && $model->load($this->request->post())) {
             $model->load(Yii::$app->request->post());
             $uploadModel->imageFile = UploadedFile::getInstance($uploadModel, 'imageFile');
+            
 
             // Generate SKU if empty
             if (empty($model->SKU)) {
-                $model->SKU = $this->generateSKU();
+                $id_cat = $model->id_category;
+                $cat_code = ItemCategory::find()
+                    ->select(['cat_code'])
+                    ->where(['id_category' => $id_cat])
+                    ->scalar(); // scalar() will directly return the 'cat_code' value
+                $model->SKU = $this->generateSKU($cat_code);
             }
 
             // Save the uploaded image
@@ -204,6 +239,7 @@ class ItemController extends Controller
         return $this->render('update', [
             'model' => $model,
             'uploadModel' => $uploadModel,
+            'category' => $category,
         ]);
     }
 
