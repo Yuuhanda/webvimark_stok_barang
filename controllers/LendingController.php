@@ -153,8 +153,31 @@ class LendingController extends Controller
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
-        
+
     }
+
+    public function actionViewImage($id)
+    {
+        $model = $this->findModel($id);
+
+        if ($model->pic_loan) {
+            return $this->renderAjax('view-image', ['model' => $model]);
+        } else {
+            return "Image not available.";
+        }
+    }
+
+    public function actionReturnImage($id)
+    {
+        $model = $this->findModel($id);
+
+        if ($model->pic_return) {
+            return $this->renderAjax('return-image', ['model' => $model]);
+        } else {
+            return "Image not available.";
+        }
+    }
+
     /**
      * Displays a single Lending model.
      * @param int $id_lending Id Lending

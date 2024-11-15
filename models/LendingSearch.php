@@ -49,6 +49,7 @@ class LendingSearch extends Model
                 'date' => 'lending.date',
                 'id_unit' => 'lending.id_unit',
                 'id_lending' => 'lending.id_lending',
+                'pic_loan' => 'lending.pic_loan',
             ])
             ->from('lending')
             ->leftJoin('employee', 'employee.id_employee = lending.id_employee')
@@ -212,6 +213,8 @@ class LendingSearch extends Model
                 'id_unit' => 'lending.id_unit',
                 'id_item' => 'item_unit.id_item',
                 'id_lending' => 'lending.id_lending',
+                'pic_loan' => 'lending.pic_loan',
+                'pic_return' => 'lending.pic_return',
                 new \yii\db\Expression("CASE 
                     WHEN lending.type = 1 THEN 'in_use' 
                     ELSE 'returned'
