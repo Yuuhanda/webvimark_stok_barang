@@ -25,6 +25,9 @@ $this->params['breadcrumbs'][] = $this->title;
 
         <?= $form->field($model, 'comment') ?>
         <?= $form->field($model, 'serial_number')->hiddenInput()->label(false) ?>
+
+        <!-- Image Upload Field -->
+        <?= $form->field($uploadModel, 'imageFile')->fileInput()->label('Unit Picture') ?>
     
         <div class="form-group">
             <?= Html::submitButton('Return Unit To Warehouse', ['class' => 'btn btn-primary']) ?>

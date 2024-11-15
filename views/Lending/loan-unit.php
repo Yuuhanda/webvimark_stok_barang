@@ -10,6 +10,7 @@ use kartik\select2\Select2;
 /** @var app\models\Lending $model */
 /** @var ActiveForm $form */
 /** @var array $emplist */
+/** @var app\models\UploadPicture $uploadModel */
 /** @var array $avalunit */
 $this->title = 'Loan A Unit';
 $this->params['breadcrumbs'][] = $this->title;
@@ -24,6 +25,7 @@ $this->params['breadcrumbs'][] = $this->title;
     ],
     'enableClientValidation' => true,
     'enableAjaxValidation' => false, // Set to true if you need AJAX validation
+    'method' => 'post',
 ]); ?>
 
 
@@ -42,6 +44,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'allowClear' => true,
         ],
         'bsVersion' => '5', // Set Bootstrap version to 5
+       
     ]);  ?>
 
     <!-- Hidden field for type -->
@@ -57,11 +60,13 @@ $this->params['breadcrumbs'][] = $this->title;
     ])->label('Employee') ?>
 
     <!-- Image Upload Field -->
-    <?= $form->field($uploadModel, 'imageFile')->fileInput()->label('Picture')->error() ?>
+    <?= $form->field($uploadModel, 'imageFile')->fileInput()->label('Unit Picture') ?>
+
+
 
     
     <div class="form-group">
-        <?= Html::submitButton('Submit', ['class' => 'btn btn-primary']) ?>
+        <?= Html::submitButton('Save', ['class' => 'btn btn-primary']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

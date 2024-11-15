@@ -4,6 +4,7 @@ namespace app\models;
 use yii\base\Model;
 use yii\web\UploadedFile;
 use yii\helpers\Url;
+use Yii;
 
 class UploadPicture extends Model
 {
@@ -17,6 +18,7 @@ class UploadPicture extends Model
     {
         return [
             [['imageFile'], 'file', 'skipOnEmpty' => false, 'extensions' => 'png, jpg, jpeg, webp, gif', 'maxSize' => 50485760], // Limit to 1MB
+            [['imageFile'], 'required'],
         ];
     }
 
@@ -44,7 +46,7 @@ class UploadPicture extends Model
     {
         if ($this->validate()) {
             // Generate a random file name with 3 digits and a timestamp
-            $fileName = random_int(100, 999) . '_' . time() . '.' . $this->pic_loan->extension;
+            $fileName = random_int(100, 999) . '_' . time() . '.' . $this->imageFile->extension;
             $filePath = $this->uploadPath() . '/' . $fileName;
 
             // Save the uploaded file to the specified path
@@ -54,4 +56,18 @@ class UploadPicture extends Model
         }
         return false;
     }
+
+    //public function uploadLoan()
+    //{
+    //    if ($this->validate()) {
+    //        $fileName = uniqid() . '.' . $this->imageFile->extension;
+    //        $filePath = Yii::getAlias('@webroot/uploads/') . $fileName;
+    //    
+    //        if ($this->imageFile->saveAs($filePath)) {
+    //            return $fileName;
+    //        }
+    //    }
+    //    return false;
+    //}
+    //
 }
