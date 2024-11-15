@@ -58,63 +58,89 @@ class LendingController extends Controller
     {
         $model = new \app\models\Lending();
         $employee = \app\models\Employee::find()->all();
-        //$user = new \app\models\User();
         $unitmodel = new \app\models\ItemUnit();
         $avalunit = $unitmodel->getAvailableUnit($id_item);
         $uploadModel = new UploadPicture();
-
+    
         $model->type = 1;
-        
+    
         $emplist = \yii\helpers\ArrayHelper::map($employee, 'id_employee', 'emp_name');
+        // Set other attributes and save the model
+        $model->date = date('Y-m-d');
+        $model->user_id = Yii::$app->user->identity->id;
+    
 
-        if ($model->load(Yii::$app->request->post()) && $model->validate() && $uploadModel->load(Yii::$app->request->post()) && $uploadModel->validate()) {
-            $uploadModel->imageFile = UploadedFile::getInstance($uploadModel, 'imageFile');
-            Yii::debug($uploadModel->imageFile, __METHOD__); // Check if pic_loan is received correctly
+        if (Yii::$app->request->isPost ){
+            if($model->load(Yii::$app->request->post()) &&  $model->validate()){
+                $uploadModel->imageFile = UploadedFile::getInstance($uploadModel, 'imageFile');
 
-            if ($uploadModel->imageFile) {
-                $imageFileName = $uploadModel->uploadLoan();
-                if ($imageFileName) {
-                    $model->pic_loan = $imageFileName;
+                Yii::debug($uploadModel->imageFile, 'Uploaded File Details');
+            
+                if ($uploadModel->imageFile && $uploadModel->validate()) {
+                    if ($uploadModel->imageFile) {
+                        $imageFileName = $uploadModel->upload();
+                        if ($imageFileName) {
+                            $model->pic_loan = $imageFileName;
+                        }
+                        Yii::debug('Uploaded file name: ' . $uploadModel->imageFile->name, __METHOD__);
+                    } else {
+                        Yii::error('No file uploaded.', __METHOD__);
+                        Yii::$app->session->setFlash('error', 'Please upload a picture.');
+                        return $this->redirect(['loan-unit', 'id_item' => $id_item]); // Redirect back
+                    }
+                    
+                } else {
+                    Yii::error("Upload model validation failed", __METHOD__);
+                    if (!$uploadModel->validate()) {
+                        Yii::error('Upload model validation failed: ' . json_encode($uploadModel->errors), __METHOD__);
+                        var_dump($uploadModel->errors); // This will show validation error details on-screen
+                        die();
+                    }// Dump errors to check on screen
+                    Yii::$app->session->setFlash('error', 'Picture validation failed.');
+                    return $this->redirect(['index']);
                 }
-            } else {
-                Yii::$app->session->setFlash('error', 'Please upload a picture.');
-                return $this->refresh(); // Reload the form to show the error
-            }
+            
 
-            if ($this->request->isPost) {
-                $model->date = date('Y-m-d');
-                $user = Yii::$app->user->identity;
-                $model->user_id = $user->id;
-        
-                // Update the item_unit status where id_unit matches the one in the Lending model
+            
+                // Update `item_unit` status if found
                 $itemUnit = ItemUnit::findOne($model->id_unit);
                 if ($itemUnit !== null) {
-                    $itemUnit->updated_by =  Yii::$app->user->identity->id;
-                    $itemUnit->status = 2; // Update the status
+                    $itemUnit->updated_by = $model->user_id;
+                    $itemUnit->status = 2;
                     $itemUnit->save();
                 }
-        
+                //if (!$model->save()) {
+                //    var_dump($model->errors); // Dump errors to check on screen
+                //    die();
+                //}
+
+
+
                 if ($model->save()) {
                     $logController = new LogController('log', Yii::$app);
                     $logController->actionLendingLog($model->id_unit, $model->id_employee);
-                    Yii::$app->session->setFlash('success', 'Unit '. $itemUnit->serial_number .' loaned.');
+                    Yii::$app->session->setFlash('success', 'Unit ' . $itemUnit->serial_number . ' loaned.');
                     return $this->redirect(['index']);
                 } else {
-                    Yii::error($model->errors); // Log errors if save fails
                     Yii::error($model->errors, __METHOD__);
                     Yii::$app->session->setFlash('error', 'Failed to save the loan unit.');
+                    return $this->redirect(['index']);
+                    
                 }
-            }
-        }
-        
-
+            } else {Yii::$app->session->setFlash('error', 'File validation failed.');
+                var_dump($model->errors); // Dump errors to check on screen
+            die();}
+        } 
+    
         return $this->render('loan-unit', [
             'model' => $model,
             'avalunit' => $avalunit,
             'emplist' => $emplist,
-            'uploadModel' => $uploadModel, 
+            'uploadModel' => $uploadModel,
         ]);
     }
+    
+    
 
     public function actionList()
     {
@@ -127,6 +153,7 @@ class LendingController extends Controller
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
+        
     }
     /**
      * Displays a single Lending model.
@@ -152,37 +179,52 @@ class LendingController extends Controller
         $model = new Lending();
         $uploadModel = new UploadPicture();
     
-        if ($this->request->isPost) {
-            $model->date = date('Y-m-d');
-            $user = Yii::$app->user->identity;
-            $model->user_id = $user->id;
-            if ($model->load($this->request->post())) {
-                // Update the item_unit status where id_unit matches the one in the Lending model
-                $itemUnit = ItemUnit::findOne($model->id_unit); // Assuming you have id_unit in the Lending model
-                if ($itemUnit !== null) {
-                    $user = Yii::$app->user->identity;
-                    $itemUnit->updated_by = $user->id;
-                    $itemUnit->status = 2; // Update the status
-                    $itemUnit->save(); // Save the changes
-                }
-                // Save the uploaded image
-                if ($uploadModel->pic_loan && $uploadModel->validate()) {
-                    $imageFileName = $uploadModel->uploadLoan();
-                    if ($imageFileName) {
-                        $model->pic_loan = $imageFileName; // assuming `image` is a field in Item table
+        if ($this->request->isPost){
+            if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+                $uploadModel->imageFile = UploadedFile::getInstance($uploadModel, 'imageFile');
+                Yii::debug($uploadModel->imageFile, 'Uploaded File Details');
+                
+                if ($uploadModel->imageFile && $uploadModel->validate()) {
+                    $fileName = $uploadModel->uploadLoan(); // Upload the file and get the filename
+                    if ($fileName) {
+                        $model->pic_loan = $fileName; // Assign the filename to `pic_loan`
+                        Yii::debug("File uploaded successfully: $fileName", __METHOD__);
+                    } else {
+                        Yii::error("File upload failed", __METHOD__);
+                        Yii::$app->session->setFlash('error', 'Failed to upload file.');
+                        return $this->redirect(['index']);
                     }
+                } else {
+                    Yii::error("Upload model validation failed", __METHOD__);
+                    Yii::$app->session->setFlash('error', 'File validation failed.');
                 }
-                $model->save();
-                $logController = new LogController('log', Yii::$app); // Pass the required parameters to the controller
-                $logController->actionLendingLog($model->id_unit, $model->id_employee); // Call with correct parameters
-                Yii::$app->session->setFlash('success', 'Unit'. $itemUnit->serial_number .'loaned.');
-                return $this->redirect(['index']);
+            
+                // Set other attributes and save the model
+                $model->date = date('Y-m-d');
+                $model->user_id = Yii::$app->user->identity->id;
+            
+                // Update `item_unit` status if found
+                $itemUnit = ItemUnit::findOne($model->id_unit);
+                if ($itemUnit !== null) {
+                    $itemUnit->updated_by = $model->user_id;
+                    $itemUnit->status = 2;
+                    $itemUnit->save();
+                }
+            
+                if ($model->save()) {
+                    $logController = new LogController('log', Yii::$app);
+                    $logController->actionLendingLog($model->id_unit, $model->id_employee);
+                    Yii::$app->session->setFlash('success', 'Unit ' . $itemUnit->serial_number . ' loaned.');
+                    return $this->redirect(['index']);
+                } else {
+                    Yii::error($model->errors, __METHOD__);
+                    Yii::$app->session->setFlash('error', 'Failed to save the loan unit.');
+                }
+            } else {
+                $model->loadDefaultValues();
             }
-        } else {
-            $model->loadDefaultValues();
         }
-
-        return $this->render('loan-unit', [
+        return $this->render('', [
             'model' => $model,
             'uploadModel' => $uploadModel, 
         ]);

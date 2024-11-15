@@ -24,6 +24,7 @@ use yii\web\UploadedFile;
 use app\models\DocUploaded;
 use app\models\StatusLookup;
 use app\models\ConditionLookup;
+use app\models\UploadPicture;
 
 /**
  * UnitController implements the CRUD actions for ItemUnit model.
@@ -207,6 +208,8 @@ class UnitController extends Controller
             throw new NotFoundHttpException('The requested ItemUnit does not exist.');
         }
 
+        $uploadModel = new UploadPicture();
+
         $warehouses = Warehouse::find()->all();
         $whList = \yii\helpers\ArrayHelper::map($warehouses, 'id_wh', 'wh_name');
 
@@ -233,15 +236,44 @@ class UnitController extends Controller
                     $lending = Lending::find()->where(['id_unit' => $model->id_unit])
                         ->orderBy(['id_lending' => SORT_DESC]) // Get the latest entry
                         ->one();
-
-                    if ($lending) {
-                        $date = date('Y-m-d');
-                        // Update the Lending record
-                        $lending->type = 2; // Set type to 2 for return
-                        $lending->date = $date; // Update the date
-                        $lending->save(false); // Save the changes without validation
                     
-                    }
+                    //pic 
+                    $uploadModel->imageFile = UploadedFile::getInstance($uploadModel, 'imageFile');
+
+                    Yii::debug($uploadModel->imageFile, 'Uploaded File Details');
+                    
+                    if ($uploadModel->imageFile && $uploadModel->validate()) {
+                        if ($uploadModel->imageFile) {
+                            $imageFileName = $uploadModel->upload();
+                            if ($imageFileName) {
+                                $lending->pic_return = $imageFileName;
+                            }
+                            Yii::debug('Uploaded file name: ' . $uploadModel->imageFile->name, __METHOD__);
+                        } else {
+                            Yii::error('No file uploaded.', __METHOD__);
+                            Yii::$app->session->setFlash('error', 'Please upload a picture.');
+                            return $this->redirect(['return-unit', 'id_unit' => $lending->id_unit]); // Redirect back
+                        }
+
+                        } else {
+                            Yii::error("Upload model validation failed", __METHOD__);
+                            if (!$uploadModel->validate()) {
+                                Yii::error('Upload model validation failed: ' . json_encode($uploadModel->errors), __METHOD__);
+                                var_dump($uploadModel->errors); // This will show validation error details on-screen
+                                die();
+                            }// Dump errors to check on screen
+                            Yii::$app->session->setFlash('error', 'Picture validation failed.');
+                            return $this->redirect(['index']);
+                        }
+
+                        if ($lending) {
+                            $date = date('Y-m-d');
+                            // Update the Lending record
+                            $lending->type = 2; // Set type to 2 for return
+                            $lending->date = $date; // Update the date
+                            $lending->save(false); // Save the changes without validation
+                        
+                        }
                     $logController = new LogController('log', Yii::$app); // Pass the required parameters to the controller
                     $logController->actionReturnLog($model->id_unit, $lending->id_employee);
                     Yii::$app->session->setFlash('success', 'Unit Returned successfully.');
@@ -254,6 +286,7 @@ class UnitController extends Controller
             'model' => $model,
             'whList' => $whList,
             'condlist' => $condlist,
+            'uploadModel' => $uploadModel,
         ]);
     }
 
