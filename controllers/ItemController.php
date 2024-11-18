@@ -90,18 +90,24 @@ class ItemController extends Controller
         ]);
     }
 
-    public function actionWarehouse($id_item){
+    public function actionWarehouse($id_item)
+    {
         $searchModel = new WarehouseSearch();
+    
+        // Full distribution data
         $dataProvider = $searchModel->searchWhDist(Yii::$app->request->queryParams, $id_item);
-
-
-
+    
+        // Data for "In-Repair" units only
+        $inRepairProvider = $searchModel->searchInRepair(Yii::$app->request->queryParams, $id_item);
+    
         return $this->render('whdist', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'inRepairProvider' => $inRepairProvider,
         ]);
     }
-
+    
+    
     /**
      * Displays a single Item model.
      * @param int $id_item Id Item
