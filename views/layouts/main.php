@@ -104,6 +104,7 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
                             'options' => ['class' => 'nav-item has-treeview'],
                             'template' => '<a href="#" class="nav-link">{label}</a>',
                             'items' => [
+                                ['label' => 'Repair Summary', 'url' => ['/repair-log/index'], 'options' => ['class' => 'nav-item']], //dropdown item
                                 ['label' => 'Damaged Unit', 'url' => ['/unit/damaged'], 'options' => ['class' => 'nav-item']], //dropdown item
                                 ['label' => 'Unit In-Repair', 'url' => ['/unit/repair'], 'options' => ['class' => 'nav-item']], //dropdown item
                             ],
