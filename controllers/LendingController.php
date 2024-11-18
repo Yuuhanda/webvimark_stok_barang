@@ -99,22 +99,14 @@ class LendingController extends Controller
                     Yii::$app->session->setFlash('error', 'Picture validation failed.');
                     return $this->redirect(['index']);
                 }
-            
-
-            
-                // Update `item_unit` status if found
+                        
+                // Update `item_unit`
                 $itemUnit = ItemUnit::findOne($model->id_unit);
                 if ($itemUnit !== null) {
                     $itemUnit->updated_by = $model->user_id;
                     $itemUnit->status = 2;
                     $itemUnit->save();
                 }
-                //if (!$model->save()) {
-                //    var_dump($model->errors); // Dump errors to check on screen
-                //    die();
-                //}
-
-
 
                 if ($model->save()) {
                     $logController = new LogController('log', Yii::$app);

@@ -101,8 +101,8 @@ class UnitController extends Controller
 
    public function actionDamaged()
    {
-       $unitModel = new ItemUnit();
-       $damagedlist = $unitModel->getBrokenUnit();
+       //$unitModel = new ItemUnit();
+       //$damagedlist = $unitModel->getBrokenUnit();
    
        // Initialize search model
        $searchModel = new DamagedSearch();
@@ -112,7 +112,7 @@ class UnitController extends Controller
        $warehouseList = Warehouse::getWarehouseList();
    
        // Filter the data based on search input
-       $dataProvider = $searchModel->search(\Yii::$app->request->queryParams, $damagedlist);
+       $dataProvider = $searchModel->search(\Yii::$app->request->queryParams);
    
        return $this->render('damaged', [
            'searchModel' => $searchModel,
@@ -490,6 +490,9 @@ class UnitController extends Controller
                 if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
                     $logController = new LogController('log', Yii::$app); // Pass the required parameters to the controller
                     $logController->actionRepairLog($model->id_unit);
+                    $repairLog = new RepairLogController('repair', Yii::$app);
+                    $type = 1;
+                    $repairLog->actionCreate($id_unit, $model->comment, $type);
                     Yii::$app->session->setFlash('success', 'Unit sent to repair successfully.');
                     return $this->redirect(['damaged']);
                 }
@@ -528,6 +531,9 @@ class UnitController extends Controller
                 if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
                     $logController = new LogController('log', Yii::$app); // Pass the required parameters to the controller
                     $logController->actionDoneRepairLog($model->id_unit);
+                    $repairLog = new RepairLogController('repair', Yii::$app);
+                    $type = 2;
+                    $repairLog->actionCreate($id_unit, $model->comment, $type);
                     Yii::$app->session->setFlash('success', 'Unit repaired and updated.');
                     return $this->redirect(['repair']);
                 }
@@ -552,36 +558,46 @@ class UnitController extends Controller
             $model->file = UploadedFile::getInstance($model, 'file');
     
             if ($model->file && $model->validate()) {
-                // Define the file path where the file should be saved
+                // Save the uploaded file
                 $filename = $model->upload();
                 $filePath = $filename['filePath'];
                 $fileName = $filename['fileName'];
     
-                // Save the uploaded file
-                if (isset($filePath)) {
-                    // Store uploaded file record in DB
+                if ($filePath) {
+                    // Store the uploaded file in the database
                     $filemod->file_name = $fileName;
                     $filemod->user_id = Yii::$app->user->id;
                     $filemod->datetime = new \yii\db\Expression('NOW()');
                     $filemod->save();
     
-                    // Load the spreadsheet from the saved file path
+                    // Load the spreadsheet
                     $spreadsheet = IOFactory::load($filePath);
                     $sheet = $spreadsheet->getActiveSheet();
     
                     // Retrieve the item and SKU prefix
                     $item = Item::findOne($id_item);
-                    $skuPrefix = substr($item->SKU, 0, 4);
+                    $skuPrefix = $item->SKU;
     
+                    // Generate unique serial numbers
                     $unitData = [];
+                    $existingSerials = ItemUnit::find()
+                        ->select(['serial_number'])
+                        ->where(['like', 'serial_number', "{$skuPrefix}-%", false])
+                        ->asArray()
+                        ->column();
+                    
+                    $serialTracker = array_flip($existingSerials);
+    
                     foreach ($sheet->toArray(null, true, true, true) as $rowIndex => $row) {
                         if ($rowIndex == 1) continue; // Skip header
     
                         do {
-                            $serialNumber = $row['B'] ?? $this->generateUniqueSerialNumber($skuPrefix);
-                        } while (ItemUnit::find()->where(['serial_number' => $serialNumber])->exists());
+                            $serialNumber = $row['B'] ?? $this->generateUniqueSerialNumberBulk  ($skuPrefix, $serialTracker);
+                        } while (isset($serialTracker[$serialNumber]));
     
-                        // Prepare unit data and overwrite the spreadsheet row with updated data
+                        // Mark the serial number as used
+                        $serialTracker[$serialNumber] = true;
+    
                         $unitData[] = [
                             'id_item' => $id_item,
                             'status' => 1,
@@ -592,21 +608,21 @@ class UnitController extends Controller
                             'updated_by' => Yii::$app->user->id,
                         ];
     
-                        // Update the row in the spreadsheet with new values
+                        // Update the spreadsheet
                         $sheet->setCellValue("A$rowIndex", $row['A'] ?? null); // Warehouse ID
                         $sheet->setCellValue("B$rowIndex", $serialNumber);      // Serial Number
                         $sheet->setCellValue("C$rowIndex", $row['C'] ?? 'New Unit'); // Comment
                     }
     
-                    // Save the updated spreadsheet to overwrite the original uploaded file
+                    // Save updated spreadsheet
                     $writer = IOFactory::createWriter($spreadsheet, 'Xlsx');
                     $writer->save($filePath);
     
-                    // Store unit data in session for preview
+                    // Store unit data for preview
                     $session->set('unitData', $unitData);
                     $session->set('uploadedFileName', $fileName);
     
-                    // Redirect to a preview page
+                    // Redirect to preview page
                     return $this->redirect(['bulk-add-preview']);
                 } else {
                     Yii::$app->session->setFlash('error', 'Failed to save uploaded file.');
@@ -617,8 +633,6 @@ class UnitController extends Controller
     
         return $this->render('mass-unit', ['model' => $model]);
     }
-    
-    
     
     public function actionBulkAddPreview()
     {
@@ -663,5 +677,18 @@ class UnitController extends Controller
         return $skuPrefix . '-' . $newNumber;
     }
     
+    protected function generateUniqueSerialNumberBulk($skuPrefix, &$serialTracker)
+    {
+        // Find the next available number
+        $maxNumber = 0;
+        foreach (array_keys($serialTracker) as $serial) {
+            if (strpos($serial, $skuPrefix . '-') === 0) {
+                $numberPart = (int) substr($serial, -4);
+                $maxNumber = max($maxNumber, $numberPart);
+            }
+        }
     
+        $newNumber = str_pad($maxNumber + 1, 4, '0', STR_PAD_LEFT);
+        return $skuPrefix . '-' . $newNumber;
+    }
 }

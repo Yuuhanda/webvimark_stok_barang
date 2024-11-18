@@ -129,7 +129,9 @@ class ItemController extends Controller
         if (Yii::$app->request->isPost) {
             $model->load(Yii::$app->request->post());
             $uploadModel->imageFile = UploadedFile::getInstance($uploadModel, 'imageFile');
-    
+
+            Yii::debug($uploadModel->imageFile, 'Uploaded File Details');
+            
             // Generate SKU if empty
             if (empty($model->SKU)) {
                 $id_cat = $model->id_category;
@@ -140,12 +142,28 @@ class ItemController extends Controller
                 $model->SKU = $this->generateSKU($cat_code);
             }
     
-            // Save the uploaded image
             if ($uploadModel->imageFile && $uploadModel->validate()) {
-                $imageFileName = $uploadModel->upload();
-                if ($imageFileName) {
-                    $model->imagefile = $imageFileName;
+                if ($uploadModel->imageFile) {
+                    $imageFileName = $uploadModel->upload();
+                    if ($imageFileName) {
+                        $model->imagefile = $imageFileName;
+                    }
+                    Yii::debug('Uploaded file name: ' . $uploadModel->imageFile->name, __METHOD__);
+                } else {
+                    Yii::error('No file uploaded.', __METHOD__);
+                    Yii::$app->session->setFlash('error', 'Please upload a picture.');
+                    return $this->redirect(['index']); // Redirect back
                 }
+                
+            } else {
+                Yii::error("Upload model validation failed", __METHOD__);
+                if (!$uploadModel->validate()) {
+                    Yii::error('Upload model validation failed: ' . json_encode($uploadModel->errors), __METHOD__);
+                    var_dump($uploadModel->errors); // This will show validation error details on-screen
+                    die();
+                }// Dump errors to check on screen
+                Yii::$app->session->setFlash('error', 'Picture validation failed.');
+                return $this->redirect(['index']);
             }
     
             if ($model->save()) {
@@ -224,16 +242,33 @@ class ItemController extends Controller
                 $model->SKU = $this->generateSKU($cat_code);
             }
 
-            // Save the uploaded image
             if ($uploadModel->imageFile && $uploadModel->validate()) {
-                $imageFileName = $uploadModel->upload();
-                if ($imageFileName) {
-                    $model->imagefile = $imageFileName; // assuming `image` is a field in Item table
+                if ($uploadModel->imageFile) {
+                    $imageFileName = $uploadModel->upload();
+                    if ($imageFileName) {
+                        $model->imagefile = $imageFileName;
+                    }
+                    Yii::debug('Uploaded file name: ' . $uploadModel->imageFile->name, __METHOD__);
+                } else {
+                    Yii::error('No file uploaded.', __METHOD__);
+                    Yii::$app->session->setFlash('error', 'Please upload a picture.');
+                    return $this->redirect(['index']); // Redirect back
                 }
+                
+            } else {
+                Yii::error("Upload model validation failed", __METHOD__);
+                if (!$uploadModel->validate()) {
+                    Yii::error('Upload model validation failed: ' . json_encode($uploadModel->errors), __METHOD__);
+                    var_dump($uploadModel->errors); // This will show validation error details on-screen
+                    die();
+                }// Dump errors to check on screen
+                Yii::$app->session->setFlash('error', 'Picture validation failed.');
+                return $this->redirect(['index']);
             }
-            $model->save();
-            Yii::$app->session->setFlash('success', $model->item_name. ' updated successfully.');
-            return $this->redirect(['index']);
+            if ($model->save()) {
+                Yii::$app->session->setFlash('success', 'Item Updated successfully.');
+                return $this->redirect(['index']);
+            }
         }
 
         return $this->render('update', [
