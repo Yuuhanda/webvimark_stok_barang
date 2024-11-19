@@ -1,6 +1,8 @@
 <?php
 namespace app\models;
 
+use webvimark\modules\UserManagement\models\User;
+use Yii;
 use yii\base\Model;
 use yii\data\ArrayDataProvider;
 use yii\db\Query;
@@ -34,6 +36,29 @@ class ItemSearch extends Model
     public function search($params)
     {
         // Your custom query for the dashboard
+        $id_wh = Yii::$app->user->identity->id_wh;
+
+        if (User::hasRole('Admin')){
+            $query = (new Query())
+            ->select([
+                'item_name' => 'item.item_name',
+                'SKU' => 'item.SKU',
+                'category' => 'item_category.category_name',
+                'available' => 'COUNT(CASE WHEN TRIM(item_unit.status) = "1" AND item_unit.condition != 4 AND item_unit.condition != 5 THEN 1 END)',
+                'in_use' => 'COUNT(CASE WHEN TRIM(item_unit.status) = "2" THEN 1 END)',
+                'in_repair' => 'COUNT(CASE WHEN TRIM(item_unit.status) = "3" THEN 1 END)',
+                'lost' => 'COUNT(CASE WHEN TRIM(item_unit.status) = "4" THEN 1 END)',
+                'id_item' => 'item.id_item',
+                'imagefile' => 'item.imagefile',
+            ])
+            ->from('item')
+            ->leftJoin('item_unit', 'item.id_item = item_unit.id_item') // Left join to include all items
+            ->leftJoin('item_category', 'item.id_category = item_category.id_category')
+            ->where(['item_unit.id_wh' => $id_wh]) // Filter by warehouse
+            ->orWhere(['item_unit.id_wh' => null]) // Include rows without item_unit entries
+            ->groupBy('item.id_item');
+
+        } else {
         $query = (new Query())
             ->select([
                 'item_name' => 'item.item_name',
@@ -50,7 +75,7 @@ class ItemSearch extends Model
             ->leftJoin('item_unit', 'item.id_item = item_unit.id_item')
             ->leftJoin('item_category', 'item.id_category = item_category.id_category')
             ->groupBy('item.id_item');
-
+            }     
         // Load the search parameters
         $this->load($params);
 
