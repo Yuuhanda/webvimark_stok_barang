@@ -117,8 +117,18 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
                             'url' => '#',
                             'options' => ['class' => 'nav-item has-treeview'],
                             'template' => '<a href="#" class="nav-link">{label}</a>',
-                            'items' => UserManagementModule::menuItems(),
+                            'items' => array_merge(
+                                UserManagementModule::menuItems(),
+                                [
+                                    [
+                                        'label' => 'Assign Warehouse',
+                                        'url' => ['/warehouse/assign'], // The route for the new item
+                                        'options' => ['class' => 'nav-item'],
+                                    ],
+                                ]
+                            ),
                         ],
+                        
                         
                     ],
                 ]) ?>

@@ -11,6 +11,9 @@ use yii\filters\AccessControl;
 use app\models\ItemUnit;
 use Yii;
 use app\models\ItemSearch;
+use app\models\User;
+use app\models\UserSearch;
+
 /**
  * WarehouseController implements the CRUD actions for Warehouse model.
  */
@@ -166,5 +169,56 @@ class WarehouseController extends Controller
             'warehouse_name' => $wh_name,
         ]);
     }
+
+    public function actionAssign(){
+        $searchModel = new UserSearch();
+        $dataProvider = $searchModel->searchAdmins(Yii::$app->request->queryParams);
+
+    
+        return $this->render('assign', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+
+    public function actionAssignAdmins($id)
+    {
+        $userdata = User::findOne($id);
+    
+        if (!$userdata) {
+            throw new \yii\web\NotFoundHttpException('User not found.');
+        }
+    
+        // Prepare warehouse data as [id_wh => wh_name] for the dropdown
+        $warehouses = Warehouse::find()->all();
+        $whList = \yii\helpers\ArrayHelper::map($warehouses, 'id_wh', 'wh_name');
+    
+        if (Yii::$app->request->isPost) {
+            $postData = Yii::$app->request->post('User');
+            Yii::info(Yii::$app->request->post(), 'debug');
+
+            if ($postData && isset($postData['id_wh'])) {
+                $selectedWhId = $postData['id_wh'];
+                $userdata->id_wh = $selectedWhId;
+        
+                if ($userdata->save()) {
+                    Yii::$app->session->setFlash('success', 'Warehouse assigned successfully.');
+                    return $this->redirect(['assign']);
+                }
+            }
+            Yii::info(Yii::$app->request->post(), 'debug');
+
+            Yii::$app->session->setFlash('error', 'Failed to assign the warehouse.');
+        }
+        
+    
+        return $this->render('assign-admins', [
+            'username' => $userdata->username,
+            'whList' => $whList,
+            'userdata' => $userdata,
+        ]);
+    }
+    
+    
 
 }
