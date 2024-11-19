@@ -17,10 +17,12 @@ class UserSearch extends User
     public function rules()
     {
         return [
-            [['id', 'status', 'superadmin', 'created_at', 'updated_at'], 'integer'],
-            [['username', 'password_hash', 'registration_ip', 'email'], 'safe'],
+            [['id', 'status', 'superadmin', 'created_at', 'updated_at', 'id_wh'], 'integer'],
+            [['username', 'password_hash', 'registration_ip', 'email', 'id_wh', 'warehouse'], 'safe'],
         ];
     }
+
+    public $warehouse; // Virtual attribute
 
     /**
      * {@inheritdoc}
@@ -71,4 +73,44 @@ class UserSearch extends User
 
         return $dataProvider;
     }
+
+    public function searchAdmins($params)
+    {
+        $query = User::find()
+            ->select([
+                'user.id AS id',
+                'warehouse.wh_name AS warehouse', // this part not showing up in view correctly it shows not set
+                'user.username AS username',
+                'user.id_wh AS id_wh',
+                'auth_assignment.item_name AS role',
+            ])
+            ->leftJoin('warehouse', 'warehouse.id_wh = user.id_wh')
+            ->leftJoin('auth_assignment', 'user.id = auth_assignment.user_id')
+            ->where(['auth_assignment.item_name' => 'Admin']);
+    
+        // ActiveDataProvider for pagination, sorting, and filtering
+        $dataProvider = new ActiveDataProvider([
+            'query' => $query,
+        ]);
+    
+        $this->load($params);
+    
+        if (!$this->validate()) {
+            // If validation fails, return the provider without applying further conditions
+            $query->where('0=1');
+            return $dataProvider;
+        }
+    
+        // Apply filtering conditions
+        $query->andFilterWhere([
+            'user.id' => $this->id,
+            'user.id_wh' => $this->id_wh,
+        ]);
+    
+        $query->andFilterWhere(['like', 'user.username', $this->username])
+        ->andFilterWhere(['like', 'warehouse.id_wh', $this->id_wh]);
+    
+        return $dataProvider;
+    }
+    
 }

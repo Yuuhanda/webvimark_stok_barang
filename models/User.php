@@ -31,6 +31,7 @@ class User extends ActiveRecord implements IdentityInterface
             [['username', 'password_hash',], 'string', 'max' => 255],
             [['registration_ip'], 'string', 'max' => 15],
             [['email'], 'string', 'max' => 128],
+            [['id_wh'], 'integer'],
         ];
     }
 
@@ -180,10 +181,18 @@ class User extends ActiveRecord implements IdentityInterface
         return false;
     }
 
+
+
     public static function getUpdatedByList()
     {
         return ArrayHelper::map(self::find()->all(), 'id', 'username'); // assuming 'id' and 'username' columns
     }
+
+    public function getWarehouseRelation()
+    {
+        return $this->hasOne(Warehouse::class, ['id_wh' => 'id_wh']);
+    }
+
 }
 
 
