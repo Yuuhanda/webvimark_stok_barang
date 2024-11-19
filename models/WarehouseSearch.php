@@ -5,6 +5,8 @@ namespace app\models;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use app\models\Warehouse;
+use webvimark\modules\UserManagement\models\User;
+use Yii;
 use yii\data\ArrayDataProvider;
 use yii\db\Query;
 /**
@@ -72,6 +74,26 @@ class WarehouseSearch extends Warehouse
 
     public function searchWhDist($params, $id_item)
     {
+        $id_wh = Yii::$app->user->identity->id_wh;
+
+        if (User::hasRole('Admin')){
+                    // Construct the query
+            $query = (new Query())
+            ->select([
+                'warehouse' => 'warehouse.wh_name',
+                'available' => 'COUNT(CASE WHEN TRIM(item_unit.status) = "1" THEN 1 END)',
+                'in_use' => 'COUNT(CASE WHEN TRIM(item_unit.status) = "2" THEN 1 END)',
+                'in_repair' => 'COUNT(CASE WHEN TRIM(item_unit.status) = "3" THEN 1 END)',
+                'lost' => 'COUNT(CASE WHEN TRIM(item_unit.status) = "4" THEN 1 END)',
+            ])
+            ->from('item_unit')
+            ->leftJoin('warehouse', 'warehouse.id_wh = item_unit.id_wh')
+            ->where(['item_unit.id_item' => $id_item])
+            ->andWhere(['IS NOT', 'warehouse.wh_name', null]) // Exclude rows with NULL `wh_name`
+            ->andWhere(['!=', 'warehouse.wh_name', '']) // Exclude rows with empty `wh_name`
+            ->andWhere(['item_unit.id_wh' => $id_wh])
+            ->groupBy('warehouse.id_wh');
+        } else {
         // Construct the query
         $query = (new Query())
             ->select([
@@ -87,7 +109,7 @@ class WarehouseSearch extends Warehouse
             ->andWhere(['IS NOT', 'warehouse.wh_name', null]) // Exclude rows with NULL `wh_name`
             ->andWhere(['!=', 'warehouse.wh_name', '']) // Exclude rows with empty `wh_name`
             ->groupBy('warehouse.id_wh');
-    
+            }
         // Load the search parameters
         $this->load($params);
     
