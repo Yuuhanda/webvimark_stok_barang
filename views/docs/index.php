@@ -22,7 +22,14 @@ $this->params['breadcrumbs'][] = $this->title;
 
 
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
-
+    <?= Html::a('Delete old documents', ['delete-old-docs'], [
+            'class' => 'btn btn-danger',
+            'data' => [
+                'confirm' => 'Are you sure you want to delete all old document?',
+                'method' => 'post',
+            ],
+        ]) ?>
+        
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
