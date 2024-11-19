@@ -10,7 +10,7 @@ use yii\filters\VerbFilter;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use Yii;
 use yii\filters\AccessControl;
-
+use yii\helpers\FileHelper;
 
 /**
  * DocsController implements the CRUD actions for DocUploaded model.
@@ -154,23 +154,41 @@ class DocsController extends Controller
         ]);
     }
 
-    public function actionAutoDeleteOldDocs()
+    public function actionDeleteOldDocs()
     {
-        $path = Yii::getAlias('@web/document');
-        $files = glob($path . '/*'); // Fetch all files in the directory
+        $documentPath = Yii::getAlias('../web/document');
+        $thresholdTime = strtotime('-1 day'); // Change as needed
 
+        // Ensure the directory exists
+        if (!is_dir($documentPath)) {
+            Yii::$app->session->setFlash('error', 'Document directory does not exist.');
+            return $this->redirect(['index']);
+        }
+
+        // Scan for files in the directory
+        $files = FileHelper::findFiles($documentPath);
+
+        $deletedFiles = [];
         foreach ($files as $file) {
-            if (is_file($file)) {
-                $fileAge = time() - filemtime($file); // Calculate file age
-                $oneYear = 365 * 24 * 60 * 60; // One year in seconds
+            if (filemtime($file) < $thresholdTime) {
+                $fileName = basename($file);
 
-                if ($fileAge > $oneYear) {
-                    unlink($file); // Delete file if it's older than a year
+                // Attempt to delete the file
+                if (@unlink($file)) {
+                    $deletedFiles[] = $fileName;
+
+                    // Delete corresponding record in `doc_uploaded` table
+                    DocUploaded::deleteAll(['file_name' => $fileName]);
                 }
             }
         }
 
-        Yii::$app->session->setFlash('success', 'Old documents have been deleted.');
+        if ($deletedFiles) {
+            Yii::$app->session->setFlash('success', 'Deleted files: ' . implode(', ', $deletedFiles));
+        } else {
+            Yii::$app->session->setFlash('info', 'No files older than the threshold were found.');
+        }
+
         return $this->redirect(['index']);
     }
 
