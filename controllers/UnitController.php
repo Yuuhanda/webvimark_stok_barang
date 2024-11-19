@@ -590,10 +590,21 @@ class UnitController extends Controller
     
                     foreach ($sheet->toArray(null, true, true, true) as $rowIndex => $row) {
                         if ($rowIndex == 1) continue; // Skip header
+
+                        $serialNumber = $row['B'] ?? null;
     
-                        do {
-                            $serialNumber = $row['B'] ?? $this->generateUniqueSerialNumberBulk  ($skuPrefix, $serialTracker);
-                        } while (isset($serialTracker[$serialNumber]));
+                        if ($serialNumber && isset($serialTracker[$serialNumber])) {
+                            Yii::$app->session->setFlash('error', "Serial number '{$serialNumber}' is not unique. Please ensure all serial numbers are unique.");
+                            return $this->redirect(['index']);
+                        }
+    
+                        // Auto-generate if serial number is empty
+                        if (!$serialNumber) {
+                            do {
+                                $serialNumber = $this->generateUniqueSerialNumberBulk($skuPrefix, $serialTracker);
+                            } while (isset($serialTracker[$serialNumber]));
+                        }
+    
     
                         // Mark the serial number as used
                         $serialTracker[$serialNumber] = true;
@@ -690,5 +701,14 @@ class UnitController extends Controller
     
         $newNumber = str_pad($maxNumber + 1, 4, '0', STR_PAD_LEFT);
         return $skuPrefix . '-' . $newNumber;
+    }
+
+    public function actionCheck(){
+        if (\webvimark\modules\UserManagement\models\User::hasRole('superadmin')) {
+           echo'User is superadmin';
+        } else {
+            echo'User is not superadmin';
+        }
+        
     }
 }
