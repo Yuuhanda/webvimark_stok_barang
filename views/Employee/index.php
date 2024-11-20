@@ -6,12 +6,13 @@ use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\grid\ActionColumn;
 use yii\grid\GridView;
+use app\helpers\TranslationHelper;
 
 /** @var yii\web\View $this */
 /** @var app\models\EmployeeSearch $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
-$this->title = 'Employees';
+$this->title = TranslationHelper::translate('Employees');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="employee-index">
@@ -19,7 +20,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= GhostHtml::a('Add Employee', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= GhostHtml::a(TranslationHelper::translate('Add Employee'), ['create'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
@@ -29,15 +30,26 @@ $this->params['breadcrumbs'][] = $this->title;
         'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
-
-            'emp_name',
-            'phone',
-            'email:email',
-            'address',
+            [
+                'attribute' => 'emp_name',
+                'label' => TranslationHelper::translate('Employee Name'),
+            ],
+            [
+                'attribute' => 'phone',
+                'label' => TranslationHelper::translate('Phone'),
+            ],
+            [
+                'attribute' => 'email',
+                'label' => TranslationHelper::translate('Email'),
+            ],
+            [
+                'attribute' => 'address',
+                'label' => TranslationHelper::translate('Address'),
+            ],
             [
                 'class' => 'yii\grid\ActionColumn',
                 'template' => '{view} {update} {delete}',
-                'header' => 'Action',
+                'header' => TranslationHelper::translate('Action'),
                 'buttons' => [
                     'view' => function ($url, $model, $key) {
                         return GhostHtml::a('<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye" viewBox="0 0 16 16">
@@ -66,7 +78,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                 ['delete', 'id_employee' => $model['id_employee']], [
                                 'class' => 'btn btn-danger',
                                 'data' => [
-                                    'confirm' => 'Are you sure you want to delete this item?',
+                                    'confirm' => TranslationHelper::translate('Are you sure you want to delete this employee?'),
                                     'method' => 'post', // Yii2's built-in support for form submission on link click
                                 ],
                                 'style' => 'margin-top: 1px; margin-bottom: 1px; font-size: 12px; padding: 3px 6px;'

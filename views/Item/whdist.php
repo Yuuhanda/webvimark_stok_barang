@@ -6,12 +6,13 @@ use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\grid\ActionColumn;
 use yii\grid\GridView;
+use app\helpers\TranslationHelper;
 
 /** @var yii\web\View $this */
 /** @var app\models\ItemSearch $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
-$this->title = 'Item Detail In Warehouses';
+$this->title = TranslationHelper::translate('Item Detail In Warehouses');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="item-whdist">
@@ -20,17 +21,32 @@ $this->params['breadcrumbs'][] = $this->title;
     <p><?= GhostHtml::a('Export to .xlsx', ['export/wh-dist', 'id_item' => Yii::$app->request->get('id_item')], ['class' => 'btn btn-info']) ?></p>
 
     <!-- Full Warehouse Distribution -->
-    <h2>Warehouse Distribution</h2>
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
-            'warehouse',
-            'available',
-            'in_use',
-            'in_repair',
-            'lost',
+            [
+                'attribute' => 'warehouse',
+                'label' => TranslationHelper::translate('Warehouse')
+            ],
+            [
+                'attribute' => 'available',
+                'label' => TranslationHelper::translate('Available')
+            ],
+            [
+                'attribute' => 'in_use',
+                'label' => TranslationHelper::translate('In-Use')
+            ],
+            [
+                'attribute' => 'in_repair',
+                'label' => TranslationHelper::translate('In-Repair')
+            ],
+            [
+                'attribute' => 'lost',
+                'label' => TranslationHelper::translate('Unit Lost')
+            ],
+
         ],
     ]); ?>
 
@@ -42,7 +58,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'columns' => [
                     [
                         'attribute' => 'in_repair',
-                        'label' => 'Units Undergoing Repair',
+                        'label' => TranslationHelper::translate('Units Undergoing Repair'),
                         'contentOptions' => ['style' => 'text-align: center; font-weight: bold;'],
                     ],
                 ],

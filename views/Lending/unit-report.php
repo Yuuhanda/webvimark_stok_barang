@@ -7,6 +7,7 @@ use yii\helpers\Url;
 use yii\grid\ActionColumn;
 use yii\grid\GridView;
 use yii\widgets\ActiveForm;
+use app\helpers\TranslationHelper;
 
 /** @var yii\web\View $this */
 /** @var app\models\LogSearch $searchModel */
@@ -22,7 +23,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <p>
         <?php 
             // Button to trigger hidden export form
-            echo GhostHtml::button('Export Data to .xlsx', [
+            echo GhostHtml::button( TranslationHelper::translate('Export Data to .xlsx'), [
                 'class' => 'btn btn-success',
                 'onclick' => "$('#export-form').submit();"
             ]);
@@ -39,14 +40,16 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'attribute' => 'item_name',
                 'value' => 'item_name',
+                'label' => TranslationHelper::translate('Item Name'),
             ],
             [
                 'attribute' => 'serial_number',
                 'value' => 'serial_number',
+                'label' => TranslationHelper::translate('Serial Number'),
             ],
             [
                 'attribute' => 'number_of_times_unit_is_lent',
-                'label' => 'Number of Times Unit is Lent',
+                'label' => TranslationHelper::translate('Number of Times Unit is Lent'),
                 'filter' => false, // Disable filter for aggregate columns if not needed
             ],
         ],

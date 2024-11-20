@@ -10,12 +10,13 @@ use webvimark\modules\UserManagement\components\GhostHtml;
 use yii\widgets\ActiveForm;
 use yii\bootstrap5\Modal;
 use yii\web\View;
+use app\helpers\TranslationHelper;
 
 /** @var yii\web\View $this */
 /** @var app\models\LendigSearch $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
-$this->title = 'Loaning List';
+$this->title = TranslationHelper::translate('Loaning List');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="unit-loan-list">
@@ -37,10 +38,22 @@ $this->params['breadcrumbs'][] = $this->title;
         'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
-            'serial_number',
-            'employee',
-            'updated_by',
-            'comment',
+            [
+                'attribute' => 'serial_number',
+                'label' =>TranslationHelper::translate('Serial Number'),
+            ],
+            [
+                'attribute' => 'employee',
+                'label' =>TranslationHelper::translate('Employee'),
+            ],
+            [
+                'attribute' => 'updated_by',
+                'label' =>TranslationHelper::translate('Updated By'),
+            ],
+            [
+                'attribute' => 'comment',
+                'label' =>TranslationHelper::translate('Comment'),
+            ],
             [
                 'attribute' => 'date',
                 'filter' => DatePicker::widget([
@@ -55,11 +68,12 @@ $this->params['breadcrumbs'][] = $this->title;
                     return Yii::$app->formatter->asDate($model['date'], 'php:d F, Y');
                 },
                 'format' => 'raw',
+                'label' => TranslationHelper::translate('Date'),
             ],
             [
                 'class' => 'yii\grid\ActionColumn',
                 'template' => '{viewImage} {returnunit}',
-                'header' => 'Action',
+                'header' => TranslationHelper::translate('Action'),
                 'buttons' => [
                     'viewImage' => function ($url, $model, $key) {
                         return GhostHtml::a(

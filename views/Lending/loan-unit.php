@@ -5,6 +5,7 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use yii\helpers\ArrayHelper;
 use kartik\select2\Select2;
+use app\helpers\TranslationHelper;
 
 /** @var yii\web\View $this */
 /** @var app\models\Lending $model */
@@ -12,7 +13,7 @@ use kartik\select2\Select2;
 /** @var array $emplist */
 /** @var app\models\UploadPicture $uploadModel */
 /** @var array $avalunit */
-$this->title = 'Loan A Unit';
+$this->title = TranslationHelper::translate('Lending');
 $this->params['breadcrumbs'][] = $this->title;
 //['action' => ['lending/create']]
 ?>
@@ -37,7 +38,7 @@ $this->params['breadcrumbs'][] = $this->title;
             return $unit['serial_number'] . ' (' . $unit['condition_name'] . ')';
         }),
         'options' => [
-            'placeholder' => 'Select Available Unit',
+            'placeholder' => TranslationHelper::translate('Select Available Unit'),
             'id' => 'unit-dropdown',
         ],
         'pluginOptions' => [
@@ -45,7 +46,7 @@ $this->params['breadcrumbs'][] = $this->title;
         ],
         'bsVersion' => '5', // Set Bootstrap version to 5
        
-    ]);  ?>
+    ])->label(TranslationHelper::translate('Select Unit Item'));  ?>
 
     <!-- Hidden field for type -->
     <?= $form->field($model, 'type')->hiddenInput()->label(false) ?>
@@ -53,20 +54,20 @@ $this->params['breadcrumbs'][] = $this->title;
     <!-- Dropdown for employee list -->
     <?= $form->field($model, 'id_employee')->widget(Select2::class, [
         'data' => $emplist,
-        'options' => ['placeholder' => 'Select Employee'],
+        'options' => ['placeholder' => TranslationHelper::translate('Select Employee')],
         'pluginOptions' => [
             'allowClear' => true,
         ],
-    ])->label('Employee') ?>
+    ])->label(TranslationHelper::translate('Select Employee')); ?>
 
     <!-- Image Upload Field -->
-    <?= $form->field($uploadModel, 'imageFile')->fileInput()->label('Unit Picture') ?>
+    <?= $form->field($uploadModel, 'imageFile')->fileInput()->label(TranslationHelper::translate('Unit Picture')) ?>
 
 
 
     
     <div class="form-group">
-        <?= Html::submitButton('Save', ['class' => 'btn btn-primary']) ?>
+        <?= Html::submitButton(TranslationHelper::translate('Save'), ['class' => 'btn btn-primary']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

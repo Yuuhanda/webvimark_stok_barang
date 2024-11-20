@@ -1,8 +1,9 @@
 <?php
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use app\helpers\TranslationHelper;
 
-$this->title = 'Add Unit in Bulk';
+$this->title = TranslationHelper::translate('Add Unit in Bulk');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
@@ -11,7 +12,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
 <!-- Download Template Button -->
 <p>
-    <?= Html::a('Download Template', Yii::getAlias('@web') . '/templates/add-unit-template.xlsx', [
+    <?= Html::a(TranslationHelper::translate('Download Template'), Yii::getAlias('@web') . '/templates/add-unit-template.xlsx', [
         'class' => 'btn btn-primary',
         'target' => '_blank', // Opens in a new tab
         'download' => 'add-unit-template.xlsx', // Initiates download
@@ -25,7 +26,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
 <?= $form->field($model, 'file')->fileInput() ?>
 
-<?= Html::submitButton('Upload', ['class' => 'btn btn-success']) ?>
+<?= Html::submitButton(TranslationHelper::translate('Upload'), ['class' => 'btn btn-success']) ?>
 
 <?php ActiveForm::end() ?>
 </div>

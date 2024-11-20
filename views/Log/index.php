@@ -6,8 +6,9 @@ use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\grid\GridView;
 use yii\widgets\ActiveForm;
+use app\helpers\TranslationHelper;
 
-$this->title = 'Unit Logs';
+$this->title = TranslationHelper::translate('Unit Usage Logs');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="unit-log-index">
@@ -17,7 +18,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <p>
         <?php 
             // Button to trigger hidden export form
-            echo GhostHtml::button('Export Log Data to .xlsx', [
+            echo GhostHtml::button(TranslationHelper::translate('Export Log Data to .xlsx'), [
                 'class' => 'btn btn-success',
                 'onclick' => "$('#export-form').submit();"
             ]);
@@ -33,25 +34,25 @@ $this->params['breadcrumbs'][] = $this->title;
 
         <div class="row">
             <div class="col-md-6">    
-                <?= $form->field($searchModel, 'serial_number')->textInput(['placeholder' => 'Enter serial number'])->label(false) ?>
+                <?= $form->field($searchModel, 'serial_number')->textInput(['placeholder' => TranslationHelper::translate('Enter serial number')])->label(false) ?>
             </div>
             <div class="col-md-6">
-                <?= $form->field($searchModel, 'content')->textInput(['placeholder' => 'Enter log content'])->label(false) ?>
+                <?= $form->field($searchModel, 'content')->textInput(['placeholder' => TranslationHelper::translate('Enter log content')])->label(false) ?>
             </div>
         </div>
 
         <div class="row">
             <div class="col-md-6">
-                <?= $form->field($searchModel, 'log_date_start')->input('date')->label('Log Date Start') ?>
+                <?= $form->field($searchModel, 'log_date_start')->input('date')->label(TranslationHelper::translate('Log Date Start')) ?>
             </div>
             <div class="col-md-6">
-                <?= $form->field($searchModel, 'log_date_end')->input('date')->label('Log Date End') ?>
+                <?= $form->field($searchModel, 'log_date_end')->input('date')->label(TranslationHelper::translate('Log Date End')) ?>
             </div>
         </div>
 
-        <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>
+        <?= Html::submitButton(TranslationHelper::translate('Search'), ['class' => 'btn btn-primary']) ?>
         <?php ActiveForm::end(); ?>
-    </div>
+    </div><br>
 
     <!-- Export Form with Hidden Fields -->
     <?php $exportForm = ActiveForm::begin([
@@ -71,12 +72,21 @@ $this->params['breadcrumbs'][] = $this->title;
         'dataProvider' => $dataProvider,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
-            'serial_number',
+            [
+                'attribute' => 'serial_number',
+                'label' => TranslationHelper::translate('Serial Number')
+            ],
+            [
+                'attribute' => 'content',
+                'label' => TranslationHelper::translate('Log')
+            ],
             'content',
             [
                 'attribute' => 'log_date',
                 'format' => ['date', 'php:d-m-Y, H:i:s'],
+                'label' => TranslationHelper::translate('Date')
             ],
+
         ],
     ]); ?>
 </div>

@@ -13,6 +13,7 @@ use webvimark\modules\UserManagement\models\User;
 use webvimark\modules\UserManagement\components\GhostHtml;
 use webvimark\modules\UserManagement\components\GhostNav;
 use app\assets\AdminLteAsset;
+use app\helpers\TranslationHelper;
 
 AdminLteAsset::register($this);
 AppAsset::register($this);
@@ -48,7 +49,7 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
             'items' => [  
                 Yii::$app->user->isGuest
                     ? ['label' => 'Login', 'url' => ['/user-management/auth/login']]
-                    : ['label'=>'Account Settings', 'url'=>['/user-management/auth/change-own-password']],
+                    : ['label'=> TranslationHelper::translate('Account Settings'), 'url'=>['/user-management/auth/change-own-password']],
                     [
                         'label' => 'Logout (' . Yii::$app->user->identity->username . ')', 
                         'url' => ['/user-management/auth/logout'], 
@@ -73,47 +74,47 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
                     'options' => ['class' => 'nav nav-pills nav-sidebar flex-column', 'data-widget' => 'treeview', 'role' => 'menu', 'data-accordion' => 'false'],
                     'items' => [
                         [
-                            'label' => 'Inventory',
+                            'label' => TranslationHelper::translate('Inventory'),
                             'url' => '#',
                             'options' => ['class' => 'nav-item has-treeview'],
                             'template' => '<a href="#" class="nav-link">{label}</a>',
                             'items' => [
-                                ['label' => 'Master Inventory', 'url' => ['/item/index'], 'options' => ['class' => 'nav-item']], //dropdown item
-                                ['label' => 'Item Category', 'url' => ['/category/index'], 'options' => ['class' => 'nav-item']], //dropdown item
-                                ['label' => 'Manage Unit', 'url' => ['/unit/index'], 'options' => ['class' => 'nav-item']], //dropdown item
-                                ['label' => 'Bulk Upload History', 'url' => ['/docs/index'], 'options' => ['class' => 'nav-item']], //dropdown item
-                                ['label' => 'Unit Usage Log', 'url' => ['/log/index'], 'options' => ['class' => 'nav-item']], //dropdown item
+                                ['label' => TranslationHelper::translate('Master Inventory'), 'url' => ['/item/index'], 'options' => ['class' => 'nav-item']], //dropdown item
+                                ['label' => TranslationHelper::translate('Item Category'), 'url' => ['/category/index'], 'options' => ['class' => 'nav-item']], //dropdown item
+                                ['label' => TranslationHelper::translate('Manage Unit'), 'url' => ['/unit/index'], 'options' => ['class' => 'nav-item']], //dropdown item
+                                ['label' => TranslationHelper::translate('Bulk Upload History'), 'url' => ['/docs/index'], 'options' => ['class' => 'nav-item']], //dropdown item
+                                ['label' => TranslationHelper::translate('Unit Usage Log'), 'url' => ['/log/index'], 'options' => ['class' => 'nav-item']], //dropdown item
                             ],
                         ],
                         [
-                            'label' => 'Item Loaning',
+                            'label' => TranslationHelper::translate('Lending'),
                             'url' => '#',
                             'options' => ['class' => 'nav-item has-treeview'],
                             'template' => '<a href="#" class="nav-link">{label}</a>',
                             'items' => [
-                                ['label' => 'Unit Loaning', 'url' => ['/lending/index'], 'options' => ['class' => 'nav-item']], //dropdown item
-                                ['label' => 'Loaning List', 'url' => ['/lending/list'], 'options' => ['class' => 'nav-item']], //dropdown item
-                                ['label' => 'Lending History', 'url' => ['/lending/lending-history'], 'options' => ['class' => 'nav-item']], //dropdown item
-                                ['label' => 'Item Loan Report', 'url' => ['/lending/item-report-active'], 'options' => ['class' => 'nav-item']], //dropdown item
-                                ['label' => 'Unit Loan Report', 'url' => ['/lending/unit-report-active'], 'options' => ['class' => 'nav-item']], //dropdown item
+                                ['label' => TranslationHelper::translate('Lending'), 'url' => ['/lending/index'], 'options' => ['class' => 'nav-item']], //dropdown item
+                                ['label' => TranslationHelper::translate('Lending List'), 'url' => ['/lending/list'], 'options' => ['class' => 'nav-item']], //dropdown item
+                                ['label' => TranslationHelper::translate('Lending History'), 'url' => ['/lending/lending-history'], 'options' => ['class' => 'nav-item']], //dropdown item
+                                ['label' => TranslationHelper::translate('Item Loan Report'), 'url' => ['/lending/item-report-active'], 'options' => ['class' => 'nav-item']], //dropdown item
+                                ['label' => TranslationHelper::translate('Unit Loan Report'), 'url' => ['/lending/unit-report-active'], 'options' => ['class' => 'nav-item']], //dropdown item
                             ],
                         ],
                         [
-                            'label' => 'Damaged & In-Repair Unit',
+                            'label' => TranslationHelper::translate('Damaged & In-Repair Unit'),
                             'url' => '#',
                             'options' => ['class' => 'nav-item has-treeview'],
                             'template' => '<a href="#" class="nav-link">{label}</a>',
                             'items' => [
-                                ['label' => 'Repair Summary', 'url' => ['/repair-log/index'], 'options' => ['class' => 'nav-item']], //dropdown item
-                                ['label' => 'Damaged Unit', 'url' => ['/unit/damaged'], 'options' => ['class' => 'nav-item']], //dropdown item
-                                ['label' => 'Unit In-Repair', 'url' => ['/unit/repair'], 'options' => ['class' => 'nav-item']], //dropdown item
+                                ['label' => TranslationHelper::translate('Repair Summary'), 'url' => ['/repair-log/index'], 'options' => ['class' => 'nav-item']], //dropdown item
+                                ['label' => TranslationHelper::translate('Damaged Unit'), 'url' => ['/unit/damaged'], 'options' => ['class' => 'nav-item']], //dropdown item
+                                ['label' => TranslationHelper::translate('Unit In-Repair'), 'url' => ['/unit/repair'], 'options' => ['class' => 'nav-item']], //dropdown item
                             ],
                         ],
-                        ['label' => 'Edit Unit Data', 'url' => ['/unit/correction-search'], 'options' => ['class' => 'nav-item'], 'template' => '<a href="{url}" class="nav-link">{label}</a>',], //dropdown item
-                        ['label' => 'Warehouse', 'url' => ['/warehouse/index'], 'options' => ['class' => 'nav-item'], 'template' => '<a href="{url}" class="nav-link">{label}</a>',], //dropdown item
-                        ['label' => 'Employee', 'url' => ['/employee/index'], 'options' => ['class' => 'nav-item'], 'template' => '<a href="{url}" class="nav-link">{label}</a>',], //dropdown item
+                        ['label' =>     TranslationHelper::translate('Edit Unit Data'), 'url' => ['/unit/correction-search'], 'options' => ['class' => 'nav-item'], 'template' => '<a href="{url}" class="nav-link">{label}</a>',], //dropdown item
+                        ['label' =>     TranslationHelper::translate('Warehouse'), 'url' => ['/warehouse/index'], 'options' => ['class' => 'nav-item'], 'template' => '<a href="{url}" class="nav-link">{label}</a>',], //dropdown item
+                        ['label' =>     TranslationHelper::translate('Employee'), 'url' => ['/employee/index'], 'options' => ['class' => 'nav-item'], 'template' => '<a href="{url}" class="nav-link">{label}</a>',], //dropdown item
                         [
-                            'label' => 'Admin Menu',
+                            'label' => TranslationHelper::translate('Admin Menu'),
                             'url' => '#',
                             'options' => ['class' => 'nav-item has-treeview'],
                             'template' => '<a href="#" class="nav-link">{label}</a>',
@@ -121,7 +122,7 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
                                 UserManagementModule::menuItems(),
                                 [
                                     [
-                                        'label' => 'Assign Warehouse',
+                                        'label' => TranslationHelper::translate('Assign Admin Warehouse'),
                                         'url' => ['/warehouse/assign'], // The route for the new item
                                         'options' => ['class' => 'nav-item'],
                                     ],
@@ -132,6 +133,26 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
                         
                     ],
                 ]) ?>
+    <br><br>
+    <? 
+    //echo Html::dropDownList('language', Yii::$app->language, ['en' => 'English', 'id' => 'Indonesian'], [
+    //    'id' => 'language-switcher',
+    //    'class' => 'form-select',
+    //]) 
+    ?>
+
+    <?php
+    $this->registerJs(<<<JS
+    $('#language-switcher').change(function() {
+        var selectedLang = $(this).val();
+        $.post('/site/set-language', { language: selectedLang }, function() {
+            location.reload();
+        });
+    });
+    JS
+    );
+    ?>
+
 
             </nav>
         </div>
@@ -163,7 +184,32 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
         <strong>&copy; Fikri A. Yuhanda - Prabubima Tech 2024 || Office Inventory Management Yii2 <?= date('Y') ?></strong>
     </footer>
 </div>
+<?php 
+$this->registerJs(<<<JS
+// Function to dynamically translate text using the MyMemory Translate API
+function translateText(text, sourceLang, targetLang) {
+    $.get('/site/translate', { text: text, sourceLang: sourceLang, targetLang: targetLang }, function(data) {
+        if (data.success) {
+            $('#translated-content').text(data.translatedText); // Update translated content
+        } else {
+            console.error('Translation failed:', data.error);
+        }
+    });
+}
 
+// Switch language and dynamically translate the page
+$('#language-switcher').change(function() {
+    var selectedLang = $(this).val();
+    var sourceLang = 'en'; // Default source language
+    var textToTranslate = $('#content-wrapper').text(); // Example content selector
+    var textToTranslate = $('#nav').text(); // Example content selector
+    translateText(textToTranslate, sourceLang, selectedLang);
+});
+
+JS
+, \yii\web\View::POS_READY);
+
+?>
 <?php $this->endBody() ?>
 </body>
 </html>

@@ -2,12 +2,13 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
+use app\helpers\TranslationHelper;
 
 /** @var yii\web\View $this */
 /** @var app\models\RepairLogSearch $searchModel */
 /** @var yii\data\ArrayDataProvider $dataProvider */
 
-$this->title = 'Repair Logs Summary';
+$this->title = TranslationHelper::translate('Repair Logs Summary');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="repair-log-index">
@@ -29,6 +30,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 ),
                 'contentOptions' => ['style' => 'width: 150px;'],
                 'headerOptions' => ['style' => 'width: 150px;'],
+                'label' => TranslationHelper::translate('Year'),
             ],
             [
                 'attribute' => 'month',
@@ -49,14 +51,15 @@ $this->params['breadcrumbs'][] = $this->title;
                 ),
                 'contentOptions' => ['style' => 'width: 250px;'],
                 'headerOptions' => ['style' => 'width: 250px;'],
+                'label' => TranslationHelper::translate('Month'),
             ],
             [
                 'attribute' => 'rep_type_1_count',
-                'label' => 'Went to Repair',
+                'label' => TranslationHelper::translate('Unit Sent to Repair'),
             ],
             [
                 'attribute' => 'rep_type_2_count',
-                'label' => 'Repair Closed',
+                'label' => TranslationHelper::translate('Repair Closed'),
             ],
             //[
             //    'attribute' => 'total_repairs',

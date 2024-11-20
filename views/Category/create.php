@@ -1,11 +1,12 @@
 <?php
 
 use yii\helpers\Html;
+use app\helpers\TranslationHelper;
 
 /** @var yii\web\View $this */
 /** @var app\models\ItemCategory $model */
 
-$this->title = 'Create Item Category';
+$this->title = TranslationHelper::translate('Create Item Category');
 $this->params['breadcrumbs'][] = ['label' => 'Item Categories', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>

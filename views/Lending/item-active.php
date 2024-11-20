@@ -7,12 +7,13 @@ use yii\helpers\Url;
 use yii\grid\ActionColumn;
 use yii\grid\GridView;
 use yii\widgets\ActiveForm;
+use app\helpers\TranslationHelper;
 
 /** @var yii\web\View $this */
 /** @var app\models\LogSearch $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
-$this->title = 'Item Loan Report';
+$this->title = TranslationHelper::translate('Item Loan Report');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="item-loan-report">
@@ -23,7 +24,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <p>
         <?php 
             // Button to trigger hidden export form
-            echo GhostHtml::button('Export Data to .xlsx', [
+            echo GhostHtml::button(TranslationHelper::translate('Export Data to .xlsx'), [
                 'class' => 'btn btn-success',
                 'onclick' => "$('#export-form').submit();"
             ]);
@@ -36,13 +37,19 @@ $this->params['breadcrumbs'][] = $this->title;
     'filterModel' => $searchModel,
     'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
-            'item_name',
+            [
+                'attribute' => 'item_name',
+                'label' => TranslationHelper::translate('Item Name')
+            ],
             'SKU',
-            'total_item_lent',
+            [
+                'attribute' => 'total_item_lent',
+                'label' => TranslationHelper::translate('Total Item Lent')
+            ],
             [
                 'class' => 'yii\grid\ActionColumn',
                 'template' => '{detail}',
-                'header' => 'Action', 
+                'header' => TranslationHelper::translate('Action'), 
                 'buttons' => [
                     'detail' => function ($url, $model, $key) {
                         return GhostHtml::a('<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
