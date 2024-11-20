@@ -10,6 +10,7 @@ use yii\filters\VerbFilter;
 use yii\db\Expression; 
 use Yii;
 use yii\filters\AccessControl;
+use app\components\MyMemoryService;
 /**
  * UserController implements the CRUD actions for User model.
  */
@@ -87,7 +88,6 @@ class UserController extends Controller
                     Yii::$app->session->setFlash('error', 'Failed to save the model' . json_encode($model->errors));
                     return $this->redirect(['create']);
                 }
-                return $this->redirect(['view', 'id' => $model->id]);
             }
         } else {
             $model->loadDefaultValues();

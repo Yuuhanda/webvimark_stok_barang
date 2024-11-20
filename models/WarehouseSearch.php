@@ -76,7 +76,7 @@ class WarehouseSearch extends Warehouse
     {
         $id_wh = Yii::$app->user->identity->id_wh;
 
-        if (User::hasRole('Admin')){
+        if (User::hasRole('Admin') && !User::hasRole('superadmin')){
                     // Construct the query
             $query = (new Query())
             ->select([

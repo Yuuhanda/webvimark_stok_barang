@@ -7,6 +7,7 @@ use app\models\CategorySearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use app\components\MyMemoryService;
 
 /**
  * CategoryController implements the CRUD actions for ItemCategory model.

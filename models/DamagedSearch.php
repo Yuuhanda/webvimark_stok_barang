@@ -29,7 +29,7 @@ class DamagedSearch extends Model
     {
         $id_wh = Yii::$app->user->identity->id_wh;
 
-        if (User::hasRole('Admin')){
+        if (User::hasRole('Admin') && !User::hasRole('superadmin')){
             $query = (new Query())
             ->select([
                 'condition_lookup.condition_name AS condition',

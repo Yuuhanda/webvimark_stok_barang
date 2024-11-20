@@ -106,6 +106,11 @@ $config = [
             ],
         ],
 
+        'myMemoryClient' => [
+            'class' => 'yii\httpclient\Client',
+            'baseUrl' => 'https://api.mymemory.translated.net',
+        ],
+
         
     ],
     'modules'=>[

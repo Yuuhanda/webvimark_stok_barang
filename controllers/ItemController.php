@@ -21,6 +21,7 @@ use app\models\Warehouse;
 use app\models\ConditionLookup;
 use app\models\ItemCategory;
 use app\models\StatusLookup;
+use app\components\MyMemoryService;
 /**
  * ItemController implements the CRUD actions for Item model.
  */
@@ -255,21 +256,8 @@ class ItemController extends Controller
                         $model->imagefile = $imageFileName;
                     }
                     Yii::debug('Uploaded file name: ' . $uploadModel->imageFile->name, __METHOD__);
-                } else {
-                    Yii::error('No file uploaded.', __METHOD__);
-                    Yii::$app->session->setFlash('error', 'Please upload a picture.');
-                    return $this->redirect(['index']); // Redirect back
                 }
                 
-            } else {
-                Yii::error("Upload model validation failed", __METHOD__);
-                if (!$uploadModel->validate()) {
-                    Yii::error('Upload model validation failed: ' . json_encode($uploadModel->errors), __METHOD__);
-                    var_dump($uploadModel->errors); // This will show validation error details on-screen
-                    die();
-                }// Dump errors to check on screen
-                Yii::$app->session->setFlash('error', 'Picture validation failed.');
-                return $this->redirect(['index']);
             }
             if ($model->save()) {
                 Yii::$app->session->setFlash('success', 'Item Updated successfully.');
@@ -336,6 +324,16 @@ class ItemController extends Controller
         ]);
     }
 
+    public function actionTranslate()
+    {
+        $text = 'Hello World';
+        $sourceLang = 'en';
+        $targetLang = 'fr';
+
+        $translatedText = MyMemoryService::translate($text, $sourceLang, $targetLang);
+
+        echo $translatedText. ' . ' .$text;
+    }
 
 
 }

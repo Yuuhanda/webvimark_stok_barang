@@ -17,8 +17,7 @@ class UploadPicture extends Model
     public function rules()
     {
         return [
-            [['imageFile'], 'file', 'skipOnEmpty' => false, 'extensions' => 'png, jpg, jpeg, webp, gif', 'maxSize' => 50485760], // Limit to 1MB
-            [['imageFile'], 'required'],
+            [['imageFile'], 'file', 'skipOnEmpty' => true, 'extensions' => 'png, jpg, jpeg, webp, gif', 'maxSize' => 50485760], // Limit to 1MB
         ];
     }
 
