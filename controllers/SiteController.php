@@ -10,6 +10,8 @@ use yii\filters\VerbFilter;
 use app\models\LoginForm;
 use app\models\ContactForm;
 use app\models\User;
+use app\components\MyMemoryService;
+use app\components\MyMemoryTranslation;
 
 class SiteController extends Controller
 {
@@ -150,5 +152,26 @@ class SiteController extends Controller
     public function actionAbout()
     {
         return $this->render('about');
+    }
+
+    public function actionTranslate()
+    {
+        Yii::$app->response->format = Response::FORMAT_JSON;
+
+        $text = Yii::$app->request->get('text', '');
+        $sourceLang = Yii::$app->request->get('sourceLang', 'en');
+        $targetLang = Yii::$app->request->get('targetLang', 'id');
+
+        if (empty($text)) {
+            return ['success' => false, 'message' => 'Text is required'];
+        }
+
+        $translatedText = MyMemoryService::translate($text, $sourceLang, $targetLang);
+
+        if ($translatedText) {
+            return ['success' => true, 'translatedText' => $translatedText];
+        }
+
+        return ['success' => false, 'message' => 'Translation failed'];
     }
 }

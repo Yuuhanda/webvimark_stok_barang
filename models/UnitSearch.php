@@ -35,7 +35,7 @@ class UnitSearch extends Model
         // Your custom query for item detail
         $id_wh = Yii::$app->user->identity->id_wh;
 
-        if (User::hasRole('Admin')){
+        if (User::hasRole('Admin') && !User::hasRole('superadmin')){
             $query = (new Query())
             ->select([
                 'condition' => 'condition_lookup.condition_name',

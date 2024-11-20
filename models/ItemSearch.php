@@ -38,7 +38,7 @@ class ItemSearch extends Model
         // Your custom query for the dashboard
         $id_wh = Yii::$app->user->identity->id_wh;
         
-        if (User::hasRole('warehouse-adm')&& !User::hasRole('superadmin')) {//ill use multiple condition instead
+        if (User::hasRole('Admin') && !User::hasRole('superadmin')) {//ill use multiple condition instead
             $query = (new Query())
                 ->select([
                     'item_name' => 'item.item_name',

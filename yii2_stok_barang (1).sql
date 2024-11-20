@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 13, 2024 at 03:07 AM
+-- Generation Time: Nov 20, 2024 at 05:02 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -655,17 +655,29 @@ CREATE TABLE `doc_uploaded` (
 --
 
 INSERT INTO `doc_uploaded` (`id_doc`, `file_name`, `datetime`, `user_id`) VALUES
-(1, 'bulk_unit651_1730948866.xlsx', '2024-11-07 10:07:46.00', 5),
-(2, 'bulk_unit417_1731039861.xlsx', '2024-11-08 11:24:21.00', 10),
-(3, 'bulk_unit638_1731460940.xlsx', '2024-11-13 08:22:20.00', 5),
-(4, 'bulk_unit135_1731460963.xlsx', '2024-11-13 08:22:43.00', 5),
-(5, 'bulk_unit904_1731460975.xlsx', '2024-11-13 08:22:55.00', 5),
-(6, 'bulk_unit264_1731460985.xlsx', '2024-11-13 08:23:05.00', 5),
-(7, 'bulk_unit839_1731461003.xlsx', '2024-11-13 08:23:23.00', 5),
-(8, 'bulk_unit554_1731461012.xlsx', '2024-11-13 08:23:32.00', 5),
-(9, 'bulk_unit239_1731462562.xlsx', '2024-11-13 08:49:23.00', 1),
-(10, 'bulk_unit658_1731462574.xlsx', '2024-11-13 08:49:34.00', 1),
-(11, 'bulk_unit375_1731462584.xlsx', '2024-11-13 08:49:44.00', 1);
+(12, 'bulk_unit693_1732072227.xlsx', '2024-11-20 10:10:27.00', 1),
+(13, 'bulk_unit696_1732072240.xlsx', '2024-11-20 10:10:40.00', 1),
+(14, 'bulk_unit296_1732072345.xlsx', '2024-11-20 10:12:25.00', 1),
+(15, 'bulk_unit794_1732072685.xlsx', '2024-11-20 10:18:05.00', 1),
+(16, 'bulk_unit716_1732073524.xlsx', '2024-11-20 10:32:04.00', 1),
+(17, 'bulk_unit918_1732073709.xlsx', '2024-11-20 10:35:09.00', 1),
+(18, 'bulk_unit812_1732073865.xlsx', '2024-11-20 10:37:45.00', 1),
+(19, 'bulk_unit673_1732073936.xlsx', '2024-11-20 10:38:56.00', 1),
+(20, 'bulk_unit426_1732074005.xlsx', '2024-11-20 10:40:05.00', 1),
+(21, 'bulk_unit692_1732074172.xlsx', '2024-11-20 10:42:52.00', 1),
+(22, 'bulk_unit164_1732074430.xlsx', '2024-11-20 10:47:10.00', 1),
+(23, 'bulk_unit834_1732074929.xlsx', '2024-11-20 10:55:29.00', 1),
+(24, 'bulk_unit162_1732075067.xlsx', '2024-11-20 10:57:47.00', 1),
+(25, 'bulk_unit962_1732075090.xlsx', '2024-11-20 10:58:10.00', 1),
+(26, 'bulk_unit691_1732075102.xlsx', '2024-11-20 10:58:22.00', 1),
+(27, 'bulk_unit928_1732075122.xlsx', '2024-11-20 10:58:42.00', 1),
+(28, 'bulk_unit247_1732075132.xlsx', '2024-11-20 10:58:52.00', 1),
+(29, 'bulk_unit385_1732075143.xlsx', '2024-11-20 10:59:03.00', 1),
+(30, 'bulk_unit529_1732075153.xlsx', '2024-11-20 10:59:13.00', 1),
+(31, 'bulk_unit370_1732075163.xlsx', '2024-11-20 10:59:23.00', 1),
+(32, 'bulk_unit992_1732075174.xlsx', '2024-11-20 10:59:34.00', 1),
+(33, 'bulk_unit231_1732075185.xlsx', '2024-11-20 10:59:45.00', 1),
+(34, 'bulk_unit733_1732075245.xlsx', '2024-11-20 11:00:45.00', 1);
 
 -- --------------------------------------------------------
 
@@ -704,24 +716,48 @@ CREATE TABLE `item` (
   `id_item` int(10) UNSIGNED NOT NULL,
   `item_name` varchar(60) NOT NULL,
   `SKU` varchar(50) NOT NULL,
-  `imagefile` varchar(255) NOT NULL
+  `imagefile` varchar(255) NOT NULL,
+  `id_category` int(10) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `item`
 --
 
-INSERT INTO `item` (`id_item`, `item_name`, `SKU`, `imagefile`) VALUES
-(11, 'Logitech Signature Slim Keyboard K950', 'BOGD-44', '736_1731394912.webp'),
-(12, 'Logitech MX Anywhere 3S', 'OJWL-41', '304_1731394932.webp'),
-(13, 'ThinkPad T14s Gen 4 (14″ AMD)', 'BNKH-93', '859_1731395020.jpg'),
-(14, 'Generic Mousepad Small', 'RGTD-6', '409_1731395120.jpeg'),
-(15, 'Sennheisser HD600', 'OTLP-31', '959_1731395082.jpeg'),
-(16, 'Shure SM7B', 'UGSI-9059', '121_1731395169.jpeg'),
-(18, 'TC-Helicon GOXLR', 'WX95-54EB', '903_1731395204.jpeg'),
-(25, 'USB-C Hub Multi Dongle', 'UD31-64DI', '624_1731395239.jpeg'),
-(26, 'Macbook Air M3', 'PU87-69AN', '116_1731395279.jpeg'),
-(27, 'Sony A7 iv', 'LV46-13GV', '302_1731460840.webp');
+INSERT INTO `item` (`id_item`, `item_name`, `SKU`, `imagefile`, `id_category`) VALUES
+(11, 'Logitech Signature Slim Keyboard K950', 'PAA-0001', '736_1731394912.webp', 1),
+(12, 'Logitech MX Anywhere 3S', 'PAA-0002', '304_1731394932.webp', 1),
+(13, 'ThinkPad T14s Gen 4 (14″ AMD)', 'PCA-0001', '859_1731395020.jpg', 3),
+(14, 'Generic Mousepad Small', 'PAA-0003', '409_1731395120.jpeg', 1),
+(15, 'Sennheisser HD600', 'VDA-0001', '959_1731395082.jpeg', 2),
+(16, 'Shure SM7B', 'VDA-0002', '121_1731395169.jpeg', 2),
+(18, 'TC-Helicon GOXLR', 'VDA-0003', '903_1731395204.jpeg', 2),
+(25, 'USB-C Hub Multi Dongle', 'PAA-0004', '624_1731395239.jpeg', 1),
+(26, 'Macbook Air M3', 'PCA-0002', '116_1731395279.jpeg', 3),
+(27, 'Sony A7 iv', 'VDA-0004', '302_1731460840.webp', 2),
+(28, 'Test FlakPz Gepard', 'TCA-0001', '945_1732075232.jpeg', 4);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `item_category`
+--
+
+CREATE TABLE `item_category` (
+  `id_category` int(10) NOT NULL,
+  `category_name` varchar(60) NOT NULL,
+  `cat_code` varchar(6) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `item_category`
+--
+
+INSERT INTO `item_category` (`id_category`, `category_name`, `cat_code`) VALUES
+(1, 'Computer Peripherals', 'PA'),
+(2, 'Audio Visual Production', 'VD'),
+(3, 'Personal Computer', 'PC'),
+(4, 'Test Cat', 'TC');
 
 -- --------------------------------------------------------
 
@@ -745,155 +781,646 @@ CREATE TABLE `item_unit` (
 --
 
 INSERT INTO `item_unit` (`id_unit`, `id_item`, `status`, `id_wh`, `comment`, `serial_number`, `condition`, `updated_by`) VALUES
-(58, 11, 1, 7, 'rbac test 3', 'BOG5409', 1, 5),
-(59, 11, 1, 6, 'test add new unit', 'BOG-7848', 1, 1),
-(60, 11, 2, 5, 'finish repair test', 'BOG-2254', 1, 5),
-(61, 11, 3, NULL, 'test add new unit', 'BOG-0642', 3, 8),
-(62, 11, 3, NULL, 'test rbac', 'BOG-6089', 2, 5),
-(63, 11, 1, 8, 'edit test', 'BOG-7894', 2, 1),
-(64, 11, 1, 5, 'test add new unit', 'BOG-0790', 1, 1),
-(65, 11, 3, NULL, 'test add new unit', 'BOG-0346', 2, 8),
-(66, 11, 3, NULL, 'test add new unit', 'BOG-3217', 3, 8),
-(67, 11, 1, 7, 'test add new unit', 'BOG-7480', 1, 1),
-(68, 11, 4, 7, 'test add new unit', 'BOG-4594', 4, 8),
-(69, 11, 1, 5, 'test add new unit', 'BOG-3363', 1, 1),
-(70, 11, 2, 7, 'test add new unit', 'BOG-2006', 1, 5),
-(71, 12, 1, 5, 'test add new unit', 'OJW-5143', 1, 1),
-(72, 12, 3, NULL, 'rbac test', 'OJW-5757', 3, 5),
-(73, 12, 1, 7, 'test add new unit', 'OJW-6303', 1, 1),
-(74, 13, 1, NULL, 'test add new unit', 'BNK-0338', 1, NULL),
-(75, 13, 1, 5, '', 'BNK-7156', 1, NULL),
-(76, 13, 1, 7, 'test add new unit', 'BNK-2251', 1, NULL),
-(77, 13, 1, 7, 'test add new unit', 'BNK-6793', 1, NULL),
-(78, 14, 1, 9, 'test add new unit', 'RGT-2537', 1, NULL),
-(79, 14, 1, 5, '', 'RGT-2175', 1, NULL),
-(80, 14, 1, 5, 'test add new unit', 'RGT-6288', 1, NULL),
-(81, 13, 1, 9, 'edit test', 'BNK-9582', 1, NULL),
-(82, 13, 1, 8, 'edit test', 'BNK-1702', 1, 5),
-(83, 14, 1, NULL, '', 'RGT-6039', 1, NULL),
-(84, 14, 1, 8, 'rbac test', 'RGT-1395', 1, 5),
-(85, 14, 1, 5, 'New Unit', 'RGT-9633', 1, NULL),
-(87, 11, 1, 5, 'mass upload test', 'BOG-670', 1, 5),
-(88, 11, 1, 6, 'mass upload test', 'BOG-389', 1, 1),
-(89, 11, 1, 7, 'mass upload test', 'BOG-460', 1, 5),
-(90, 11, 1, 8, 'mass upload test', 'BOG-932', 1, 5),
-(91, 11, 1, 9, 'mass upload test', 'BOG-623', 1, 5),
-(92, 11, 1, 5, 'mass upload test', 'BOG-297', 1, 5),
-(93, 11, 1, 6, 'mass upload test', 'BOG-263', 1, 5),
-(94, 11, 1, 7, 'mass upload test', 'BOG-784', 1, 5),
-(95, 11, 2, 8, 'eyy', 'BOG-261', 1, 5),
-(96, 11, 2, 9, 'mass upload test', 'BOG-914', 1, 5),
-(97, 14, 1, 5, 'mass upload test', 'RGT-908', 1, 5),
-(98, 14, 1, 6, 'mass upload test', 'RGT-882', 1, 5),
-(99, 14, 1, 7, 'mass upload test', 'RGT-567', 1, 5),
-(100, 14, 1, 8, 'mass upload test', 'RGT-614', 1, 5),
-(101, 14, 1, 9, 'mass upload test', 'RGT-848', 1, 5),
-(102, 14, 1, 5, 'mass upload test', 'RGT-780', 1, 5),
-(103, 14, 1, 6, 'mass upload test', 'RGT-197', 1, 5),
-(104, 14, 1, 7, 'mass upload test', 'RGT-389', 1, 5),
-(105, 14, 1, 8, 'mass upload test', 'RGT-105', 1, 5),
-(106, 14, 1, 9, 'mass upload test', 'RGT-51', 1, 5),
-(107, 14, 1, 5, 'mass upload test', 'RGT-880', 1, 5),
-(108, 14, 1, 6, 'mass upload test', 'RGT-626', 1, 5),
-(109, 14, 1, 7, 'mass upload test', 'RGT-403', 1, 5),
-(110, 14, 1, 8, 'mass upload test', 'RGT-110', 1, 5),
-(111, 14, 1, 9, 'mass upload test', 'RGT-946', 1, 5),
-(112, 14, 1, 5, 'mass upload test', 'RGT-577', 1, 5),
-(113, 14, 1, 6, 'mass upload test', 'RGT-805', 1, 5),
-(114, 14, 1, 7, 'mass upload test', 'RGT-583', 1, 5),
-(115, 14, 1, 8, 'mass upload test', 'RGT-268', 1, 5),
-(116, 14, 1, 9, 'mass upload test', 'RGT-372', 1, 5),
-(53303, 16, 1, 6, 'test add new unit', 'UGSI-31JEAB', 1, 4),
-(53304, 16, 1, 6, 'test add new unit', 'UGSI-85EDXN74', 1, 4),
-(53305, 16, 1, 10, 'New Unit', 'UGSI-31XB39FY', 1, 4),
-(53306, 16, 1, 8, 'test add new unit', 'UGSI-4994KW', 1, 4),
-(53307, 18, 1, 8, 'test add new unit', 'WX95-1911YK', 1, 4),
-(53308, 18, 2, 5, 'test add new unit  new autogenerate format', 'WX95-8225CZ-GH', 1, 4),
-(53309, 18, 1, 7, 'new format check', 'WX95-4898QB-TN', 1, 4),
-(54210, 26, 1, 5, 'rbac test', 'PU87-3865SB-CB', 1, 5),
-(54211, 26, 1, 5, 'rbac test webvimark bulk', 'PU87-2604YU-GG', 1, 5),
-(54212, 26, 1, 6, 'rbac test webvimark bulk', 'PU87-5165WZ-FF', 1, 5),
-(54213, 26, 1, 7, 'rbac test webvimark bulk', 'PU87-2309CI-BE', 1, 5),
-(54214, 26, 1, 8, 'rbac test webvimark bulk', 'PU87-7290MP-OU', 1, 5),
-(54215, 26, 1, 9, 'rbac test webvimark bulk', 'PU87-2368QM-AM', 1, 5),
-(54216, 26, 1, 10, 'rbac test webvimark bulk', 'PU87-5412DB-WD', 1, 5),
-(54217, 12, 1, 9, 'return test demo 1', 'OJWL-5502BT-GD', 1, 5),
-(54218, 12, 1, 10, 'test add new unit 222', 'OJWL-8475IX-GL', 1, 1),
-(54219, 27, 1, 5, 'test add new unit', 'LV46-8908QM-BG', 1, 5),
-(54220, 27, 1, 6, 'New Unit', 'LV46-4496ZX-VF', 1, 5),
-(54221, 25, 1, 5, 'test add new unit', 'UD31-2295XN-UY', 1, 5),
-(54222, 15, 1, 5, 'test', 'OTLP-6254BO-BY', 1, 5),
-(54223, 15, 1, 6, 'test', 'OTLP-9868UR-CE', 1, 5),
-(54224, 15, 1, 7, 'test', 'OTLP-6484BD-UW', 1, 5),
-(54225, 15, 1, 8, 'test', 'OTLP-3005PX-FQ', 1, 5),
-(54226, 15, 1, 9, 'test', 'OTLP-1691EA-WY', 1, 5),
-(54227, 15, 1, 10, 'test', 'OTLP-4385YA-XN', 1, 5),
-(54228, 15, 1, 11, 'test', 'OTLP-7802QJ-RP', 1, 5),
-(54229, 15, 1, 13, 'test', 'OTLP-4704VS-VK', 1, 5),
-(54230, 25, 1, 5, 'test', 'UD31-6957PS-FN', 1, 5),
-(54231, 25, 1, 6, 'test', 'UD31-0624QS-XH', 1, 5),
-(54232, 25, 1, 7, 'test', 'UD31-6126LI-SG', 1, 5),
-(54233, 25, 1, 8, 'test', 'UD31-2747EZ-YV', 1, 5),
-(54234, 25, 1, 9, 'test', 'UD31-2473BK-VC', 1, 5),
-(54235, 25, 1, 10, 'test', 'UD31-6379RS-DV', 1, 5),
-(54236, 25, 1, 11, 'test', 'UD31-6465XI-OX', 1, 5),
-(54237, 25, 1, 13, 'test', 'UD31-7610JF-TN', 1, 5),
-(54238, 18, 1, 5, 'test', 'WX95-7528VL-SU', 1, 5),
-(54239, 18, 1, 6, 'test', 'WX95-0322WC-UD', 1, 5),
-(54240, 18, 1, 7, 'test', 'WX95-6061ZE-LL', 1, 5),
-(54241, 18, 1, 8, 'test', 'WX95-6813WW-KD', 1, 5),
-(54242, 18, 1, 9, 'test', 'WX95-1630WR-EN', 1, 5),
-(54243, 18, 1, 10, 'test', 'WX95-9020QW-JY', 1, 5),
-(54244, 18, 1, 11, 'test', 'WX95-0517GE-GT', 1, 5),
-(54245, 18, 1, 13, 'test', 'WX95-8865TB-IV', 1, 5),
-(54246, 27, 1, 5, 'test', 'LV46-5078AR-YB', 1, 5),
-(54247, 27, 1, 6, 'test', 'LV46-9572BZ-SW', 1, 5),
-(54248, 27, 1, 7, 'test', 'LV46-8071NF-CJ', 1, 5),
-(54249, 27, 1, 8, 'test', 'LV46-1354WC-EB', 1, 5),
-(54250, 27, 1, 9, 'test', 'LV46-1770ND-MO', 1, 5),
-(54251, 27, 1, 10, 'test', 'LV46-7495GJ-LF', 1, 5),
-(54252, 27, 1, 11, 'test', 'LV46-6755FE-ZK', 1, 5),
-(54253, 27, 1, 13, 'test', 'LV46-7798ZZ-GH', 1, 5),
-(54254, 26, 1, 5, 'test', 'PU87-0283HB-SQ', 1, 5),
-(54255, 26, 1, 6, 'test', 'PU87-2761DF-DP', 1, 5),
-(54256, 26, 1, 7, 'test', 'PU87-8835FS-CY', 1, 5),
-(54257, 26, 1, 8, 'test', 'PU87-5616TH-JV', 1, 5),
-(54258, 26, 1, 9, 'test', 'PU87-5813OA-GJ', 1, 5),
-(54259, 26, 1, 10, 'test', 'PU87-2753OL-JQ', 1, 5),
-(54260, 26, 1, 11, 'test', 'PU87-7408EE-YS', 1, 5),
-(54261, 26, 1, 13, 'test', 'PU87-9607QD-DW', 1, 5),
-(54262, 16, 1, 5, 'test', 'UGSI-8274JB-CA', 1, 5),
-(54263, 16, 1, 6, 'test', 'UGSI-8526JK-PU', 1, 5),
-(54264, 16, 1, 7, 'test', 'UGSI-0756VM-UW', 1, 5),
-(54265, 16, 1, 8, 'test', 'UGSI-7763YA-KY', 1, 5),
-(54266, 16, 1, 9, 'test', 'UGSI-8200TC-UN', 1, 5),
-(54267, 16, 1, 10, 'test', 'UGSI-4665OJ-EU', 1, 5),
-(54268, 16, 1, 11, 'test', 'UGSI-8632EA-RL', 1, 5),
-(54269, 16, 1, 13, 'test', 'UGSI-4969KT-HK', 1, 5),
-(54270, 12, 1, 5, 'test', 'OJWL-7989IY-HU', 1, 1),
-(54271, 12, 1, 6, 'test', 'OJWL-5470WJ-CG', 1, 1),
-(54272, 12, 1, 7, 'test', 'OJWL-8753DP-WY', 1, 1),
-(54273, 12, 1, 8, 'test', 'OJWL-8515JX-UA', 1, 1),
-(54274, 12, 1, 9, 'test', 'OJWL-9424ZL-YF', 1, 1),
-(54275, 12, 1, 10, 'test', 'OJWL-5845MT-YT', 1, 1),
-(54276, 12, 1, 11, 'test', 'OJWL-2147TY-ES', 1, 1),
-(54277, 12, 1, 13, 'test', 'OJWL-1291FP-XS', 1, 1),
-(54278, 13, 1, 5, 'test', 'BNKH-3552UP-MF', 1, 1),
-(54279, 13, 1, 6, 'test', 'BNKH-5747BQ-ZN', 1, 1),
-(54280, 13, 1, 7, 'test', 'BNKH-2040HN-PN', 1, 1),
-(54281, 13, 1, 8, 'test', 'BNKH-6102NJ-AK', 1, 1),
-(54282, 13, 1, 9, 'test', 'BNKH-6726KV-TH', 1, 1),
-(54283, 13, 1, 10, 'test', 'BNKH-9718LO-CR', 1, 1),
-(54284, 13, 1, 11, 'test', 'BNKH-5182SN-PQ', 1, 1),
-(54285, 13, 1, 13, 'test', 'BNKH-0528TR-OM', 1, 1),
-(54286, 15, 1, 5, 'test', 'OTLP-9395UE-XV', 1, 1),
-(54287, 15, 1, 6, 'test', 'OTLP-4912SZ-IQ', 1, 1),
-(54288, 15, 1, 7, 'test', 'OTLP-2136XV-LM', 1, 1),
-(54289, 15, 1, 8, 'test', 'OTLP-8406II-PM', 1, 1),
-(54290, 15, 1, 9, 'test', 'OTLP-3077KG-YN', 1, 1),
-(54291, 15, 1, 10, 'test', 'OTLP-6327FY-DG', 1, 1),
-(54292, 15, 1, 11, 'test', 'OTLP-2460VW-BH', 1, 1),
-(54293, 15, 1, 13, 'test', 'OTLP-6074SC-IH', 1, 1);
+(54294, 11, 1, 5, 'new data after purge', 'PAA-0001-0001', 1, 1),
+(54295, 11, 1, 6, 'new data after purge', 'PAA-0001-0002', 1, 1),
+(54296, 11, 1, 7, 'new data after purge', 'PAA-0001-0003', 1, 1),
+(54297, 11, 1, 8, 'new data after purge', 'PAA-0001-0004', 1, 1),
+(54298, 11, 1, 9, 'new data after purge', 'PAA-0001-0005', 1, 1),
+(54299, 11, 1, 10, 'new data after purge', 'PAA-0001-0006', 1, 1),
+(54300, 11, 1, 11, 'new data after purge', 'PAA-0001-0007', 1, 1),
+(54301, 11, 1, 13, 'new data after purge', 'PAA-0001-0008', 1, 1),
+(54302, 11, 1, 5, 'new data after purge', 'PAA-0001-0009', 1, 1),
+(54303, 11, 1, 6, 'new data after purge', 'PAA-0001-0010', 1, 1),
+(54304, 11, 1, 7, 'new data after purge', 'PAA-0001-0011', 1, 1),
+(54305, 11, 1, 8, 'new data after purge', 'PAA-0001-0012', 1, 1),
+(54306, 11, 1, 9, 'new data after purge', 'PAA-0001-0013', 1, 1),
+(54307, 11, 1, 10, 'new data after purge', 'PAA-0001-0014', 1, 1),
+(54308, 11, 1, 11, 'new data after purge', 'PAA-0001-0015', 1, 1),
+(54309, 11, 1, 13, 'new data after purge', 'PAA-0001-0016', 1, 1),
+(54310, 11, 1, 5, 'new data after purge', 'PAA-0001-0017', 1, 1),
+(54311, 11, 1, 6, 'new data after purge', 'PAA-0001-0018', 1, 1),
+(54312, 11, 1, 7, 'new data after purge', 'PAA-0001-0019', 1, 1),
+(54313, 11, 1, 8, 'new data after purge', 'PAA-0001-0020', 1, 1),
+(54314, 11, 1, 9, 'new data after purge', 'PAA-0001-0021', 1, 1),
+(54315, 11, 1, 10, 'new data after purge', 'PAA-0001-0022', 1, 1),
+(54316, 11, 1, 11, 'new data after purge', 'PAA-0001-0023', 1, 1),
+(54317, 11, 1, 13, 'new data after purge', 'PAA-0001-0024', 1, 1),
+(54318, 11, 1, 5, 'new data after purge', 'PAA-0001-0025', 1, 1),
+(54319, 11, 1, 6, 'new data after purge', 'PAA-0001-0026', 1, 1),
+(54320, 11, 1, 7, 'new data after purge', 'PAA-0001-0027', 1, 1),
+(54321, 11, 1, 8, 'new data after purge', 'PAA-0001-0028', 1, 1),
+(54322, 11, 1, 9, 'new data after purge', 'PAA-0001-0029', 1, 1),
+(54323, 11, 1, 10, 'new data after purge', 'PAA-0001-0030', 1, 1),
+(54324, 11, 1, 11, 'new data after purge', 'PAA-0001-0031', 1, 1),
+(54325, 11, 1, 13, 'new data after purge', 'PAA-0001-0032', 1, 1),
+(54326, 11, 1, 5, 'new data after purge', 'PAA-0001-0033', 1, 1),
+(54327, 11, 1, 6, 'new data after purge', 'PAA-0001-0034', 1, 1),
+(54328, 11, 1, 7, 'new data after purge', 'PAA-0001-0035', 1, 1),
+(54329, 11, 1, 8, 'new data after purge', 'PAA-0001-0036', 1, 1),
+(54330, 11, 1, 9, 'new data after purge', 'PAA-0001-0037', 1, 1),
+(54331, 11, 1, 10, 'new data after purge', 'PAA-0001-0038', 1, 1),
+(54332, 11, 1, 11, 'new data after purge', 'PAA-0001-0039', 1, 1),
+(54333, 11, 1, 13, 'new data after purge', 'PAA-0001-0040', 1, 1),
+(54334, 11, 1, 5, 'new data after purge', 'PAA-0001-0041', 1, 1),
+(54335, 11, 1, 6, 'new data after purge', 'PAA-0001-0042', 1, 1),
+(54336, 11, 1, 7, 'new data after purge', 'PAA-0001-0043', 1, 1),
+(54337, 11, 1, 8, 'new data after purge', 'PAA-0001-0044', 1, 1),
+(54338, 11, 1, 9, 'new data after purge', 'PAA-0001-0045', 1, 1),
+(54339, 11, 1, 10, 'new data after purge', 'PAA-0001-0046', 1, 1),
+(54340, 11, 1, 11, 'new data after purge', 'PAA-0001-0047', 1, 1),
+(54341, 11, 1, 13, 'new data after purge', 'PAA-0001-0048', 1, 1),
+(54342, 11, 1, 5, 'new data after purge', 'PAA-0001-0049', 1, 1),
+(54343, 11, 1, 6, 'new data after purge', 'PAA-0001-0050', 1, 1),
+(54344, 11, 1, 7, 'new data after purge', 'PAA-0001-0051', 1, 1),
+(54345, 11, 1, 8, 'new data after purge', 'PAA-0001-0052', 1, 1),
+(54346, 11, 1, 9, 'new data after purge', 'PAA-0001-0053', 1, 1),
+(54347, 11, 1, 10, 'new data after purge', 'PAA-0001-0054', 1, 1),
+(54348, 11, 1, 11, 'new data after purge', 'PAA-0001-0055', 1, 1),
+(54349, 11, 1, 13, 'new data after purge', 'PAA-0001-0056', 1, 1),
+(54350, 11, 1, 5, 'new data after purge', 'PAA-0001-0057', 1, 1),
+(54351, 11, 1, 6, 'new data after purge', 'PAA-0001-0058', 1, 1),
+(54352, 11, 1, 7, 'new data after purge', 'PAA-0001-0059', 1, 1),
+(54353, 11, 1, 8, 'new data after purge', 'PAA-0001-0060', 1, 1),
+(54354, 11, 1, 9, 'new data after purge', 'PAA-0001-0061', 1, 1),
+(54355, 11, 1, 10, 'new data after purge', 'PAA-0001-0062', 1, 1),
+(54356, 11, 1, 11, 'new data after purge', 'PAA-0001-0063', 1, 1),
+(54357, 11, 1, 13, 'new data after purge', 'PAA-0001-0064', 1, 1),
+(54358, 12, 1, 5, 'new data after purge', 'PAA-0002-0001', 1, 1),
+(54359, 12, 1, 6, 'new data after purge', 'PAA-0002-0002', 1, 1),
+(54360, 12, 1, 7, 'new data after purge', 'PAA-0002-0003', 1, 1),
+(54361, 12, 1, 8, 'new data after purge', 'PAA-0002-0004', 1, 1),
+(54362, 12, 1, 9, 'new data after purge', 'PAA-0002-0005', 1, 1),
+(54363, 12, 1, 10, 'new data after purge', 'PAA-0002-0006', 1, 1),
+(54364, 12, 1, 11, 'new data after purge', 'PAA-0002-0007', 1, 1),
+(54365, 12, 1, 13, 'new data after purge', 'PAA-0002-0008', 1, 1),
+(54366, 12, 1, 5, 'new data after purge', 'PAA-0002-0009', 1, 1),
+(54367, 12, 1, 6, 'new data after purge', 'PAA-0002-0010', 1, 1),
+(54368, 12, 1, 7, 'new data after purge', 'PAA-0002-0011', 1, 1),
+(54369, 12, 1, 8, 'new data after purge', 'PAA-0002-0012', 1, 1),
+(54370, 12, 1, 9, 'new data after purge', 'PAA-0002-0013', 1, 1),
+(54371, 12, 1, 10, 'new data after purge', 'PAA-0002-0014', 1, 1),
+(54372, 12, 1, 11, 'new data after purge', 'PAA-0002-0015', 1, 1),
+(54373, 12, 1, 13, 'new data after purge', 'PAA-0002-0016', 1, 1),
+(54374, 12, 1, 5, 'new data after purge', 'PAA-0002-0017', 1, 1),
+(54375, 12, 1, 6, 'new data after purge', 'PAA-0002-0018', 1, 1),
+(54376, 12, 1, 7, 'new data after purge', 'PAA-0002-0019', 1, 1),
+(54377, 12, 1, 8, 'new data after purge', 'PAA-0002-0020', 1, 1),
+(54378, 12, 1, 9, 'new data after purge', 'PAA-0002-0021', 1, 1),
+(54379, 12, 1, 10, 'new data after purge', 'PAA-0002-0022', 1, 1),
+(54380, 12, 1, 11, 'new data after purge', 'PAA-0002-0023', 1, 1),
+(54381, 12, 1, 13, 'new data after purge', 'PAA-0002-0024', 1, 1),
+(54382, 12, 1, 5, 'new data after purge', 'PAA-0002-0025', 1, 1),
+(54383, 12, 1, 6, 'new data after purge', 'PAA-0002-0026', 1, 1),
+(54384, 12, 1, 7, 'new data after purge', 'PAA-0002-0027', 1, 1),
+(54385, 12, 1, 8, 'new data after purge', 'PAA-0002-0028', 1, 1),
+(54386, 12, 1, 9, 'new data after purge', 'PAA-0002-0029', 1, 1),
+(54387, 12, 1, 10, 'new data after purge', 'PAA-0002-0030', 1, 1),
+(54388, 12, 1, 11, 'new data after purge', 'PAA-0002-0031', 1, 1),
+(54389, 12, 1, 13, 'new data after purge', 'PAA-0002-0032', 1, 1),
+(54390, 12, 1, 5, 'new data after purge', 'PAA-0002-0033', 1, 1),
+(54391, 12, 1, 6, 'new data after purge', 'PAA-0002-0034', 1, 1),
+(54392, 12, 1, 7, 'new data after purge', 'PAA-0002-0035', 1, 1),
+(54393, 12, 1, 8, 'new data after purge', 'PAA-0002-0036', 1, 1),
+(54394, 12, 1, 9, 'new data after purge', 'PAA-0002-0037', 1, 1),
+(54395, 12, 1, 10, 'new data after purge', 'PAA-0002-0038', 1, 1),
+(54396, 12, 1, 11, 'new data after purge', 'PAA-0002-0039', 1, 1),
+(54397, 12, 1, 13, 'new data after purge', 'PAA-0002-0040', 1, 1),
+(54398, 12, 1, 5, 'new data after purge', 'PAA-0002-0041', 1, 1),
+(54399, 12, 1, 6, 'new data after purge', 'PAA-0002-0042', 1, 1),
+(54400, 12, 1, 7, 'new data after purge', 'PAA-0002-0043', 1, 1),
+(54401, 12, 1, 8, 'new data after purge', 'PAA-0002-0044', 1, 1),
+(54402, 12, 1, 9, 'new data after purge', 'PAA-0002-0045', 1, 1),
+(54403, 12, 1, 10, 'new data after purge', 'PAA-0002-0046', 1, 1),
+(54404, 12, 1, 11, 'new data after purge', 'PAA-0002-0047', 1, 1),
+(54405, 12, 1, 13, 'new data after purge', 'PAA-0002-0048', 1, 1),
+(54406, 12, 1, 5, 'new data after purge', 'PAA-0002-0049', 1, 1),
+(54407, 12, 1, 6, 'new data after purge', 'PAA-0002-0050', 1, 1),
+(54408, 12, 1, 7, 'new data after purge', 'PAA-0002-0051', 1, 1),
+(54409, 12, 1, 8, 'new data after purge', 'PAA-0002-0052', 1, 1),
+(54410, 12, 1, 9, 'new data after purge', 'PAA-0002-0053', 1, 1),
+(54411, 12, 1, 10, 'new data after purge', 'PAA-0002-0054', 1, 1),
+(54412, 12, 1, 11, 'new data after purge', 'PAA-0002-0055', 1, 1),
+(54413, 12, 1, 13, 'new data after purge', 'PAA-0002-0056', 1, 1),
+(54414, 12, 1, 5, 'new data after purge', 'PAA-0002-0057', 1, 1),
+(54415, 12, 1, 6, 'new data after purge', 'PAA-0002-0058', 1, 1),
+(54416, 12, 1, 7, 'new data after purge', 'PAA-0002-0059', 1, 1),
+(54417, 12, 1, 8, 'new data after purge', 'PAA-0002-0060', 1, 1),
+(54418, 12, 1, 9, 'new data after purge', 'PAA-0002-0061', 1, 1),
+(54419, 12, 1, 10, 'new data after purge', 'PAA-0002-0062', 1, 1),
+(54420, 12, 1, 11, 'new data after purge', 'PAA-0002-0063', 1, 1),
+(54421, 12, 1, 13, 'new data after purge', 'PAA-0002-0064', 1, 1),
+(54422, 13, 1, 5, 'new data after purge', 'PCA-0001-0001', 1, 1),
+(54423, 13, 1, 6, 'new data after purge', 'PCA-0001-0002', 1, 1),
+(54424, 13, 1, 7, 'new data after purge', 'PCA-0001-0003', 1, 1),
+(54425, 13, 1, 8, 'new data after purge', 'PCA-0001-0004', 1, 1),
+(54426, 13, 1, 9, 'new data after purge', 'PCA-0001-0005', 1, 1),
+(54427, 13, 1, 10, 'new data after purge', 'PCA-0001-0006', 1, 1),
+(54428, 13, 1, 11, 'new data after purge', 'PCA-0001-0007', 1, 1),
+(54429, 13, 1, 13, 'new data after purge', 'PCA-0001-0008', 1, 1),
+(54430, 13, 1, 5, 'new data after purge', 'PCA-0001-0009', 1, 1),
+(54431, 13, 1, 6, 'new data after purge', 'PCA-0001-0010', 1, 1),
+(54432, 13, 1, 7, 'new data after purge', 'PCA-0001-0011', 1, 1),
+(54433, 13, 1, 8, 'new data after purge', 'PCA-0001-0012', 1, 1),
+(54434, 13, 1, 9, 'new data after purge', 'PCA-0001-0013', 1, 1),
+(54435, 13, 1, 10, 'new data after purge', 'PCA-0001-0014', 1, 1),
+(54436, 13, 1, 11, 'new data after purge', 'PCA-0001-0015', 1, 1),
+(54437, 13, 1, 13, 'new data after purge', 'PCA-0001-0016', 1, 1),
+(54438, 13, 1, 5, 'new data after purge', 'PCA-0001-0017', 1, 1),
+(54439, 13, 1, 6, 'new data after purge', 'PCA-0001-0018', 1, 1),
+(54440, 13, 1, 7, 'new data after purge', 'PCA-0001-0019', 1, 1),
+(54441, 13, 1, 8, 'new data after purge', 'PCA-0001-0020', 1, 1),
+(54442, 13, 1, 9, 'new data after purge', 'PCA-0001-0021', 1, 1),
+(54443, 13, 1, 10, 'new data after purge', 'PCA-0001-0022', 1, 1),
+(54444, 13, 1, 11, 'new data after purge', 'PCA-0001-0023', 1, 1),
+(54445, 13, 1, 13, 'new data after purge', 'PCA-0001-0024', 1, 1),
+(54446, 13, 1, 5, 'new data after purge', 'PCA-0001-0025', 1, 1),
+(54447, 13, 1, 6, 'new data after purge', 'PCA-0001-0026', 1, 1),
+(54448, 13, 1, 7, 'new data after purge', 'PCA-0001-0027', 1, 1),
+(54449, 13, 1, 8, 'new data after purge', 'PCA-0001-0028', 1, 1),
+(54450, 13, 1, 9, 'new data after purge', 'PCA-0001-0029', 1, 1),
+(54451, 13, 1, 10, 'new data after purge', 'PCA-0001-0030', 1, 1),
+(54452, 13, 1, 11, 'new data after purge', 'PCA-0001-0031', 1, 1),
+(54453, 13, 1, 13, 'new data after purge', 'PCA-0001-0032', 1, 1),
+(54454, 13, 1, 5, 'new data after purge', 'PCA-0001-0033', 1, 1),
+(54455, 13, 1, 6, 'new data after purge', 'PCA-0001-0034', 1, 1),
+(54456, 13, 1, 7, 'new data after purge', 'PCA-0001-0035', 1, 1),
+(54457, 13, 1, 8, 'new data after purge', 'PCA-0001-0036', 1, 1),
+(54458, 13, 1, 9, 'new data after purge', 'PCA-0001-0037', 1, 1),
+(54459, 13, 1, 10, 'new data after purge', 'PCA-0001-0038', 1, 1),
+(54460, 13, 1, 11, 'new data after purge', 'PCA-0001-0039', 1, 1),
+(54461, 13, 1, 13, 'new data after purge', 'PCA-0001-0040', 1, 1),
+(54462, 13, 1, 5, 'new data after purge', 'PCA-0001-0041', 1, 1),
+(54463, 13, 1, 6, 'new data after purge', 'PCA-0001-0042', 1, 1),
+(54464, 13, 1, 7, 'new data after purge', 'PCA-0001-0043', 1, 1),
+(54465, 13, 1, 8, 'new data after purge', 'PCA-0001-0044', 1, 1),
+(54466, 13, 1, 9, 'new data after purge', 'PCA-0001-0045', 1, 1),
+(54467, 13, 1, 10, 'new data after purge', 'PCA-0001-0046', 1, 1),
+(54468, 13, 1, 11, 'new data after purge', 'PCA-0001-0047', 1, 1),
+(54469, 13, 1, 13, 'new data after purge', 'PCA-0001-0048', 1, 1),
+(54470, 13, 1, 5, 'new data after purge', 'PCA-0001-0049', 1, 1),
+(54471, 13, 1, 6, 'new data after purge', 'PCA-0001-0050', 1, 1),
+(54472, 13, 1, 7, 'new data after purge', 'PCA-0001-0051', 1, 1),
+(54473, 13, 1, 8, 'new data after purge', 'PCA-0001-0052', 1, 1),
+(54474, 13, 1, 9, 'new data after purge', 'PCA-0001-0053', 1, 1),
+(54475, 13, 1, 10, 'new data after purge', 'PCA-0001-0054', 1, 1),
+(54476, 13, 1, 11, 'new data after purge', 'PCA-0001-0055', 1, 1),
+(54477, 13, 1, 13, 'new data after purge', 'PCA-0001-0056', 1, 1),
+(54478, 13, 1, 5, 'new data after purge', 'PCA-0001-0057', 1, 1),
+(54479, 13, 1, 6, 'new data after purge', 'PCA-0001-0058', 1, 1),
+(54480, 13, 1, 7, 'new data after purge', 'PCA-0001-0059', 1, 1),
+(54481, 13, 1, 8, 'new data after purge', 'PCA-0001-0060', 1, 1),
+(54482, 13, 1, 9, 'new data after purge', 'PCA-0001-0061', 1, 1),
+(54483, 13, 1, 10, 'new data after purge', 'PCA-0001-0062', 1, 1),
+(54484, 13, 1, 11, 'new data after purge', 'PCA-0001-0063', 1, 1),
+(54485, 13, 1, 13, 'new data after purge', 'PCA-0001-0064', 1, 1),
+(54486, 14, 1, 5, 'new data after purge', 'PAA-0003-0001', 1, 1),
+(54487, 14, 1, 6, 'new data after purge', 'PAA-0003-0002', 1, 1),
+(54488, 14, 1, 7, 'new data after purge', 'PAA-0003-0003', 1, 1),
+(54489, 14, 1, 8, 'new data after purge', 'PAA-0003-0004', 1, 1),
+(54490, 14, 1, 9, 'new data after purge', 'PAA-0003-0005', 1, 1),
+(54491, 14, 1, 10, 'new data after purge', 'PAA-0003-0006', 1, 1),
+(54492, 14, 1, 11, 'new data after purge', 'PAA-0003-0007', 1, 1),
+(54493, 14, 1, 13, 'new data after purge', 'PAA-0003-0008', 1, 1),
+(54494, 14, 1, 5, 'new data after purge', 'PAA-0003-0009', 1, 1),
+(54495, 14, 1, 6, 'new data after purge', 'PAA-0003-0010', 1, 1),
+(54496, 14, 1, 7, 'new data after purge', 'PAA-0003-0011', 1, 1),
+(54497, 14, 1, 8, 'new data after purge', 'PAA-0003-0012', 1, 1),
+(54498, 14, 1, 9, 'new data after purge', 'PAA-0003-0013', 1, 1),
+(54499, 14, 1, 10, 'new data after purge', 'PAA-0003-0014', 1, 1),
+(54500, 14, 1, 11, 'new data after purge', 'PAA-0003-0015', 1, 1),
+(54501, 14, 1, 13, 'new data after purge', 'PAA-0003-0016', 1, 1),
+(54502, 14, 1, 5, 'new data after purge', 'PAA-0003-0017', 1, 1),
+(54503, 14, 1, 6, 'new data after purge', 'PAA-0003-0018', 1, 1),
+(54504, 14, 1, 7, 'new data after purge', 'PAA-0003-0019', 1, 1),
+(54505, 14, 1, 8, 'new data after purge', 'PAA-0003-0020', 1, 1),
+(54506, 14, 1, 9, 'new data after purge', 'PAA-0003-0021', 1, 1),
+(54507, 14, 1, 10, 'new data after purge', 'PAA-0003-0022', 1, 1),
+(54508, 14, 1, 11, 'new data after purge', 'PAA-0003-0023', 1, 1),
+(54509, 14, 1, 13, 'new data after purge', 'PAA-0003-0024', 1, 1),
+(54510, 14, 1, 5, 'new data after purge', 'PAA-0003-0025', 1, 1),
+(54511, 14, 1, 6, 'new data after purge', 'PAA-0003-0026', 1, 1),
+(54512, 14, 1, 7, 'new data after purge', 'PAA-0003-0027', 1, 1),
+(54513, 14, 1, 8, 'new data after purge', 'PAA-0003-0028', 1, 1),
+(54514, 14, 1, 9, 'new data after purge', 'PAA-0003-0029', 1, 1),
+(54515, 14, 1, 10, 'new data after purge', 'PAA-0003-0030', 1, 1),
+(54516, 14, 1, 11, 'new data after purge', 'PAA-0003-0031', 1, 1),
+(54517, 14, 1, 13, 'new data after purge', 'PAA-0003-0032', 1, 1),
+(54518, 14, 1, 5, 'new data after purge', 'PAA-0003-0033', 1, 1),
+(54519, 14, 1, 6, 'new data after purge', 'PAA-0003-0034', 1, 1),
+(54520, 14, 1, 7, 'new data after purge', 'PAA-0003-0035', 1, 1),
+(54521, 14, 1, 8, 'new data after purge', 'PAA-0003-0036', 1, 1),
+(54522, 14, 1, 9, 'new data after purge', 'PAA-0003-0037', 1, 1),
+(54523, 14, 1, 10, 'new data after purge', 'PAA-0003-0038', 1, 1),
+(54524, 14, 1, 11, 'new data after purge', 'PAA-0003-0039', 1, 1),
+(54525, 14, 1, 13, 'new data after purge', 'PAA-0003-0040', 1, 1),
+(54526, 14, 1, 5, 'new data after purge', 'PAA-0003-0041', 1, 1),
+(54527, 14, 1, 6, 'new data after purge', 'PAA-0003-0042', 1, 1),
+(54528, 14, 1, 7, 'new data after purge', 'PAA-0003-0043', 1, 1),
+(54529, 14, 1, 8, 'new data after purge', 'PAA-0003-0044', 1, 1),
+(54530, 14, 1, 9, 'new data after purge', 'PAA-0003-0045', 1, 1),
+(54531, 14, 1, 10, 'new data after purge', 'PAA-0003-0046', 1, 1),
+(54532, 14, 1, 11, 'new data after purge', 'PAA-0003-0047', 1, 1),
+(54533, 14, 1, 13, 'new data after purge', 'PAA-0003-0048', 1, 1),
+(54534, 14, 1, 5, 'new data after purge', 'PAA-0003-0049', 1, 1),
+(54535, 14, 1, 6, 'new data after purge', 'PAA-0003-0050', 1, 1),
+(54536, 14, 1, 7, 'new data after purge', 'PAA-0003-0051', 1, 1),
+(54537, 14, 1, 8, 'new data after purge', 'PAA-0003-0052', 1, 1),
+(54538, 14, 1, 9, 'new data after purge', 'PAA-0003-0053', 1, 1),
+(54539, 14, 1, 10, 'new data after purge', 'PAA-0003-0054', 1, 1),
+(54540, 14, 1, 11, 'new data after purge', 'PAA-0003-0055', 1, 1),
+(54541, 14, 1, 13, 'new data after purge', 'PAA-0003-0056', 1, 1),
+(54542, 14, 1, 5, 'new data after purge', 'PAA-0003-0057', 1, 1),
+(54543, 14, 1, 6, 'new data after purge', 'PAA-0003-0058', 1, 1),
+(54544, 14, 1, 7, 'new data after purge', 'PAA-0003-0059', 1, 1),
+(54545, 14, 1, 8, 'new data after purge', 'PAA-0003-0060', 1, 1),
+(54546, 14, 1, 9, 'new data after purge', 'PAA-0003-0061', 1, 1),
+(54547, 14, 1, 10, 'new data after purge', 'PAA-0003-0062', 1, 1),
+(54548, 14, 1, 11, 'new data after purge', 'PAA-0003-0063', 1, 1),
+(54549, 14, 1, 13, 'new data after purge', 'PAA-0003-0064', 1, 1),
+(54550, 15, 1, 5, 'new data after purge', 'VDA-0001-0001', 1, 1),
+(54551, 15, 1, 6, 'new data after purge', 'VDA-0001-0002', 1, 1),
+(54552, 15, 1, 7, 'new data after purge', 'VDA-0001-0003', 1, 1),
+(54553, 15, 1, 8, 'new data after purge', 'VDA-0001-0004', 1, 1),
+(54554, 15, 1, 9, 'new data after purge', 'VDA-0001-0005', 1, 1),
+(54555, 15, 1, 10, 'new data after purge', 'VDA-0001-0006', 1, 1),
+(54556, 15, 1, 11, 'new data after purge', 'VDA-0001-0007', 1, 1),
+(54557, 15, 1, 13, 'new data after purge', 'VDA-0001-0008', 1, 1),
+(54558, 15, 1, 5, 'new data after purge', 'VDA-0001-0009', 1, 1),
+(54559, 15, 1, 6, 'new data after purge', 'VDA-0001-0010', 1, 1),
+(54560, 15, 1, 7, 'new data after purge', 'VDA-0001-0011', 1, 1),
+(54561, 15, 1, 8, 'new data after purge', 'VDA-0001-0012', 1, 1),
+(54562, 15, 1, 9, 'new data after purge', 'VDA-0001-0013', 1, 1),
+(54563, 15, 1, 10, 'new data after purge', 'VDA-0001-0014', 1, 1),
+(54564, 15, 1, 11, 'new data after purge', 'VDA-0001-0015', 1, 1),
+(54565, 15, 1, 13, 'new data after purge', 'VDA-0001-0016', 1, 1),
+(54566, 15, 1, 5, 'new data after purge', 'VDA-0001-0017', 1, 1),
+(54567, 15, 1, 6, 'new data after purge', 'VDA-0001-0018', 1, 1),
+(54568, 15, 1, 7, 'new data after purge', 'VDA-0001-0019', 1, 1),
+(54569, 15, 1, 8, 'new data after purge', 'VDA-0001-0020', 1, 1),
+(54570, 15, 1, 9, 'new data after purge', 'VDA-0001-0021', 1, 1),
+(54571, 15, 1, 10, 'new data after purge', 'VDA-0001-0022', 1, 1),
+(54572, 15, 1, 11, 'new data after purge', 'VDA-0001-0023', 1, 1),
+(54573, 15, 1, 13, 'new data after purge', 'VDA-0001-0024', 1, 1),
+(54574, 15, 1, 5, 'new data after purge', 'VDA-0001-0025', 1, 1),
+(54575, 15, 1, 6, 'new data after purge', 'VDA-0001-0026', 1, 1),
+(54576, 15, 1, 7, 'new data after purge', 'VDA-0001-0027', 1, 1),
+(54577, 15, 1, 8, 'new data after purge', 'VDA-0001-0028', 1, 1),
+(54578, 15, 1, 9, 'new data after purge', 'VDA-0001-0029', 1, 1),
+(54579, 15, 1, 10, 'new data after purge', 'VDA-0001-0030', 1, 1),
+(54580, 15, 1, 11, 'new data after purge', 'VDA-0001-0031', 1, 1),
+(54581, 15, 1, 13, 'new data after purge', 'VDA-0001-0032', 1, 1),
+(54582, 15, 1, 5, 'new data after purge', 'VDA-0001-0033', 1, 1),
+(54583, 15, 1, 6, 'new data after purge', 'VDA-0001-0034', 1, 1),
+(54584, 15, 1, 7, 'new data after purge', 'VDA-0001-0035', 1, 1),
+(54585, 15, 1, 8, 'new data after purge', 'VDA-0001-0036', 1, 1),
+(54586, 15, 1, 9, 'new data after purge', 'VDA-0001-0037', 1, 1),
+(54587, 15, 1, 10, 'new data after purge', 'VDA-0001-0038', 1, 1),
+(54588, 15, 1, 11, 'new data after purge', 'VDA-0001-0039', 1, 1),
+(54589, 15, 1, 13, 'new data after purge', 'VDA-0001-0040', 1, 1),
+(54590, 15, 1, 5, 'new data after purge', 'VDA-0001-0041', 1, 1),
+(54591, 15, 1, 6, 'new data after purge', 'VDA-0001-0042', 1, 1),
+(54592, 15, 1, 7, 'new data after purge', 'VDA-0001-0043', 1, 1),
+(54593, 15, 1, 8, 'new data after purge', 'VDA-0001-0044', 1, 1),
+(54594, 15, 1, 9, 'new data after purge', 'VDA-0001-0045', 1, 1),
+(54595, 15, 1, 10, 'new data after purge', 'VDA-0001-0046', 1, 1),
+(54596, 15, 1, 11, 'new data after purge', 'VDA-0001-0047', 1, 1),
+(54597, 15, 1, 13, 'new data after purge', 'VDA-0001-0048', 1, 1),
+(54598, 15, 1, 5, 'new data after purge', 'VDA-0001-0049', 1, 1),
+(54599, 15, 1, 6, 'new data after purge', 'VDA-0001-0050', 1, 1),
+(54600, 15, 1, 7, 'new data after purge', 'VDA-0001-0051', 1, 1),
+(54601, 15, 1, 8, 'new data after purge', 'VDA-0001-0052', 1, 1),
+(54602, 15, 1, 9, 'new data after purge', 'VDA-0001-0053', 1, 1),
+(54603, 15, 1, 10, 'new data after purge', 'VDA-0001-0054', 1, 1),
+(54604, 15, 1, 11, 'new data after purge', 'VDA-0001-0055', 1, 1),
+(54605, 15, 1, 13, 'new data after purge', 'VDA-0001-0056', 1, 1),
+(54606, 15, 1, 5, 'new data after purge', 'VDA-0001-0057', 1, 1),
+(54607, 15, 1, 6, 'new data after purge', 'VDA-0001-0058', 1, 1),
+(54608, 15, 1, 7, 'new data after purge', 'VDA-0001-0059', 1, 1),
+(54609, 15, 1, 8, 'new data after purge', 'VDA-0001-0060', 1, 1),
+(54610, 15, 1, 9, 'new data after purge', 'VDA-0001-0061', 1, 1),
+(54611, 15, 1, 10, 'new data after purge', 'VDA-0001-0062', 1, 1),
+(54612, 15, 1, 11, 'new data after purge', 'VDA-0001-0063', 1, 1),
+(54613, 15, 1, 13, 'new data after purge', 'VDA-0001-0064', 1, 1),
+(54614, 16, 1, 5, 'new data after purge', 'VDA-0002-0001', 1, 1),
+(54615, 16, 1, 6, 'new data after purge', 'VDA-0002-0002', 1, 1),
+(54616, 16, 1, 7, 'new data after purge', 'VDA-0002-0003', 1, 1),
+(54617, 16, 1, 8, 'new data after purge', 'VDA-0002-0004', 1, 1),
+(54618, 16, 1, 9, 'new data after purge', 'VDA-0002-0005', 1, 1),
+(54619, 16, 1, 10, 'new data after purge', 'VDA-0002-0006', 1, 1),
+(54620, 16, 1, 11, 'new data after purge', 'VDA-0002-0007', 1, 1),
+(54621, 16, 1, 13, 'new data after purge', 'VDA-0002-0008', 1, 1),
+(54622, 16, 1, 5, 'new data after purge', 'VDA-0002-0009', 1, 1),
+(54623, 16, 1, 6, 'new data after purge', 'VDA-0002-0010', 1, 1),
+(54624, 16, 1, 7, 'new data after purge', 'VDA-0002-0011', 1, 1),
+(54625, 16, 1, 8, 'new data after purge', 'VDA-0002-0012', 1, 1),
+(54626, 16, 1, 9, 'new data after purge', 'VDA-0002-0013', 1, 1),
+(54627, 16, 1, 10, 'new data after purge', 'VDA-0002-0014', 1, 1),
+(54628, 16, 1, 11, 'new data after purge', 'VDA-0002-0015', 1, 1),
+(54629, 16, 1, 13, 'new data after purge', 'VDA-0002-0016', 1, 1),
+(54630, 16, 1, 5, 'new data after purge', 'VDA-0002-0017', 1, 1),
+(54631, 16, 1, 6, 'new data after purge', 'VDA-0002-0018', 1, 1),
+(54632, 16, 1, 7, 'new data after purge', 'VDA-0002-0019', 1, 1),
+(54633, 16, 1, 8, 'new data after purge', 'VDA-0002-0020', 1, 1),
+(54634, 16, 1, 9, 'new data after purge', 'VDA-0002-0021', 1, 1),
+(54635, 16, 1, 10, 'new data after purge', 'VDA-0002-0022', 1, 1),
+(54636, 16, 1, 11, 'new data after purge', 'VDA-0002-0023', 1, 1),
+(54637, 16, 1, 13, 'new data after purge', 'VDA-0002-0024', 1, 1),
+(54638, 16, 1, 5, 'new data after purge', 'VDA-0002-0025', 1, 1),
+(54639, 16, 1, 6, 'new data after purge', 'VDA-0002-0026', 1, 1),
+(54640, 16, 1, 7, 'new data after purge', 'VDA-0002-0027', 1, 1),
+(54641, 16, 1, 8, 'new data after purge', 'VDA-0002-0028', 1, 1),
+(54642, 16, 1, 9, 'new data after purge', 'VDA-0002-0029', 1, 1),
+(54643, 16, 1, 10, 'new data after purge', 'VDA-0002-0030', 1, 1),
+(54644, 16, 1, 11, 'new data after purge', 'VDA-0002-0031', 1, 1),
+(54645, 16, 1, 13, 'new data after purge', 'VDA-0002-0032', 1, 1),
+(54646, 16, 1, 5, 'new data after purge', 'VDA-0002-0033', 1, 1),
+(54647, 16, 1, 6, 'new data after purge', 'VDA-0002-0034', 1, 1),
+(54648, 16, 1, 7, 'new data after purge', 'VDA-0002-0035', 1, 1),
+(54649, 16, 1, 8, 'new data after purge', 'VDA-0002-0036', 1, 1),
+(54650, 16, 1, 9, 'new data after purge', 'VDA-0002-0037', 1, 1),
+(54651, 16, 1, 10, 'new data after purge', 'VDA-0002-0038', 1, 1),
+(54652, 16, 1, 11, 'new data after purge', 'VDA-0002-0039', 1, 1),
+(54653, 16, 1, 13, 'new data after purge', 'VDA-0002-0040', 1, 1),
+(54654, 16, 1, 5, 'new data after purge', 'VDA-0002-0041', 1, 1),
+(54655, 16, 1, 6, 'new data after purge', 'VDA-0002-0042', 1, 1),
+(54656, 16, 1, 7, 'new data after purge', 'VDA-0002-0043', 1, 1),
+(54657, 16, 1, 8, 'new data after purge', 'VDA-0002-0044', 1, 1),
+(54658, 16, 1, 9, 'new data after purge', 'VDA-0002-0045', 1, 1),
+(54659, 16, 1, 10, 'new data after purge', 'VDA-0002-0046', 1, 1),
+(54660, 16, 1, 11, 'new data after purge', 'VDA-0002-0047', 1, 1),
+(54661, 16, 1, 13, 'new data after purge', 'VDA-0002-0048', 1, 1),
+(54662, 16, 1, 5, 'new data after purge', 'VDA-0002-0049', 1, 1),
+(54663, 16, 1, 6, 'new data after purge', 'VDA-0002-0050', 1, 1),
+(54664, 16, 1, 7, 'new data after purge', 'VDA-0002-0051', 1, 1),
+(54665, 16, 1, 8, 'new data after purge', 'VDA-0002-0052', 1, 1),
+(54666, 16, 1, 9, 'new data after purge', 'VDA-0002-0053', 1, 1),
+(54667, 16, 1, 10, 'new data after purge', 'VDA-0002-0054', 1, 1),
+(54668, 16, 1, 11, 'new data after purge', 'VDA-0002-0055', 1, 1),
+(54669, 16, 1, 13, 'new data after purge', 'VDA-0002-0056', 1, 1),
+(54670, 16, 1, 5, 'new data after purge', 'VDA-0002-0057', 1, 1),
+(54671, 16, 1, 6, 'new data after purge', 'VDA-0002-0058', 1, 1),
+(54672, 16, 1, 7, 'new data after purge', 'VDA-0002-0059', 1, 1),
+(54673, 16, 1, 8, 'new data after purge', 'VDA-0002-0060', 1, 1),
+(54674, 16, 1, 9, 'new data after purge', 'VDA-0002-0061', 1, 1),
+(54675, 16, 1, 10, 'new data after purge', 'VDA-0002-0062', 1, 1),
+(54676, 16, 1, 11, 'new data after purge', 'VDA-0002-0063', 1, 1),
+(54677, 16, 1, 13, 'new data after purge', 'VDA-0002-0064', 1, 1),
+(54678, 18, 1, 5, 'new data after purge', 'VDA-0003-0001', 1, 1),
+(54679, 18, 1, 6, 'new data after purge', 'VDA-0003-0002', 1, 1),
+(54680, 18, 1, 7, 'new data after purge', 'VDA-0003-0003', 1, 1),
+(54681, 18, 1, 8, 'new data after purge', 'VDA-0003-0004', 1, 1),
+(54682, 18, 1, 9, 'new data after purge', 'VDA-0003-0005', 1, 1),
+(54683, 18, 1, 10, 'new data after purge', 'VDA-0003-0006', 1, 1),
+(54684, 18, 1, 11, 'new data after purge', 'VDA-0003-0007', 1, 1),
+(54685, 18, 1, 13, 'new data after purge', 'VDA-0003-0008', 1, 1),
+(54686, 18, 1, 5, 'new data after purge', 'VDA-0003-0009', 1, 1),
+(54687, 18, 1, 6, 'new data after purge', 'VDA-0003-0010', 1, 1),
+(54688, 18, 1, 7, 'new data after purge', 'VDA-0003-0011', 1, 1),
+(54689, 18, 1, 8, 'new data after purge', 'VDA-0003-0012', 1, 1),
+(54690, 18, 1, 9, 'new data after purge', 'VDA-0003-0013', 1, 1),
+(54691, 18, 1, 10, 'new data after purge', 'VDA-0003-0014', 1, 1),
+(54692, 18, 1, 11, 'new data after purge', 'VDA-0003-0015', 1, 1),
+(54693, 18, 1, 13, 'new data after purge', 'VDA-0003-0016', 1, 1),
+(54694, 18, 1, 5, 'new data after purge', 'VDA-0003-0017', 1, 1),
+(54695, 18, 1, 6, 'new data after purge', 'VDA-0003-0018', 1, 1),
+(54696, 18, 1, 7, 'new data after purge', 'VDA-0003-0019', 1, 1),
+(54697, 18, 1, 8, 'new data after purge', 'VDA-0003-0020', 1, 1),
+(54698, 18, 1, 9, 'new data after purge', 'VDA-0003-0021', 1, 1),
+(54699, 18, 1, 10, 'new data after purge', 'VDA-0003-0022', 1, 1),
+(54700, 18, 1, 11, 'new data after purge', 'VDA-0003-0023', 1, 1),
+(54701, 18, 1, 13, 'new data after purge', 'VDA-0003-0024', 1, 1),
+(54702, 18, 1, 5, 'new data after purge', 'VDA-0003-0025', 1, 1),
+(54703, 18, 1, 6, 'new data after purge', 'VDA-0003-0026', 1, 1),
+(54704, 18, 1, 7, 'new data after purge', 'VDA-0003-0027', 1, 1),
+(54705, 18, 1, 8, 'new data after purge', 'VDA-0003-0028', 1, 1),
+(54706, 18, 1, 9, 'new data after purge', 'VDA-0003-0029', 1, 1),
+(54707, 18, 1, 10, 'new data after purge', 'VDA-0003-0030', 1, 1),
+(54708, 18, 1, 11, 'new data after purge', 'VDA-0003-0031', 1, 1),
+(54709, 18, 1, 13, 'new data after purge', 'VDA-0003-0032', 1, 1),
+(54710, 18, 1, 5, 'new data after purge', 'VDA-0003-0033', 1, 1),
+(54711, 18, 1, 6, 'new data after purge', 'VDA-0003-0034', 1, 1),
+(54712, 18, 1, 7, 'new data after purge', 'VDA-0003-0035', 1, 1),
+(54713, 18, 1, 8, 'new data after purge', 'VDA-0003-0036', 1, 1),
+(54714, 18, 1, 9, 'new data after purge', 'VDA-0003-0037', 1, 1),
+(54715, 18, 1, 10, 'new data after purge', 'VDA-0003-0038', 1, 1),
+(54716, 18, 1, 11, 'new data after purge', 'VDA-0003-0039', 1, 1),
+(54717, 18, 1, 13, 'new data after purge', 'VDA-0003-0040', 1, 1),
+(54718, 18, 1, 5, 'new data after purge', 'VDA-0003-0041', 1, 1),
+(54719, 18, 1, 6, 'new data after purge', 'VDA-0003-0042', 1, 1),
+(54720, 18, 1, 7, 'new data after purge', 'VDA-0003-0043', 1, 1),
+(54721, 18, 1, 8, 'new data after purge', 'VDA-0003-0044', 1, 1),
+(54722, 18, 1, 9, 'new data after purge', 'VDA-0003-0045', 1, 1),
+(54723, 18, 1, 10, 'new data after purge', 'VDA-0003-0046', 1, 1),
+(54724, 18, 1, 11, 'new data after purge', 'VDA-0003-0047', 1, 1),
+(54725, 18, 1, 13, 'new data after purge', 'VDA-0003-0048', 1, 1),
+(54726, 18, 1, 5, 'new data after purge', 'VDA-0003-0049', 1, 1),
+(54727, 18, 1, 6, 'new data after purge', 'VDA-0003-0050', 1, 1),
+(54728, 18, 1, 7, 'new data after purge', 'VDA-0003-0051', 1, 1),
+(54729, 18, 1, 8, 'new data after purge', 'VDA-0003-0052', 1, 1),
+(54730, 18, 1, 9, 'new data after purge', 'VDA-0003-0053', 1, 1),
+(54731, 18, 1, 10, 'new data after purge', 'VDA-0003-0054', 1, 1),
+(54732, 18, 1, 11, 'new data after purge', 'VDA-0003-0055', 1, 1),
+(54733, 18, 1, 13, 'new data after purge', 'VDA-0003-0056', 1, 1),
+(54734, 18, 1, 5, 'new data after purge', 'VDA-0003-0057', 1, 1),
+(54735, 18, 1, 6, 'new data after purge', 'VDA-0003-0058', 1, 1),
+(54736, 18, 1, 7, 'new data after purge', 'VDA-0003-0059', 1, 1),
+(54737, 18, 1, 8, 'new data after purge', 'VDA-0003-0060', 1, 1),
+(54738, 18, 1, 9, 'new data after purge', 'VDA-0003-0061', 1, 1),
+(54739, 18, 1, 10, 'new data after purge', 'VDA-0003-0062', 1, 1),
+(54740, 18, 1, 11, 'new data after purge', 'VDA-0003-0063', 1, 1),
+(54741, 18, 1, 13, 'new data after purge', 'VDA-0003-0064', 1, 1),
+(54742, 25, 1, 5, 'new data after purge', 'PAA-0004-0001', 1, 1),
+(54743, 25, 1, 6, 'new data after purge', 'PAA-0004-0002', 1, 1),
+(54744, 25, 1, 7, 'new data after purge', 'PAA-0004-0003', 1, 1),
+(54745, 25, 1, 8, 'new data after purge', 'PAA-0004-0004', 1, 1),
+(54746, 25, 1, 9, 'new data after purge', 'PAA-0004-0005', 1, 1),
+(54747, 25, 1, 10, 'new data after purge', 'PAA-0004-0006', 1, 1),
+(54748, 25, 1, 11, 'new data after purge', 'PAA-0004-0007', 1, 1),
+(54749, 25, 1, 13, 'new data after purge', 'PAA-0004-0008', 1, 1),
+(54750, 25, 1, 5, 'new data after purge', 'PAA-0004-0009', 1, 1),
+(54751, 25, 1, 6, 'new data after purge', 'PAA-0004-0010', 1, 1),
+(54752, 25, 1, 7, 'new data after purge', 'PAA-0004-0011', 1, 1),
+(54753, 25, 1, 8, 'new data after purge', 'PAA-0004-0012', 1, 1),
+(54754, 25, 1, 9, 'new data after purge', 'PAA-0004-0013', 1, 1),
+(54755, 25, 1, 10, 'new data after purge', 'PAA-0004-0014', 1, 1),
+(54756, 25, 1, 11, 'new data after purge', 'PAA-0004-0015', 1, 1),
+(54757, 25, 1, 13, 'new data after purge', 'PAA-0004-0016', 1, 1),
+(54758, 25, 1, 5, 'new data after purge', 'PAA-0004-0017', 1, 1),
+(54759, 25, 1, 6, 'new data after purge', 'PAA-0004-0018', 1, 1),
+(54760, 25, 1, 7, 'new data after purge', 'PAA-0004-0019', 1, 1),
+(54761, 25, 1, 8, 'new data after purge', 'PAA-0004-0020', 1, 1),
+(54762, 25, 1, 9, 'new data after purge', 'PAA-0004-0021', 1, 1),
+(54763, 25, 1, 10, 'new data after purge', 'PAA-0004-0022', 1, 1),
+(54764, 25, 1, 11, 'new data after purge', 'PAA-0004-0023', 1, 1),
+(54765, 25, 1, 13, 'new data after purge', 'PAA-0004-0024', 1, 1),
+(54766, 25, 1, 5, 'new data after purge', 'PAA-0004-0025', 1, 1),
+(54767, 25, 1, 6, 'new data after purge', 'PAA-0004-0026', 1, 1),
+(54768, 25, 1, 7, 'new data after purge', 'PAA-0004-0027', 1, 1),
+(54769, 25, 1, 8, 'new data after purge', 'PAA-0004-0028', 1, 1),
+(54770, 25, 1, 9, 'new data after purge', 'PAA-0004-0029', 1, 1),
+(54771, 25, 1, 10, 'new data after purge', 'PAA-0004-0030', 1, 1),
+(54772, 25, 1, 11, 'new data after purge', 'PAA-0004-0031', 1, 1),
+(54773, 25, 1, 13, 'new data after purge', 'PAA-0004-0032', 1, 1),
+(54774, 25, 1, 5, 'new data after purge', 'PAA-0004-0033', 1, 1),
+(54775, 25, 1, 6, 'new data after purge', 'PAA-0004-0034', 1, 1),
+(54776, 25, 1, 7, 'new data after purge', 'PAA-0004-0035', 1, 1),
+(54777, 25, 1, 8, 'new data after purge', 'PAA-0004-0036', 1, 1),
+(54778, 25, 1, 9, 'new data after purge', 'PAA-0004-0037', 1, 1),
+(54779, 25, 1, 10, 'new data after purge', 'PAA-0004-0038', 1, 1),
+(54780, 25, 1, 11, 'new data after purge', 'PAA-0004-0039', 1, 1),
+(54781, 25, 1, 13, 'new data after purge', 'PAA-0004-0040', 1, 1),
+(54782, 25, 1, 5, 'new data after purge', 'PAA-0004-0041', 1, 1),
+(54783, 25, 1, 6, 'new data after purge', 'PAA-0004-0042', 1, 1),
+(54784, 25, 1, 7, 'new data after purge', 'PAA-0004-0043', 1, 1),
+(54785, 25, 1, 8, 'new data after purge', 'PAA-0004-0044', 1, 1),
+(54786, 25, 1, 9, 'new data after purge', 'PAA-0004-0045', 1, 1),
+(54787, 25, 1, 10, 'new data after purge', 'PAA-0004-0046', 1, 1),
+(54788, 25, 1, 11, 'new data after purge', 'PAA-0004-0047', 1, 1),
+(54789, 25, 1, 13, 'new data after purge', 'PAA-0004-0048', 1, 1),
+(54790, 25, 1, 5, 'new data after purge', 'PAA-0004-0049', 1, 1),
+(54791, 25, 1, 6, 'new data after purge', 'PAA-0004-0050', 1, 1),
+(54792, 25, 1, 7, 'new data after purge', 'PAA-0004-0051', 1, 1),
+(54793, 25, 1, 8, 'new data after purge', 'PAA-0004-0052', 1, 1),
+(54794, 25, 1, 9, 'new data after purge', 'PAA-0004-0053', 1, 1),
+(54795, 25, 1, 10, 'new data after purge', 'PAA-0004-0054', 1, 1),
+(54796, 25, 1, 11, 'new data after purge', 'PAA-0004-0055', 1, 1),
+(54797, 25, 1, 13, 'new data after purge', 'PAA-0004-0056', 1, 1),
+(54798, 25, 1, 5, 'new data after purge', 'PAA-0004-0057', 1, 1),
+(54799, 25, 1, 6, 'new data after purge', 'PAA-0004-0058', 1, 1),
+(54800, 25, 1, 7, 'new data after purge', 'PAA-0004-0059', 1, 1),
+(54801, 25, 1, 8, 'new data after purge', 'PAA-0004-0060', 1, 1),
+(54802, 25, 1, 9, 'new data after purge', 'PAA-0004-0061', 1, 1),
+(54803, 25, 1, 10, 'new data after purge', 'PAA-0004-0062', 1, 1),
+(54804, 25, 1, 11, 'new data after purge', 'PAA-0004-0063', 1, 1),
+(54805, 25, 1, 13, 'new data after purge', 'PAA-0004-0064', 1, 1),
+(54806, 26, 1, 5, 'new data after purge', 'PCA-0002-0001', 1, 1),
+(54807, 26, 1, 6, 'new data after purge', 'PCA-0002-0002', 1, 1),
+(54808, 26, 1, 7, 'new data after purge', 'PCA-0002-0003', 1, 1),
+(54809, 26, 1, 8, 'new data after purge', 'PCA-0002-0004', 1, 1),
+(54810, 26, 1, 9, 'new data after purge', 'PCA-0002-0005', 1, 1),
+(54811, 26, 1, 10, 'new data after purge', 'PCA-0002-0006', 1, 1),
+(54812, 26, 1, 11, 'new data after purge', 'PCA-0002-0007', 1, 1),
+(54813, 26, 1, 13, 'new data after purge', 'PCA-0002-0008', 1, 1),
+(54814, 26, 1, 5, 'new data after purge', 'PCA-0002-0009', 1, 1),
+(54815, 26, 1, 6, 'new data after purge', 'PCA-0002-0010', 1, 1),
+(54816, 26, 1, 7, 'new data after purge', 'PCA-0002-0011', 1, 1),
+(54817, 26, 1, 8, 'new data after purge', 'PCA-0002-0012', 1, 1),
+(54818, 26, 1, 9, 'new data after purge', 'PCA-0002-0013', 1, 1),
+(54819, 26, 1, 10, 'new data after purge', 'PCA-0002-0014', 1, 1),
+(54820, 26, 1, 11, 'new data after purge', 'PCA-0002-0015', 1, 1),
+(54821, 26, 1, 13, 'new data after purge', 'PCA-0002-0016', 1, 1),
+(54822, 26, 1, 5, 'new data after purge', 'PCA-0002-0017', 1, 1),
+(54823, 26, 1, 6, 'new data after purge', 'PCA-0002-0018', 1, 1),
+(54824, 26, 1, 7, 'new data after purge', 'PCA-0002-0019', 1, 1),
+(54825, 26, 1, 8, 'new data after purge', 'PCA-0002-0020', 1, 1),
+(54826, 26, 1, 9, 'new data after purge', 'PCA-0002-0021', 1, 1),
+(54827, 26, 1, 10, 'new data after purge', 'PCA-0002-0022', 1, 1),
+(54828, 26, 1, 11, 'new data after purge', 'PCA-0002-0023', 1, 1),
+(54829, 26, 1, 13, 'new data after purge', 'PCA-0002-0024', 1, 1),
+(54830, 26, 1, 5, 'new data after purge', 'PCA-0002-0025', 1, 1),
+(54831, 26, 1, 6, 'new data after purge', 'PCA-0002-0026', 1, 1),
+(54832, 26, 1, 7, 'new data after purge', 'PCA-0002-0027', 1, 1),
+(54833, 26, 1, 8, 'new data after purge', 'PCA-0002-0028', 1, 1),
+(54834, 26, 1, 9, 'new data after purge', 'PCA-0002-0029', 1, 1),
+(54835, 26, 1, 10, 'new data after purge', 'PCA-0002-0030', 1, 1),
+(54836, 26, 1, 11, 'new data after purge', 'PCA-0002-0031', 1, 1),
+(54837, 26, 1, 13, 'new data after purge', 'PCA-0002-0032', 1, 1),
+(54838, 26, 1, 5, 'new data after purge', 'PCA-0002-0033', 1, 1),
+(54839, 26, 1, 6, 'new data after purge', 'PCA-0002-0034', 1, 1),
+(54840, 26, 1, 7, 'new data after purge', 'PCA-0002-0035', 1, 1),
+(54841, 26, 1, 8, 'new data after purge', 'PCA-0002-0036', 1, 1),
+(54842, 26, 1, 9, 'new data after purge', 'PCA-0002-0037', 1, 1),
+(54843, 26, 1, 10, 'new data after purge', 'PCA-0002-0038', 1, 1),
+(54844, 26, 1, 11, 'new data after purge', 'PCA-0002-0039', 1, 1),
+(54845, 26, 1, 13, 'new data after purge', 'PCA-0002-0040', 1, 1),
+(54846, 26, 1, 5, 'new data after purge', 'PCA-0002-0041', 1, 1),
+(54847, 26, 1, 6, 'new data after purge', 'PCA-0002-0042', 1, 1),
+(54848, 26, 1, 7, 'new data after purge', 'PCA-0002-0043', 1, 1),
+(54849, 26, 1, 8, 'new data after purge', 'PCA-0002-0044', 1, 1),
+(54850, 26, 1, 9, 'new data after purge', 'PCA-0002-0045', 1, 1),
+(54851, 26, 1, 10, 'new data after purge', 'PCA-0002-0046', 1, 1),
+(54852, 26, 1, 11, 'new data after purge', 'PCA-0002-0047', 1, 1),
+(54853, 26, 1, 13, 'new data after purge', 'PCA-0002-0048', 1, 1),
+(54854, 26, 1, 5, 'new data after purge', 'PCA-0002-0049', 1, 1),
+(54855, 26, 1, 6, 'new data after purge', 'PCA-0002-0050', 1, 1),
+(54856, 26, 1, 7, 'new data after purge', 'PCA-0002-0051', 1, 1),
+(54857, 26, 1, 8, 'new data after purge', 'PCA-0002-0052', 1, 1),
+(54858, 26, 1, 9, 'new data after purge', 'PCA-0002-0053', 1, 1),
+(54859, 26, 1, 10, 'new data after purge', 'PCA-0002-0054', 1, 1),
+(54860, 26, 1, 11, 'new data after purge', 'PCA-0002-0055', 1, 1),
+(54861, 26, 1, 13, 'new data after purge', 'PCA-0002-0056', 1, 1),
+(54862, 26, 1, 5, 'new data after purge', 'PCA-0002-0057', 1, 1),
+(54863, 26, 1, 6, 'new data after purge', 'PCA-0002-0058', 1, 1),
+(54864, 26, 1, 7, 'new data after purge', 'PCA-0002-0059', 1, 1),
+(54865, 26, 1, 8, 'new data after purge', 'PCA-0002-0060', 1, 1),
+(54866, 26, 1, 9, 'new data after purge', 'PCA-0002-0061', 1, 1),
+(54867, 26, 1, 10, 'new data after purge', 'PCA-0002-0062', 1, 1),
+(54868, 26, 1, 11, 'new data after purge', 'PCA-0002-0063', 1, 1),
+(54869, 26, 1, 13, 'new data after purge', 'PCA-0002-0064', 1, 1),
+(54870, 27, 1, 5, 'new data after purge', 'VDA-0004-0001', 1, 1),
+(54871, 27, 1, 6, 'new data after purge', 'VDA-0004-0002', 1, 1),
+(54872, 27, 1, 7, 'new data after purge', 'VDA-0004-0003', 1, 1),
+(54873, 27, 1, 8, 'new data after purge', 'VDA-0004-0004', 1, 1),
+(54874, 27, 1, 9, 'new data after purge', 'VDA-0004-0005', 1, 1),
+(54875, 27, 1, 10, 'new data after purge', 'VDA-0004-0006', 1, 1),
+(54876, 27, 1, 11, 'new data after purge', 'VDA-0004-0007', 1, 1),
+(54877, 27, 1, 13, 'new data after purge', 'VDA-0004-0008', 1, 1),
+(54878, 27, 1, 5, 'new data after purge', 'VDA-0004-0009', 1, 1),
+(54879, 27, 1, 6, 'new data after purge', 'VDA-0004-0010', 1, 1),
+(54880, 27, 1, 7, 'new data after purge', 'VDA-0004-0011', 1, 1),
+(54881, 27, 1, 8, 'new data after purge', 'VDA-0004-0012', 1, 1),
+(54882, 27, 1, 9, 'new data after purge', 'VDA-0004-0013', 1, 1),
+(54883, 27, 1, 10, 'new data after purge', 'VDA-0004-0014', 1, 1),
+(54884, 27, 1, 11, 'new data after purge', 'VDA-0004-0015', 1, 1),
+(54885, 27, 1, 13, 'new data after purge', 'VDA-0004-0016', 1, 1),
+(54886, 27, 1, 5, 'new data after purge', 'VDA-0004-0017', 1, 1),
+(54887, 27, 1, 6, 'new data after purge', 'VDA-0004-0018', 1, 1),
+(54888, 27, 1, 7, 'new data after purge', 'VDA-0004-0019', 1, 1),
+(54889, 27, 1, 8, 'new data after purge', 'VDA-0004-0020', 1, 1),
+(54890, 27, 1, 9, 'new data after purge', 'VDA-0004-0021', 1, 1),
+(54891, 27, 1, 10, 'new data after purge', 'VDA-0004-0022', 1, 1),
+(54892, 27, 1, 11, 'new data after purge', 'VDA-0004-0023', 1, 1),
+(54893, 27, 1, 13, 'new data after purge', 'VDA-0004-0024', 1, 1),
+(54894, 27, 1, 5, 'new data after purge', 'VDA-0004-0025', 1, 1),
+(54895, 27, 1, 6, 'new data after purge', 'VDA-0004-0026', 1, 1),
+(54896, 27, 1, 7, 'new data after purge', 'VDA-0004-0027', 1, 1),
+(54897, 27, 1, 8, 'new data after purge', 'VDA-0004-0028', 1, 1),
+(54898, 27, 1, 9, 'new data after purge', 'VDA-0004-0029', 1, 1),
+(54899, 27, 1, 10, 'new data after purge', 'VDA-0004-0030', 1, 1),
+(54900, 27, 1, 11, 'new data after purge', 'VDA-0004-0031', 1, 1),
+(54901, 27, 1, 13, 'new data after purge', 'VDA-0004-0032', 1, 1),
+(54902, 27, 1, 5, 'new data after purge', 'VDA-0004-0033', 1, 1),
+(54903, 27, 1, 6, 'new data after purge', 'VDA-0004-0034', 1, 1),
+(54904, 27, 1, 7, 'new data after purge', 'VDA-0004-0035', 1, 1),
+(54905, 27, 1, 8, 'new data after purge', 'VDA-0004-0036', 1, 1),
+(54906, 27, 1, 9, 'new data after purge', 'VDA-0004-0037', 1, 1),
+(54907, 27, 1, 10, 'new data after purge', 'VDA-0004-0038', 1, 1),
+(54908, 27, 1, 11, 'new data after purge', 'VDA-0004-0039', 1, 1),
+(54909, 27, 1, 13, 'new data after purge', 'VDA-0004-0040', 1, 1),
+(54910, 27, 1, 5, 'new data after purge', 'VDA-0004-0041', 1, 1),
+(54911, 27, 1, 6, 'new data after purge', 'VDA-0004-0042', 1, 1),
+(54912, 27, 1, 7, 'new data after purge', 'VDA-0004-0043', 1, 1),
+(54913, 27, 1, 8, 'new data after purge', 'VDA-0004-0044', 1, 1),
+(54914, 27, 1, 9, 'new data after purge', 'VDA-0004-0045', 1, 1),
+(54915, 27, 1, 10, 'new data after purge', 'VDA-0004-0046', 1, 1),
+(54916, 27, 1, 11, 'new data after purge', 'VDA-0004-0047', 1, 1),
+(54917, 27, 1, 13, 'new data after purge', 'VDA-0004-0048', 1, 1),
+(54918, 27, 1, 5, 'new data after purge', 'VDA-0004-0049', 1, 1),
+(54919, 27, 1, 6, 'new data after purge', 'VDA-0004-0050', 1, 1),
+(54920, 27, 1, 7, 'new data after purge', 'VDA-0004-0051', 1, 1),
+(54921, 27, 1, 8, 'new data after purge', 'VDA-0004-0052', 1, 1),
+(54922, 27, 1, 9, 'new data after purge', 'VDA-0004-0053', 1, 1),
+(54923, 27, 1, 10, 'new data after purge', 'VDA-0004-0054', 1, 1),
+(54924, 27, 1, 11, 'new data after purge', 'VDA-0004-0055', 1, 1),
+(54925, 27, 1, 13, 'new data after purge', 'VDA-0004-0056', 1, 1),
+(54926, 27, 1, 5, 'new data after purge', 'VDA-0004-0057', 1, 1),
+(54927, 27, 1, 6, 'new data after purge', 'VDA-0004-0058', 1, 1),
+(54928, 27, 1, 7, 'new data after purge', 'VDA-0004-0059', 1, 1),
+(54929, 27, 1, 8, 'new data after purge', 'VDA-0004-0060', 1, 1),
+(54930, 27, 1, 9, 'new data after purge', 'VDA-0004-0061', 1, 1),
+(54931, 27, 1, 10, 'new data after purge', 'VDA-0004-0062', 1, 1),
+(54932, 27, 1, 11, 'new data after purge', 'VDA-0004-0063', 1, 1),
+(54933, 27, 1, 13, 'new data after purge', 'VDA-0004-0064', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -907,43 +1434,10 @@ CREATE TABLE `lending` (
   `user_id` int(11) NOT NULL,
   `id_employee` int(10) UNSIGNED NOT NULL,
   `type` tinyint(3) UNSIGNED NOT NULL,
-  `date` date NOT NULL
+  `date` date NOT NULL,
+  `pic_loan` varchar(255) NOT NULL,
+  `pic_return` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `lending`
---
-
-INSERT INTO `lending` (`id_lending`, `id_unit`, `user_id`, `id_employee`, `type`, `date`) VALUES
-(30, 62, 1, 3, 2, '2024-10-29'),
-(31, 61, 4, 1, 2, '2024-10-29'),
-(32, 60, 4, 2, 2, '2024-10-29'),
-(33, 58, 5, 2, 2, '2024-10-29'),
-(34, 66, 5, 1, 2, '2024-10-30'),
-(35, 61, 5, 1, 2, '2024-10-30'),
-(36, 64, 5, 1, 2, '2024-10-29'),
-(37, 72, 8, 2, 2, '2024-10-30'),
-(38, 65, 8, 3, 2, '2024-10-30'),
-(39, 68, 8, 2, 2, '2024-10-30'),
-(40, 70, 8, 3, 2, '2024-10-31'),
-(41, 64, 8, 2, 2, '2024-10-30'),
-(42, 84, 5, 4, 2, '2024-10-30'),
-(43, 84, 5, 1, 2, '2024-11-07'),
-(44, 64, 5, 2, 2, '2024-11-12'),
-(45, 70, 5, 1, 1, '2024-10-31'),
-(46, 60, 5, 1, 1, '2024-10-31'),
-(47, 95, 5, 1, 1, '2024-10-31'),
-(48, 95, 5, 1, 1, '2024-10-31'),
-(49, 53308, 4, 2, 1, '2024-10-31'),
-(50, 96, 5, 2, 1, '2024-11-07'),
-(51, 88, 1, 5, 1, '2024-11-08'),
-(52, 88, 1, 5, 2, '2024-11-11'),
-(53, 54217, 1, 5, 2, '2024-11-11'),
-(54, 54217, 1, 4, 2, '2024-11-11'),
-(55, 54217, 5, 5, 2, '2024-11-11'),
-(56, 93, 5, 5, 2, '2024-11-11'),
-(57, 88, 1, 5, 2, '2024-11-12'),
-(58, 59, 1, 7, 2, '2024-11-12');
 
 -- --------------------------------------------------------
 
@@ -995,6 +1489,39 @@ INSERT INTO `migration` (`version`, `apply_time`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `repair_log`
+--
+
+CREATE TABLE `repair_log` (
+  `id_repair` int(10) NOT NULL,
+  `id_unit` int(10) NOT NULL,
+  `comment` varchar(120) NOT NULL,
+  `rep_type` tinyint(3) NOT NULL,
+  `datetime` datetime(2) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `rep_type_lookup`
+--
+
+CREATE TABLE `rep_type_lookup` (
+  `id_rep_t` tinyint(3) NOT NULL,
+  `rep_type` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `rep_type_lookup`
+--
+
+INSERT INTO `rep_type_lookup` (`id_rep_t`, `rep_type`) VALUES
+(1, 'Repair on going'),
+(2, 'Repair done. Repair Closed');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `status_lookup`
 --
 
@@ -1026,100 +1553,6 @@ CREATE TABLE `unit_log` (
   `update_at` datetime(6) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dumping data for table `unit_log`
---
-
-INSERT INTO `unit_log` (`id_log`, `id_unit`, `content`, `update_at`) VALUES
-(24, 62, 'Unit BOG-6089 lent to Tumbal', '2024-10-28 14:14:04.000000'),
-(25, 58, 'Unit BOG5409 updated by tumbaladmin', '2024-10-29 08:52:07.000000'),
-(26, 62, 'Unit BOG-6089 returned by Tumbal', '2024-10-29 08:56:09.000000'),
-(27, 62, 'Unit BOG-6089 sent for repair by tumbaladmin', '2024-10-29 08:58:36.000000'),
-(28, 62, 'Unit BOG-6089 repaired. Taken to warehouse by fradmin', '2024-10-29 09:02:13.000000'),
-(29, 62, 'Unit BOG-6089 sent for repair by fradmin', '2024-10-29 09:02:42.000000'),
-(30, 61, 'Unit BOG-0642 lent to johan tumbal by fradmin', '2024-10-29 09:11:57.000000'),
-(31, 60, 'Unit BOG-2254 lent to Emma by fradmin', '2024-10-29 09:12:48.000000'),
-(32, 61, 'Unit BOG-0642 returned by johan tumbal, recieved by fradmin', '2024-10-29 09:13:00.000000'),
-(33, 61, 'Unit BOG-0642 returned by johan tumbal, recieved by fradmin', '2024-10-29 09:13:00.000000'),
-(34, 60, 'Unit BOG-2254 returned by Emma, recieved by fradmin', '2024-10-29 09:14:20.000000'),
-(35, 60, 'Unit BOG-2254 sent for repair by fradmin', '2024-10-29 09:16:01.000000'),
-(36, 58, 'Unit BOG5409 lent to Emma by tumbaladmin', '2024-10-29 10:11:55.000000'),
-(37, 58, 'Unit BOG5409 returned by Emma, recieved by tumbaladmin', '2024-10-29 10:19:15.000000'),
-(38, 66, 'Unit BOG-3217 lent to johan tumbal by tumbaladmin', '2024-10-29 10:31:10.000000'),
-(39, 61, 'Unit BOG-0642 lent to johan tumbal by tumbaladmin', '2024-10-29 10:31:14.000000'),
-(40, 64, 'Unit BOG-0790 lent to johan tumbal by tumbaladmin', '2024-10-29 10:31:18.000000'),
-(41, 64, 'Unit BOG-0790 updated by tumbaladmin', '2024-10-29 13:42:54.000000'),
-(42, 64, 'Unit BOG-0790 updated by tumbaladmin', '2024-10-29 13:43:01.000000'),
-(43, 64, 'Unit BOG-0790 returned by johan tumbal, recieved by tumbaladmin', '2024-10-29 13:43:17.000000'),
-(44, 72, 'Unit OJW-5757 lent to Emma by fredadmin', '2024-10-30 08:42:02.000000'),
-(45, 65, 'Unit BOG-0346 lent to Tumbal by fredadmin', '2024-10-30 08:42:08.000000'),
-(46, 60, 'Unit BOG-2254 repaired. Taken to warehouse by fredadmin', '2024-10-30 09:03:55.000000'),
-(47, 66, 'Unit BOG-3217 returned by johan tumbal, recieved by fredadmin', '2024-10-30 09:04:12.000000'),
-(48, 61, 'Unit BOG-0642 returned by johan tumbal, recieved by fredadmin', '2024-10-30 09:04:26.000000'),
-(49, 61, 'Unit BOG-0642 sent for repair by fredadmin', '2024-10-30 09:04:37.000000'),
-(50, 66, 'Unit BOG-3217 sent for repair by fredadmin', '2024-10-30 09:04:39.000000'),
-(51, 65, 'Unit BOG-0346 returned by Tumbal, recieved by fredadmin', '2024-10-30 09:10:01.000000'),
-(52, 65, 'Unit BOG-0346 sent for repair by fredadmin', '2024-10-30 09:10:07.000000'),
-(53, 68, 'Unit BOG-4594 lent to Emma by fredadmin', '2024-10-30 09:14:52.000000'),
-(54, 70, 'Unit BOG-2006 lent to Tumbal by fredadmin', '2024-10-30 09:14:57.000000'),
-(55, 72, 'Unit OJW-5757 returned by Emma, recieved by fredadmin', '2024-10-30 09:15:05.000000'),
-(56, 68, 'Unit BOG-4594 returned by Emma, recieved by fredadmin', '2024-10-30 09:15:10.000000'),
-(57, 64, 'Unit BOG-0790 lent to Emma by fredadmin', '2024-10-30 10:24:38.000000'),
-(58, 63, 'Unit BOG-7894 updated by fradmin', '2024-10-30 11:11:53.000000'),
-(59, 84, 'Unit RGT-1395 lent to Freddy by tumbaladmin', '2024-10-30 14:31:37.000000'),
-(60, 84, 'Unit RGT-1395 returned by Freddy, recieved by tumbaladmin', '2024-10-30 14:31:53.000000'),
-(61, 64, 'Unit BOG-0790 returned by Emma, recieved by tumbaladmin', '2024-10-30 14:32:00.000000'),
-(62, 81, 'Unit BNK-9582 updated by tumbaladmin', '2024-10-30 14:37:46.000000'),
-(63, 82, 'Unit BNK-1702 updated by tumbaladmin', '2024-10-30 14:38:04.000000'),
-(64, 82, 'Unit BNK-1702 updated by tumbaladmin', '2024-10-30 14:40:33.000000'),
-(65, 82, 'Unit BNK-1702 updated by tumbaladmin', '2024-10-30 14:42:53.000000'),
-(66, 70, 'Unit BOG-2006 returned by Tumbal, recieved by tumbaladmin', '2024-10-31 09:15:27.000000'),
-(67, 84, 'Unit RGT-1395 lent to johan tumbal by tumbaladmin', '2024-10-31 09:15:43.000000'),
-(68, 64, 'Unit BOG-0790 lent to Emma by tumbaladmin', '2024-10-31 09:15:48.000000'),
-(69, 70, 'Unit BOG-2006 lent to johan tumbal by tumbaladmin', '2024-10-31 09:15:53.000000'),
-(70, 60, 'Unit BOG-2254 lent to johan tumbal by tumbaladmin', '2024-10-31 09:15:58.000000'),
-(71, 95, 'Unit BOG-261 lent to johan tumbal by tumbaladmin', '2024-10-31 09:16:03.000000'),
-(72, 95, 'Unit BOG-261 lent to johan tumbal by tumbaladmin', '2024-10-31 09:16:03.000000'),
-(73, 95, 'Unit BOG-261 updated by tumbaladmin', '2024-10-31 09:17:30.000000'),
-(74, 53308, 'Unit WX95-8225CZ-GH lent to Emma by fradmin', '2024-10-31 10:44:28.000000'),
-(75, 58, 'Unit BOG5409 updated by tumbaladmin', '2024-11-07 09:57:30.000000'),
-(76, 58, 'Unit BOG5409 updated by tumbaladmin', '2024-11-07 10:00:19.000000'),
-(77, 58, 'Unit BOG5409 updated by tumbaladmin', '2024-11-07 10:00:41.000000'),
-(78, 58, 'Unit BOG5409 updated by tumbaladmin', '2024-11-07 10:00:49.000000'),
-(79, 58, 'Unit BOG5409 updated by tumbaladmin', '2024-11-07 10:01:07.000000'),
-(80, 96, 'Unit BOG-914 lent to Emma by tumbaladmin', '2024-11-07 10:17:15.000000'),
-(81, 84, 'Unit RGT-1395 returned by johan tumbal, recieved by tumbaladmin', '2024-11-07 10:19:24.000000'),
-(82, 72, 'Unit OJW-5757 sent for repair by tumbaladmin', '2024-11-07 10:23:16.000000'),
-(83, 62, 'Unit BOG-6089 repaired. Taken to warehouse by bobtherepairman', '2024-11-07 10:44:01.000000'),
-(84, 88, 'Unit BOG-389 lent to Shioriiiin by superadmin', '2024-11-08 09:10:13.000000'),
-(85, 88, 'Unit BOG-389 lent to Shioriiiin by superadmin', '2024-11-08 09:10:13.000000'),
-(86, 59, 'Unit BOG-7848 updated by superadmin', '2024-11-11 10:41:21.000000'),
-(87, 63, 'Unit BOG-7894 updated by superadmin', '2024-11-11 10:41:34.000000'),
-(88, 63, 'Unit BOG-7894 updated by superadmin', '2024-11-11 10:41:35.000000'),
-(89, 67, 'Unit BOG-7480 updated by superadmin', '2024-11-11 10:41:42.000000'),
-(90, 69, 'Unit BOG-3363 updated by superadmin', '2024-11-11 10:41:47.000000'),
-(91, 54218, 'Unit OJWL-8475IX-GL added by superadmin', '2024-11-11 10:51:35.000000'),
-(92, 71, 'Unit OJW-5143 updated by superadmin', '2024-11-11 10:54:02.000000'),
-(93, 73, 'Unit OJW-6303 updated by superadmin', '2024-11-11 10:54:10.000000'),
-(94, 54217, 'Unit OJWL-5502BT-GD lent to Shioriiiin by superadmin', '2024-11-11 10:57:00.000000'),
-(95, 54217, 'Unit OJWL-5502BT-GD returned by Shioriiiin, recieved by superadmin', '2024-11-11 13:37:47.000000'),
-(96, 54217, 'Unit OJWL-5502BT-GD lent to Freddy by superadmin', '2024-11-11 13:38:47.000000'),
-(97, 54217, 'Unit OJWL-5502BT-GD returned by Freddy, recieved by franzferdinand', '2024-11-11 13:55:20.000000'),
-(98, 54217, 'Unit OJWL-5502BT-GD lent to Shioriiiin by franzferdinand', '2024-11-11 13:55:30.000000'),
-(99, 54217, 'Unit OJWL-5502BT-GD returned by Shioriiiin, recieved by franzferdinand', '2024-11-11 13:56:24.000000'),
-(100, 93, 'Unit BOG-263 lent to Shioriiiin by franzferdinand', '2024-11-11 13:58:18.000000'),
-(101, 93, 'Unit BOG-263 returned by Shioriiiin, recieved by franzferdinand', '2024-11-11 13:58:42.000000'),
-(102, 88, 'Unit BOG-389 returned by Shioriiiin, recieved by franzferdinand', '2024-11-11 13:58:49.000000'),
-(103, 88, 'Unit BOG-389 lent to Shioriiiin by superadmin', '2024-11-12 08:15:29.000000'),
-(104, 59, 'Unit BOG-7848 lent to Shioweeen by superadmin', '2024-11-12 08:15:41.000000'),
-(105, 59, 'Unit BOG-7848 returned by Shioweeen, recieved by superadmin', '2024-11-12 08:15:53.000000'),
-(106, 88, 'Unit BOG-389 returned by Shioriiiin, recieved by superadmin', '2024-11-12 08:16:05.000000'),
-(107, 64, 'Unit BOG-0790 returned by Emma, recieved by superadmin', '2024-11-12 08:16:09.000000'),
-(108, 62, 'Unit BOG-6089 sent for repair by franzferdinand', '2024-11-12 08:32:18.000000'),
-(109, 54219, 'New unit LV46-8908QM-BG added by franzferdinand', '2024-11-13 08:21:02.000000'),
-(110, 54220, 'New unit LV46-4496ZX-VF added by franzferdinand', '2024-11-13 08:21:08.000000'),
-(111, 54221, 'New unit UD31-2295XN-UY added by franzferdinand', '2024-11-13 08:21:19.000000');
-
 -- --------------------------------------------------------
 
 --
@@ -1139,22 +1572,23 @@ CREATE TABLE `user` (
   `auth_key` varchar(255) DEFAULT NULL,
   `bind_to_ip` varchar(255) NOT NULL,
   `email_confirmed` int(11) NOT NULL,
-  `confirmation_token` varchar(255) NOT NULL
+  `confirmation_token` varchar(255) NOT NULL,
+  `id_wh` int(10) UNSIGNED NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Dumping data for table `user`
 --
 
-INSERT INTO `user` (`id`, `username`, `password_hash`, `status`, `superadmin`, `created_at`, `updated_at`, `registration_ip`, `email`, `auth_key`, `bind_to_ip`, `email_confirmed`, `confirmation_token`) VALUES
-(1, 'superadmin', '$2y$13$bp2w2.mTeJ/ORRVlEjA.jOHw0o49vwAJ.A15RTPjnSyk05M.20ZyS', 1, 1, '0000-00-00 00:00:00.00', '0000-00-00 00:00:00.00', NULL, 'super@mail.com', 'OtBMG-3O_ULHaEMKmM_pZIPvia1k_js_', '', 1, ''),
-(4, 'appadmin', '$2y$13$.X94ue5lX8Yt10motmlym.HyhumhiBXBZ7leukSITV7e9sTgLjNrK', 1, 0, '2024-10-28 13:20:22.00', '0000-00-00 00:00:00.00', '::1', 'bogosbinted@mail.com', 'pUwr74uXpIAq5h1XQU-3y3PuplNbm2P8', '', 1, ''),
-(5, 'franzferdinand', '$2y$13$QEUqv2hQRuKQ2uFtNfXbcuPoiz2pyiZsn1kpv3RfboEQEdA8MZC9e', 1, 0, '2024-10-28 14:32:42.00', '0000-00-00 00:00:00.00', '::1', 'ferdinand@mail.com', 'LZN0hVpdM-xAb6SA0AEALIcxiVeCAS5H', '', 1, ''),
-(8, 'warehouse@mail.com', '$2y$13$XZ6TofHa8d5cAMutTqSMs.QzdqeRCGMeRs3ZfqoMQCWveNyOjdTs2', 1, 0, '2024-10-30 08:40:40.00', '0000-00-00 00:00:00.00', '::1', 'fred@mail.com', 'JGU2pLcVye5PBUUqBlGuB7h1M8c6gkrx', '', 1, ''),
-(9, 'bobtherepairman', '$2y$13$0FJ7ZV.5Th2sydV4mDEP2u81kx56ocrbVEFZomEzdjK6xPfRt0xGa', 1, 0, '0000-00-00 00:00:00.00', '0000-00-00 00:00:00.00', '::1', 'bobrepair@mail.com', 'MbIXLNVCI6OHZFAZgwzyyLXTeiaVd6At', '', 1, ''),
-(10, 'bogosbinted', '$2y$13$byH/Orep9xl5ZWDL1IMtH.1NRxOm2IK/s9vDxODkiEp7o2gJ9TuZ2', 1, 0, '0000-00-00 00:00:00.00', '0000-00-00 00:00:00.00', '::1', 'bogosbinted@alien.com', 'LMStQ2EH_AMPtTfWSbwc9Li493FfLSTY', '', 1, ''),
-(11, 'manfred', '$2y$13$S.Pu6X0K3VWvc/kr2atfyuWdDK9xYc1BMFyvHBnjKWMjJCZuUwKRG', 1, 0, '0000-00-00 00:00:00.00', '0000-00-00 00:00:00.00', '::1', 'redbaron@mail.com', 'E8fnjVCzTMoHqvXiFnfAyEEw7aU80X5W', '', 1, ''),
-(12, 'hugh', '$2y$13$iREFX85Oa9udbjkKDslyy.46GR1OLNOKYh6JaiZ03pfwS59xaCnUS', 1, 0, '0000-00-00 00:00:00.00', '0000-00-00 00:00:00.00', '::1', 'hugh@mail.com', '-R2PpAC6v4_aTMieMxphBxZ3l_tgVRez', '', 1, '');
+INSERT INTO `user` (`id`, `username`, `password_hash`, `status`, `superadmin`, `created_at`, `updated_at`, `registration_ip`, `email`, `auth_key`, `bind_to_ip`, `email_confirmed`, `confirmation_token`, `id_wh`) VALUES
+(1, 'superadmin', '$2y$13$bp2w2.mTeJ/ORRVlEjA.jOHw0o49vwAJ.A15RTPjnSyk05M.20ZyS', 1, 1, '0000-00-00 00:00:00.00', '0000-00-00 00:00:00.00', NULL, 'super@mail.com', 'OtBMG-3O_ULHaEMKmM_pZIPvia1k_js_', '', 1, '', 5),
+(4, 'appadmin', '$2y$13$.X94ue5lX8Yt10motmlym.HyhumhiBXBZ7leukSITV7e9sTgLjNrK', 1, 0, '2024-10-28 13:20:22.00', '0000-00-00 00:00:00.00', '::1', 'bogosbinted@mail.com', 'pUwr74uXpIAq5h1XQU-3y3PuplNbm2P8', '', 1, '', 5),
+(5, 'franzferdinand', '$2y$13$QEUqv2hQRuKQ2uFtNfXbcuPoiz2pyiZsn1kpv3RfboEQEdA8MZC9e', 1, 0, '2024-10-28 14:32:42.00', '0000-00-00 00:00:00.00', '::1', 'ferdinand@mail.com', 'LZN0hVpdM-xAb6SA0AEALIcxiVeCAS5H', '', 1, '', 5),
+(8, 'warehouse@mail.com', '$2y$13$XZ6TofHa8d5cAMutTqSMs.QzdqeRCGMeRs3ZfqoMQCWveNyOjdTs2', 1, 0, '2024-10-30 08:40:40.00', '0000-00-00 00:00:00.00', '::1', 'fred@mail.com', 'JGU2pLcVye5PBUUqBlGuB7h1M8c6gkrx', '', 1, '', 5),
+(9, 'bobtherepairman', '$2y$13$0FJ7ZV.5Th2sydV4mDEP2u81kx56ocrbVEFZomEzdjK6xPfRt0xGa', 1, 0, '0000-00-00 00:00:00.00', '0000-00-00 00:00:00.00', '::1', 'bobrepair@mail.com', 'MbIXLNVCI6OHZFAZgwzyyLXTeiaVd6At', '', 1, '', 5),
+(10, 'bogosbinted', '$2y$13$byH/Orep9xl5ZWDL1IMtH.1NRxOm2IK/s9vDxODkiEp7o2gJ9TuZ2', 1, 0, '0000-00-00 00:00:00.00', '0000-00-00 00:00:00.00', '::1', 'bogosbinted@alien.com', 'LMStQ2EH_AMPtTfWSbwc9Li493FfLSTY', '', 1, '', 5),
+(11, 'manfred', '$2y$13$S.Pu6X0K3VWvc/kr2atfyuWdDK9xYc1BMFyvHBnjKWMjJCZuUwKRG', 1, 0, '0000-00-00 00:00:00.00', '0000-00-00 00:00:00.00', '::1', 'redbaron@mail.com', 'E8fnjVCzTMoHqvXiFnfAyEEw7aU80X5W', '', 1, '', 5),
+(12, 'hugh', '$2y$13$iREFX85Oa9udbjkKDslyy.46GR1OLNOKYh6JaiZ03pfwS59xaCnUS', 1, 0, '0000-00-00 00:00:00.00', '0000-00-00 00:00:00.00', '::1', 'hugh@mail.com', '-R2PpAC6v4_aTMieMxphBxZ3l_tgVRez', '', 1, '', 5);
 
 -- --------------------------------------------------------
 
@@ -1237,7 +1671,9 @@ INSERT INTO `user_visit_log` (`id`, `token`, `ip`, `language`, `user_agent`, `us
 (56, '6733fe076394c', '::1', 'en', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36 Edg/131.0.0.0', 1, 1731460615, 'Chrome', 'Windows'),
 (57, '6733fe136345e', '::1', 'en', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36 Edg/131.0.0.0', 5, 1731460627, 'Chrome', 'Windows'),
 (58, '67340022e2456', '::1', 'en', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36 Edg/131.0.0.0', 9, 1731461154, 'Chrome', 'Windows'),
-(59, '673400972f908', '::1', 'en', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36 Edg/131.0.0.0', 5, 1731461271, 'Chrome', 'Windows');
+(59, '673400972f908', '::1', 'en', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36 Edg/131.0.0.0', 5, 1731461271, 'Chrome', 'Windows'),
+(60, '673d45b403fb5', '::1', 'en', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36 Edg/131.0.0.0', 1, 1732068788, 'Chrome', 'Windows'),
+(61, '673d4bca6ff9a', '::1', 'en', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36 Edg/131.0.0.0', 5, 1732070346, 'Chrome', 'Windows');
 
 -- --------------------------------------------------------
 
@@ -1329,7 +1765,14 @@ ALTER TABLE `employee`
 --
 ALTER TABLE `item`
   ADD PRIMARY KEY (`id_item`),
-  ADD UNIQUE KEY `SKU` (`SKU`);
+  ADD UNIQUE KEY `SKU` (`SKU`),
+  ADD KEY `cat_item` (`id_category`);
+
+--
+-- Indexes for table `item_category`
+--
+ALTER TABLE `item_category`
+  ADD PRIMARY KEY (`id_category`);
 
 --
 -- Indexes for table `item_unit`
@@ -1366,6 +1809,19 @@ ALTER TABLE `migration`
   ADD PRIMARY KEY (`version`);
 
 --
+-- Indexes for table `repair_log`
+--
+ALTER TABLE `repair_log`
+  ADD PRIMARY KEY (`id_repair`),
+  ADD KEY `rep_type` (`rep_type`);
+
+--
+-- Indexes for table `rep_type_lookup`
+--
+ALTER TABLE `rep_type_lookup`
+  ADD PRIMARY KEY (`id_rep_t`);
+
+--
 -- Indexes for table `status_lookup`
 --
 ALTER TABLE `status_lookup`
@@ -1381,7 +1837,8 @@ ALTER TABLE `unit_log`
 -- Indexes for table `user`
 --
 ALTER TABLE `user`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `wh_usuer` (`id_wh`);
 
 --
 -- Indexes for table `user_visit_log`
@@ -1410,7 +1867,7 @@ ALTER TABLE `condition_lookup`
 -- AUTO_INCREMENT for table `doc_uploaded`
 --
 ALTER TABLE `doc_uploaded`
-  MODIFY `id_doc` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id_doc` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=35;
 
 --
 -- AUTO_INCREMENT for table `employee`
@@ -1422,13 +1879,19 @@ ALTER TABLE `employee`
 -- AUTO_INCREMENT for table `item`
 --
 ALTER TABLE `item`
-  MODIFY `id_item` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+  MODIFY `id_item` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+
+--
+-- AUTO_INCREMENT for table `item_category`
+--
+ALTER TABLE `item_category`
+  MODIFY `id_category` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `item_unit`
 --
 ALTER TABLE `item_unit`
-  MODIFY `id_unit` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=54294;
+  MODIFY `id_unit` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=54934;
 
 --
 -- AUTO_INCREMENT for table `lending`
@@ -1441,6 +1904,18 @@ ALTER TABLE `lending`
 --
 ALTER TABLE `lending_type_lookup`
   MODIFY `id_type` tinyint(3) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `repair_log`
+--
+ALTER TABLE `repair_log`
+  MODIFY `id_repair` int(10) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `rep_type_lookup`
+--
+ALTER TABLE `rep_type_lookup`
+  MODIFY `id_rep_t` tinyint(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `status_lookup`
@@ -1464,7 +1939,7 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `user_visit_log`
 --
 ALTER TABLE `user_visit_log`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=60;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=62;
 
 --
 -- AUTO_INCREMENT for table `warehouse`
@@ -1504,6 +1979,12 @@ ALTER TABLE `doc_uploaded`
   ADD CONSTRAINT `doc_user` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
+-- Constraints for table `item`
+--
+ALTER TABLE `item`
+  ADD CONSTRAINT `cat_item` FOREIGN KEY (`id_category`) REFERENCES `item_category` (`id_category`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
 -- Constraints for table `item_unit`
 --
 ALTER TABLE `item_unit`
@@ -1521,6 +2002,18 @@ ALTER TABLE `lending`
   ADD CONSTRAINT `lending_ibfk_2` FOREIGN KEY (`type`) REFERENCES `lending_type_lookup` (`id_type`),
   ADD CONSTRAINT `lending_ibfk_3` FOREIGN KEY (`id_employee`) REFERENCES `employee` (`id_employee`) ON DELETE CASCADE,
   ADD CONSTRAINT `user_lending_fk` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`);
+
+--
+-- Constraints for table `repair_log`
+--
+ALTER TABLE `repair_log`
+  ADD CONSTRAINT `rep_type` FOREIGN KEY (`rep_type`) REFERENCES `rep_type_lookup` (`id_rep_t`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Constraints for table `user`
+--
+ALTER TABLE `user`
+  ADD CONSTRAINT `wh_usuer` FOREIGN KEY (`id_wh`) REFERENCES `warehouse` (`id_wh`) ON DELETE NO ACTION ON UPDATE NO ACTION;
 
 --
 -- Constraints for table `user_visit_log`

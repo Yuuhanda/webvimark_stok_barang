@@ -18,7 +18,7 @@ use Yii;
 use app\models\Warehouse;
 use yii\filters\AccessControl;
 use yii\web\UploadedFile;
-
+use app\components\MyMemoryService;
 /**
  * LendingController implements the CRUD actions for Lending model.
  */

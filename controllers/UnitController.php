@@ -25,6 +25,7 @@ use app\models\DocUploaded;
 use app\models\StatusLookup;
 use app\models\ConditionLookup;
 use app\models\UploadPicture;
+use app\components\MyMemoryService;
 
 /**
  * UnitController implements the CRUD actions for ItemUnit model.
