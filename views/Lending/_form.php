@@ -2,6 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use app\helpers\TranslationHelper;
 
 /** @var yii\web\View $this */
 /** @var app\models\Lending $model */
@@ -12,7 +13,7 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'id_unit')->textInput() ?>
+    <?= $form->field($model, 'id_unit')->textInput()->label(TranslationHelper::translate('Id Unit')) ?>
 
     <?= $form->field($model, 'user_id')->textInput() ?>
 

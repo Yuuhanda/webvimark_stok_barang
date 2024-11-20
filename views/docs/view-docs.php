@@ -1,10 +1,11 @@
 <?php
 use yii\helpers\Html;
+use app\helpers\TranslationHelper;
 
 /** @var array $sheetData */
 /** @var string $fileName */
 
-$this->title = 'View Document: ' . Html::encode($fileName);
+$this->title = TranslationHelper::translate('View Document:').' ' . Html::encode($fileName);
 $this->params['breadcrumbs'][] = ['label' => 'Documents', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>

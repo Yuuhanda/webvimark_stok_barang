@@ -3,6 +3,7 @@
 use webvimark\modules\UserManagement\components\GhostHtml;
 use yii\helpers\Html;
 use yii\widgets\DetailView;
+use app\helpers\TranslationHelper;
 
 /** @var yii\web\View $this */
 /** @var app\models\Employee $model */
@@ -17,11 +18,11 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= GhostHtml::a('Update', ['update', 'id_employee' => $model->id_employee], ['class' => 'btn btn-primary']) ?>
-        <?= GhostHtml::a('Delete', ['delete', 'id_employee' => $model->id_employee], [
+        <?= GhostHtml::a('Update', [TranslationHelper::translate('update'), 'id_employee' => $model->id_employee], ['class' => 'btn btn-primary']) ?>
+        <?= GhostHtml::a('Delete', [TranslationHelper::translate('delete'), 'id_employee' => $model->id_employee], [
             'class' => 'btn btn-danger',
             'data' => [
-                'confirm' => 'Are you sure you want to delete this item?',
+                'confirm' => TranslationHelper::translate('Are you sure you want to delete this item?'),
                 'method' => 'post',
             ],
         ]) ?>

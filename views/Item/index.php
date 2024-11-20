@@ -7,12 +7,13 @@ use yii\grid\GridView;
 use yii\bootstrap5\Modal;
 use yii\web\View;
 use webvimark\modules\UserManagement\models\User;
+use app\helpers\TranslationHelper;
 
 /** @var yii\web\View $this */
 /** @var app\models\ItemSearch $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
-$this->title = 'Master Inventory';
+$this->title = TranslationHelper::translate('Master Inventory');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="Master-Inventory-index">
@@ -20,8 +21,8 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?php echo GhostHtml::a('Add New Item', ['create'], ['class' => 'btn btn-success']); ?>
-        <?php echo GhostHtml::a('Export Data to .xlsx', ['export/export-main'], ['class' => 'btn btn-success']);?>
+        <?php echo GhostHtml::a(TranslationHelper::translate('Add New Item'), ['create'], ['class' => 'btn btn-success']); ?>
+        <?php echo GhostHtml::a(TranslationHelper::translate('Export Data to .xlsx'), ['export/export-main'], ['class' => 'btn btn-success']);?>
     </p>
 
     <?= GridView::widget([
@@ -30,33 +31,46 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
             
-            'item_name',
-            'SKU',
-            'category',
+            [
+                'attribute' => 'item_name',
+                'label' => TranslationHelper::translate('Item Name'),
+            ],
+            [
+                'attribute' => 'SKU',
+                'label' => 'SKU',
+            ],
+            [
+                'attribute' => 'category',
+                'label' => TranslationHelper::translate('Category'),
+            ],
             [
                 'attribute' => 'available',
                 'contentOptions' => ['style' => 'width: 80px; text-align: right;'], // Adjust width as needed
                 'filter' => false, // Disable filter for this column
+                'label' => TranslationHelper::translate('Available'),
             ],
             [
                 'attribute' => 'in_use',
                 'contentOptions' => ['style' => 'width: 80px; text-align: right;'], // Adjust width as needed
                 'filter' => false, // Disable filter for this column
+                'label' => TranslationHelper::translate('In-Use'),
             ],
             [
                 'attribute' => 'in_repair',
                 'contentOptions' => ['style' => 'width: 80px; text-align: right;'], // Adjust width as needed
                 'filter' => false, // Disable filter for this column
+                'label' => TranslationHelper::translate('In-Repair'),
             ],
             [
                 'attribute' => 'lost',
                 'contentOptions' => ['style' => 'width: 80px; text-align: right;'], // Adjust width as needed
                 'filter' => false, // Disable filter for this column
+                'label' => TranslationHelper::translate('Unit Lost'),
             ],
             [
                 'class' => 'yii\grid\ActionColumn',
                 'template' => '{viewImage} {whdist} {detail} {edit}',
-                'header' => 'Action', 
+                'header' => TranslationHelper::translate('Action'), 
                 'buttons' => [
                     'viewImage' => function ($url, $model, $key) {
                         return GhostHtml::a(

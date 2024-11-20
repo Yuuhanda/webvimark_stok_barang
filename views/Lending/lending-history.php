@@ -11,6 +11,8 @@ use yii\widgets\ActiveForm;
 use kartik\select2\Select2;
 use yii\bootstrap5\Modal;
 use yii\web\View; 
+use app\helpers\TranslationHelper;
+
 /** @var yii\web\View $this */
 /** @var app\models\LendigSearch $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */
@@ -37,10 +39,22 @@ $this->params['breadcrumbs'][] = $this->title;
         'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
-            'serial_number',
-            'employee',
-            'updated_by',
-            'comment',
+            [
+                'attribute' => 'serial_number',
+                'label' =>TranslationHelper::translate('Serial Number'),
+            ],
+            [
+                'attribute' => 'employee',
+                'label' =>TranslationHelper::translate('Employee'),
+            ],
+            [
+                'attribute' => 'updated_by',
+                'label' =>TranslationHelper::translate('Updated By'),
+            ],
+            [
+                'attribute' => 'comment',
+                'label' =>TranslationHelper::translate('Comment'),
+            ],
             [
                 'attribute' => 'date',
                 'filter' => DatePicker::widget([
@@ -55,6 +69,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     return Yii::$app->formatter->asDate($model['date'], 'php:d F, Y');
                 },
                 'format' => 'raw',
+                'label' => TranslationHelper::translate('Date'),
             ],
             [
                 'attribute' => 'status',
@@ -67,11 +82,12 @@ $this->params['breadcrumbs'][] = $this->title;
                         'allowClear' => true,
                     ],
                 ]),
+                'label' => TranslationHelper::translate('Status'),
             ],
             [
                 'class' => 'yii\grid\ActionColumn',
                 'template' => '{viewImage} {imageReturn}',
-                'header' => 'View Image',
+                'header' => TranslationHelper::translate('View Image'),
                 'buttons' => [
                     'viewImage' => function ($url, $model, $key) {
                         return GhostHtml::a(

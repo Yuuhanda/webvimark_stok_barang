@@ -7,13 +7,15 @@ use yii\helpers\Url;
 use yii\grid\ActionColumn;
 use yii\grid\GridView;
 use yii\web\JqueryAsset;
+use app\helpers\TranslationHelper;
+
 JqueryAsset::register($this);
 
 /** @var yii\web\View $this */
 /** @var app\models\DocSearch $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
-$this->title = 'Documents Uploaded';
+$this->title = TranslationHelper::translate('Bulk Upload History');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="doc-uploaded-index">
@@ -22,10 +24,10 @@ $this->params['breadcrumbs'][] = $this->title;
 
 
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
-    <?= Html::a('Delete old documents', ['delete-old-docs'], [
+    <?= Html::a(TranslationHelper::translate('Delete old documents'), ['delete-old-docs'], [
             'class' => 'btn btn-danger',
             'data' => [
-                'confirm' => 'Are you sure you want to delete all old document?',
+                'confirm' => TranslationHelper::translate('Are you sure you want to delete all old document?'),
                 'method' => 'post',
             ],
         ]) ?>
@@ -35,8 +37,10 @@ $this->params['breadcrumbs'][] = $this->title;
         'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
-
-            'file_name',
+            [
+                'attribute' => 'file_name',
+                'label' => TranslationHelper::translate('File Name'),
+            ],
             [
                 'attribute' => 'datetime',
                 'value' => function ($model) {
@@ -46,7 +50,7 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
             'username',
             [
-                'label' => 'Action',
+                'label' => TranslationHelper::translate('Action'),
                 'format' => 'raw',
                 'value' => function ($model) {
                     $filePath = Url::to('@web/document/' . $model['file_name']);
@@ -78,7 +82,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         'target' => '_blank',
                         'data-pjax' => '0',
                         'data' => [
-                            'confirm' => 'Are you sure you want to delete this item?',
+                            'confirm' => TranslationHelper::translate('Are you sure you want to delete this item?'),
                             'method' => 'post', // Yii2's built-in support for form submission on link click
                         ],
                         'title' => 'View', 'style' => 'margin-top: 1px; margin-bottom: 1px; font-size: 12px; padding: 3px 6px;'

@@ -8,12 +8,13 @@ use yii\grid\GridView;
 use kartik\select2\Select2;
 use webvimark\modules\UserManagement\components\GhostHtml;
 use yii\widgets\ActiveForm;
+use app\helpers\TranslationHelper;
 
 /** @var yii\web\View $this */
 /** @var app\models\UnitSearch $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
-$this->title = 'Item Detail';
+$this->title = TranslationHelper::translate('Item Detail');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="item-detail">
@@ -23,7 +24,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <p>
         <?php 
             // Button to trigger hidden export form
-            echo GhostHtml::button('Export Data to .xlsx', [
+            echo GhostHtml::button(TranslationHelper::translate('Export Data to .xlsx'), [
                 'class' => 'btn btn-success',
                 'onclick' => "$('#export-form').submit();"
             ]);
@@ -48,8 +49,12 @@ $this->params['breadcrumbs'][] = $this->title;
                         'allowClear' => true,
                     ],
                 ]),
+                'label' => TranslationHelper::translate('Condition')
             ],
-            'serial_number',
+            [
+            'attribute' => 'serial_number',
+            'label' =>TranslationHelper::translate('Serial Number'),
+            ],
             'id_unit',
 
             [
@@ -63,6 +68,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     'allowClear' => true,
                 ],
             ]),
+            'label' =>TranslationHelper::translate('Status'),
         ],
     
 
@@ -78,6 +84,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     'allowClear' => true,
                 ],
             ]),
+            'label' =>TranslationHelper::translate('Updated By'),
         ],
 
         // Warehouse field with Select2
@@ -92,6 +99,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     'allowClear' => true,
                 ],
             ]),
+            'label' =>TranslationHelper::translate('Warehouse'),
         ],
 
         // Employee field with Select2
@@ -106,12 +114,15 @@ $this->params['breadcrumbs'][] = $this->title;
                     'allowClear' => true,
                 ],
             ]),
+            'label' =>TranslationHelper::translate('Employee'),
         ],
-
-            'comment',
+        [
+            'attribute' => 'comment',
+            'label' =>TranslationHelper::translate('Comment'),
+            ],
             [
                 'class' => 'yii\grid\DataColumn',
-                'label' => 'Edit',
+                'label' => TranslationHelper::translate('Edit'),
                 'format' => 'raw',
                 'value' => function ($model) {
                     // Check if the user is logged in and has superadmin role of 0 or 1

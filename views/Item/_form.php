@@ -4,6 +4,7 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use kartik\select2\Select2;
 use yii\helpers\ArrayHelper;
+use app\helpers\TranslationHelper;
 
 /** @var yii\web\View $this */
 /** @var app\models\Item $model */
@@ -15,7 +16,7 @@ use yii\helpers\ArrayHelper;
 
     <?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]); ?>
 
-    <?= $form->field($model, 'item_name')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'item_name')->textInput(['maxlength' => true])->label(TranslationHelper::translate('Item Name')) ?>
 
     <?= $form->field($model, 'SKU')->textInput(['maxlength' => true]) ?>
 
@@ -32,14 +33,14 @@ use yii\helpers\ArrayHelper;
             'allowClear' => true,
         ],
         'bsVersion' => '5', // Set Bootstrap version to 5
-    ]); ?>
+    ])->label(TranslationHelper::translate('Item Category')); ?>
 
 
     <!-- Image Upload Field -->
-    <?= $form->field($uploadModel, 'imageFile')->fileInput() ?>
+    <?= $form->field($uploadModel, 'imageFile')->fileInput()->label(TranslationHelper::translate('Item Picture')) ?>
 
     <div class="form-group">
-        <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
+        <?= Html::submitButton(TranslationHelper::translate('Save'), ['class' => 'btn btn-success']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

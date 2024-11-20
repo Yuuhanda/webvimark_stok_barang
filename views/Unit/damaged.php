@@ -8,13 +8,13 @@ use yii\grid\ActionColumn;
 use yii\grid\GridView;
 use yii\widgets\ActiveForm;
 use kartik\select2\Select2;
-
+use app\helpers\TranslationHelper;
 
 /** @var yii\web\View $this */
 /** @var app\models\LogSearch $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
-$this->title = 'Damaged Unit';
+$this->title = TranslationHelper::translate('Damaged Unit');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="unit-log-index">
@@ -49,8 +49,12 @@ $this->params['breadcrumbs'][] = $this->title;
                         'allowClear' => true,
                     ],
                 ]),
+                'label' => TranslationHelper::translate('Condition'),
             ],
-            'serial_number',
+            [
+                'attribute' => 'serial_number',
+                'label' => TranslationHelper::translate('Serial Number'),
+            ],
             [
                 'attribute' => 'status',
                 'filter' => Select2::widget([
@@ -63,7 +67,10 @@ $this->params['breadcrumbs'][] = $this->title;
                     ],
                 ]),
             ],
-            'updated_by',
+            [
+                'attribute' => 'updated_by',
+                'label' => TranslationHelper::translate('Updated By'),
+            ],
             [
                 'attribute' => 'warehouse',
                 'filter' => Select2::widget([
@@ -75,13 +82,16 @@ $this->params['breadcrumbs'][] = $this->title;
                         'allowClear' => true,
                     ],
                 ]),
+            ],
+            [
+                'attribute' => 'comment',
+                'label' => TranslationHelper::translate('Comment'),
             ],  
-            'comment',
             // Custom action buttons
             [
                 'class' => 'yii\grid\ActionColumn',
                 'template' => '{sendrepair}', // Specify the buttons
-                'header' => 'Action', 
+                'header' => TranslationHelper::translate('Action'), 
                 'buttons' => [
                 'sendrepair' => function ($url, $model, $key) {
                     // Ensure we are checking the correct value, like a numeric ID or a specific status name

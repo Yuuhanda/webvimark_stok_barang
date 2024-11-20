@@ -8,12 +8,13 @@ use yii\grid\ActionColumn;
 use yii\grid\GridView;
 use yii\widgets\ActiveForm;
 use kartik\select2\Select2;
+use app\helpers\TranslationHelper;
 
 /** @var yii\web\View $this */
 /** @var app\models\LogSearch $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
-$this->title = 'Unit In-Repair';
+$this->title = TranslationHelper::translate('Unit In-Repair');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="unit-repair-index">
@@ -25,7 +26,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <p>
         <?php 
             // Button to trigger hidden export form
-            echo Html::button('Export Data to .xlsx', [
+            echo Html::button(TranslationHelper::translate('Export Data to .xlsx'), [
                 'class' => 'btn btn-success',
                 'onclick' => "$('#export-form').submit();"
             ]);
@@ -47,8 +48,12 @@ $this->params['breadcrumbs'][] = $this->title;
                         'allowClear' => true,
                     ],
                 ]),
+                'label' => TranslationHelper::translate('Condition')
             ],
-            'serial_number',
+            [
+                'attribute' => 'serial_number',
+                'label' =>TranslationHelper::translate('Serial Number'),
+            ],
             [
                 'attribute' => 'status',
                 'filter' => Select2::widget([
@@ -60,12 +65,19 @@ $this->params['breadcrumbs'][] = $this->title;
                         'allowClear' => true,
                     ],
                 ]),
+                'label' =>TranslationHelper::translate('Status'),
             ],
-            'updated_by',
-            'comment',
+            [
+                'attribute' => 'updated_by',
+                'label' =>TranslationHelper::translate('Updated By'),
+            ],
+            [
+                'attribute' => 'comment',
+                'label' =>TranslationHelper::translate('Comment'),
+            ],
             [
                 'class' => 'yii\grid\ActionColumn',
-                'header' => 'Action', 
+                'header' => TranslationHelper::translate('Action'), 
                 'template' => '{repairdone}', // Specify the buttons
                 'buttons' => [
                     'repairdone' => function ($url, $model, $key) {

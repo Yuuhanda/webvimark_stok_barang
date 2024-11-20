@@ -156,22 +156,31 @@ class SiteController extends Controller
 
     public function actionTranslate()
     {
-        Yii::$app->response->format = Response::FORMAT_JSON;
-
-        $text = Yii::$app->request->get('text', '');
+        Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+    
+        $text = Yii::$app->request->get('text');
         $sourceLang = Yii::$app->request->get('sourceLang', 'en');
-        $targetLang = Yii::$app->request->get('targetLang', 'id');
-
-        if (empty($text)) {
-            return ['success' => false, 'message' => 'Text is required'];
+        $targetLang = Yii::$app->request->get('targetLang', 'id'); // Default to Indonesian
+    
+        if (!$text) {
+            return ['success' => false, 'error' => 'No text provided for translation.'];
         }
-
-        $translatedText = MyMemoryService::translate($text, $sourceLang, $targetLang);
-
-        if ($translatedText) {
+    
+        try {
+            $translatedText = \app\components\MyMemoryService::translate($text, $sourceLang, $targetLang);
             return ['success' => true, 'translatedText' => $translatedText];
+        } catch (\Exception $e) {
+            return ['success' => false, 'error' => $e->getMessage()];
         }
-
-        return ['success' => false, 'message' => 'Translation failed'];
     }
+
+    public function actionSetLanguage()
+{
+    $language = Yii::$app->request->post('language', 'en');
+    Yii::$app->session->set('language', $language);
+    Yii::$app->language = $language;
+    return $this->redirect(Yii::$app->request->referrer);
+}
+
+    
 }

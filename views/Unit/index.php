@@ -8,12 +8,13 @@ use yii\grid\ActionColumn;
 use yii\grid\GridView;
 use app\controllers\UnitController;
 use webvimark\modules\UserManagement\components\GhostHtml;
+use app\helpers\TranslationHelper;
 
 /** @var yii\web\View $this */
 /** @var app\models\Itemearch $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
-$this->title = 'Item Units';
+$this->title = TranslationHelper::translate('Item Units');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="item-unit-index">
@@ -29,19 +30,22 @@ $this->params['breadcrumbs'][] = $this->title;
         'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
-            
-            'item_name',
+            [
+                'attribute' => 'item_name',
+                'label' => TranslationHelper::translate('Item Name'),
+            ],
             'SKU',
             [
                 'attribute' => 'available',
                 'contentOptions' => ['style' => 'width: 80px; text-align: right;'], // Adjust width as needed
                 'filter' => false, // Disable filter for this column
+                'label' => TranslationHelper::translate('Available'),
             ],
             
             // Custom action buttons
             [
                 'class' => 'yii\grid\ActionColumn',
-                'header' => 'Action', 
+                'header' => TranslationHelper::translate('Action'), 
                 'template' => '{addunit}', // Specify the buttons
                 'buttons' => [
                     'addunit' => function ($url, $model, $key) {
