@@ -32,6 +32,7 @@ class User extends ActiveRecord implements IdentityInterface
             [['registration_ip'], 'string', 'max' => 15],
             [['email'], 'string', 'max' => 128],
             [['id_wh'], 'integer'],
+            [['user_lang'], 'string', 'max'=> 3],
         ];
     }
 
@@ -50,6 +51,7 @@ class User extends ActiveRecord implements IdentityInterface
             'updated_at' => 'Updated At',
             'registration_ip' => 'Registration Ip',
             'email' => 'Email',
+            'user_lang' => 'User Language'
         ];
     }
 

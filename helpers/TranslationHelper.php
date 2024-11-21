@@ -2,12 +2,16 @@
 namespace app\helpers;
 
 use app\components\MyMemoryService;
+use app\models\User;
+use Yii;
 
 class TranslationHelper
 {
     public static function translate($text, $sourceLang = 'en', $targetLang = 'id')
     {
-        $targetLang = $targetLang ?: \Yii::$app->language; // Default to the application's current language
+        $user_lang = User::findOne(Yii::$app->user->id);
+        $targetLang = $user_lang->user_lang;
+        $targetLang = $targetLang ?:'id'; // Default to the indonesian
         if ($sourceLang === $targetLang) {
             return $text; // Skip translation for the same language
         }

@@ -12,6 +12,7 @@ use Yii;
 use yii\filters\AccessControl;
 use app\components\MyMemoryService;
 use app\helpers\TranslationHelper;
+use webvimark\modules\UserManagement;
 /**
  * UserController implements the CRUD actions for User model.
  */
@@ -187,6 +188,30 @@ class UserController extends Controller
     
         return $this->redirect(['index']);
     }
+
+    public function actionOptions()
+    {
+        $id = Yii::$app->user->id; // Get the logged-in user's ID
+        $model = User::findOne($id); // Retrieve the user's record
+    
+        if (!$model) {
+            throw new \yii\web\NotFoundHttpException('User not found.');
+        }
+    
+        if ($this->request->isPost && $model->load(Yii::$app->request->post())) {
+            if ($model->save()) {
+                Yii::$app->session->setFlash('success', TranslationHelper::translate('Your preferences have been updated successfully.'));
+                return $this->redirect(['options']); // Redirect to the same page
+            } else {
+                Yii::$app->session->setFlash('error', TranslationHelper::translate('Failed to update your preferences. Please try again.'));
+            }
+        }
+    
+        return $this->render('options', [
+            'model' => $model,
+        ]);
+    }
+    
     
 
 }
