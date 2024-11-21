@@ -6,12 +6,13 @@ use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\grid\ActionColumn;
 use yii\grid\GridView;
+use app\helpers\TranslationHelper;
 
 /** @var yii\web\View $this */
 /** @var app\models\WarehouseSearch $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
-$this->title = 'Warehouse Admins';
+$this->title = TranslationHelper::translate('Warehouse Admins');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="warehouse-index">
@@ -25,11 +26,13 @@ $this->params['breadcrumbs'][] = $this->title;
         'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
-
-            'username',
+            [
+                'attribute' => 'username',
+                'label' => TranslationHelper::translate('Username'),
+            ],
             [
                 'attribute' => 'warehouse',
-                'label' => 'Warehouse',
+                'label' => TranslationHelper::translate('Warehouse'),
                 'value' => function ($model) {
                     return $model->warehouseRelation ? $model->warehouseRelation->wh_name : '(Not Set)';
                 },
@@ -37,12 +40,14 @@ $this->params['breadcrumbs'][] = $this->title;
                     'class' => 'form-control',
                 ]),
             ],
-            
-            'id_wh',
+            [
+                'attribute' => 'id_wh',
+                'label' => TranslationHelper::translate('Id Warehouse'),
+            ],
             [
                 'class' => 'yii\grid\ActionColumn',
                 'template' => '{assign}',
-                'header' => 'Action',
+                'header' => TranslationHelper::translate('Action'),
                 'buttons' => [
                     'assign' => function ($url, $model, $key) {
                         return GhostHtml::a(
