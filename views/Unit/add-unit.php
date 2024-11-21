@@ -7,14 +7,14 @@ use app\helpers\TranslationHelper;
 /** @var yii\web\View $this */
 /** @var app\models\ItemUnit $model */
 /** @var ActiveForm $form */
-$this->title = 'Add New Unit of Item';
+$this->title = TranslationHelper::translate('Add New Unit of Item');
 $this->params['breadcrumbs'][] = $this->title;
 
 ?>
 <div class="add-unit">
 <h1><?= Html::encode($this->title) ?></h1>
     <p>
-        <?= Html::a(TranslationHelper::translate('Add Unit in Bulk'), ['unit/bulk-add', 'id_item' =>Yii::$app->request->get('id_item')], ['class' => 'btn btn-success']) ?>
+        <?= Html::a(TranslationHelper::translate('Bulk Upload for units'), ['unit/bulk-add', 'id_item' =>Yii::$app->request->get('id_item')], ['class' => 'btn btn-success']) ?>
     </p>
     <?php $form = ActiveForm::begin(); ?>
         <?= $form->field($model, 'id_item')->hiddenInput()->label(false) ?>
