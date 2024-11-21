@@ -40,8 +40,8 @@ class MyMemoryService
             if ($response->isOk) {
                 $translatedText = $response->data['responseData']['translatedText'];
 
-                // Cache the translation for 24 hours
-                Yii::$app->cache->set($cacheKey, $translatedText, 86400);
+                // Save to cache for 30 days (60 * 60 * 24 * 30 seconds)
+                Yii::$app->cache->set($cacheKey, $translatedText, 60 * 60 * 24 * 30);
 
                 return $translatedText;
             }

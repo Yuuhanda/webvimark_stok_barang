@@ -6,7 +6,7 @@ use app\helpers\TranslationHelper;
 /** @var yii\web\View $this */
 /** @var app\models\Item $model */
 
-$this->title = TranslationHelper::translate('Update Item :') .' '.  $model->id_item;
+$this->title = TranslationHelper::translate('Update an Item :') .' '.  $model->id_item;
 $this->params['breadcrumbs'][] = ['label' => 'Items', 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->id_item, 'url' => ['view', 'id_item' => $model->id_item]];
 $this->params['breadcrumbs'][] = 'Update';
