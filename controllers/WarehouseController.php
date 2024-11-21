@@ -14,7 +14,7 @@ use app\models\ItemSearch;
 use app\models\User;
 use app\components\MyMemoryService;
 use app\models\UserSearch;
-
+use app\helpers\TranslationHelper;
 /**
  * WarehouseController implements the CRUD actions for Warehouse model.
  */
@@ -72,7 +72,7 @@ class WarehouseController extends Controller
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->save()) {
-                Yii::$app->session->setFlash('success', 'Warehouse added.');
+                Yii::$app->session->setFlash('success', TranslationHelper::translate('Warehouse added.'));
                 return $this->redirect(['index']);
             }
         } else {
@@ -96,7 +96,7 @@ class WarehouseController extends Controller
         $model = $this->findModel($id_wh);
 
         if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            Yii::$app->session->setFlash('success', 'Warehouse updated.');
+            Yii::$app->session->setFlash('success', TranslationHelper::translate('Warehouse updated.'));
             return $this->redirect(['index']);
         }
 
@@ -123,10 +123,10 @@ class WarehouseController extends Controller
             $this->findModel($id_wh)->delete();
             
             // Set a success notification
-            Yii::$app->session->setFlash('success', 'Warehouse data deleted successfully.');
+            Yii::$app->session->setFlash('success', TranslationHelper::translate('Warehouse data deleted successfully.'));
         } else {
             // Set an error notification if there are still item units in the warehouse
-            Yii::$app->session->setFlash('error', 'Warehouse still has units of item inside.');
+            Yii::$app->session->setFlash('error', TranslationHelper::translate('Warehouse still has units of item inside.'));
         }
         
         // Redirect to the index page
@@ -203,13 +203,13 @@ class WarehouseController extends Controller
                 $userdata->id_wh = $selectedWhId;
         
                 if ($userdata->save()) {
-                    Yii::$app->session->setFlash('success', 'Warehouse assigned successfully.');
+                    Yii::$app->session->setFlash('success', TranslationHelper::translate('Warehouse assigned successfully.'));
                     return $this->redirect(['assign']);
                 }
             }
             Yii::info(Yii::$app->request->post(), 'debug');
 
-            Yii::$app->session->setFlash('error', 'Failed to assign the warehouse.');
+            Yii::$app->session->setFlash('error', TranslationHelper::translate('Failed to assign the warehouse.'));
         }
         
     

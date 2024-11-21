@@ -22,6 +22,7 @@ use app\models\ConditionLookup;
 use app\models\ItemCategory;
 use app\models\StatusLookup;
 use app\components\MyMemoryService;
+use app\helpers\TranslationHelper;
 /**
  * ItemController implements the CRUD actions for Item model.
  */
@@ -158,7 +159,7 @@ class ItemController extends Controller
                     Yii::debug('Uploaded file name: ' . $uploadModel->imageFile->name, __METHOD__);
                 } else {
                     Yii::error('No file uploaded.', __METHOD__);
-                    Yii::$app->session->setFlash('error', 'Please upload a picture.');
+                    Yii::$app->session->setFlash('error', TranslationHelper::translate('Please upload a picture.'));
                     return $this->redirect(['index']); // Redirect back
                 }
                 
@@ -169,12 +170,12 @@ class ItemController extends Controller
                     var_dump($uploadModel->errors); // This will show validation error details on-screen
                     die();
                 }// Dump errors to check on screen
-                Yii::$app->session->setFlash('error', 'Picture validation failed.');
+                Yii::$app->session->setFlash('error', TranslationHelper::translate('Picture validation failed.'));
                 return $this->redirect(['index']);
             }
     
             if ($model->save()) {
-                Yii::$app->session->setFlash('success', 'Item added successfully.');
+                Yii::$app->session->setFlash('success', TranslationHelper::translate('Item added successfully.'));
                 return $this->redirect(['index']);
             }
         }
@@ -260,7 +261,7 @@ class ItemController extends Controller
                 
             }
             if ($model->save()) {
-                Yii::$app->session->setFlash('success', 'Item Updated successfully.');
+                Yii::$app->session->setFlash('success', TranslationHelper::translate('Item Updated successfully.'));
                 return $this->redirect(['index']);
             }
         }
@@ -322,17 +323,6 @@ class ItemController extends Controller
         return $this->asJson([
             'data' => $data,
         ]);
-    }
-
-    public function actionTranslate()
-    {
-        $text = 'Hello World';
-        $sourceLang = 'en';
-        $targetLang = 'fr';
-
-        $translatedText = MyMemoryService::translate($text, $sourceLang, $targetLang);
-
-        echo $translatedText. ' . ' .$text;
     }
 
 

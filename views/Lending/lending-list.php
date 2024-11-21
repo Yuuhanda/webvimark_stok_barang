@@ -26,7 +26,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <p>
         <?php 
             // Button to trigger hidden export form
-            echo Html::button('Export Data to .xlsx', [
+            echo Html::button(TranslationHelper::translate('Export Data to .xlsx'), [
                 'class' => 'btn btn-success',
                 'onclick' => "$('#export-form').submit();"
             ]);
@@ -84,7 +84,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             '#',
                             [
                                 'class' => 'btn btn-secondary',
-                                'title' => 'View Image',
+                                'title' => TranslationHelper::translate('View Image'),
                                 'data-bs-toggle' => 'modal',
                                 'data-bs-target' => '#imageModal',
                                 'data-id' => $model['id_lending'],
@@ -93,7 +93,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         );
                     },
                     'returnunit' => function ($url, $model, $key) {
-                        return GhostHtml::a('Return', ['unit/return-unit', 'id_unit' => $model['id_unit']], ['class' => 'btn btn-primary', 'style' => 'margin-top: 1px; margin-bottom: 1px; font-size: 12px; padding: 3px 6px;']);
+                        return GhostHtml::a(TranslationHelper::translate('Returns'), ['unit/return-unit', 'id_unit' => $model['id_unit']], ['class' => 'btn btn-primary', 'style' => 'margin-top: 1px; margin-bottom: 1px; font-size: 12px; padding: 3px 6px;']);
                     },
                 ],
             ],
@@ -118,7 +118,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <!-- Modal for displaying the image -->
         <?php Modal::begin([
         'id' => 'imageModal',
-        'title' => '<h5>Item Image</h5>',
+        'title' => TranslationHelper::translate('Item Image'),
         'size' => Modal::SIZE_LARGE,
         'footer' => Html::button('Close', ['class' => 'btn btn-secondary', 'data-bs-dismiss' => 'modal']),
     ]); ?>

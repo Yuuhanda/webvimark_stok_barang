@@ -26,6 +26,7 @@ use app\models\StatusLookup;
 use app\models\ConditionLookup;
 use app\models\UploadPicture;
 use app\components\MyMemoryService;
+use app\helpers\TranslationHelper;
 
 /**
  * UnitController implements the CRUD actions for ItemUnit model.
@@ -165,7 +166,7 @@ class UnitController extends Controller
                 if ($model->serial_number == NULL) {
                     $item = Item::findOne($model->id_item);
                     if ($model->id_wh == NULL) {
-                        Yii::$app->session->setFlash('error', 'Warehouse not allowed to be null for new unit.');
+                        Yii::$app->session->setFlash('error', TranslationHelper::translate('Warehouse not allowed to be null for new unit.'));
                         return $this->redirect("add-unit?id_item=$id_item");
                     }
                     if ($model->comment==NULL){
@@ -184,7 +185,7 @@ class UnitController extends Controller
                 $user = Yii::$app->user->identity;
                 $model->updated_by = $user->id;
             if ($model->save()){
-                Yii::$app->session->setFlash('success', 'Unit Added successfully.');
+                Yii::$app->session->setFlash('success', TranslationHelper::translate('Unit Added successfully.'));
                 $serial_n = $model->serial_number;
                 $id_unit = $model->id_unit;
 
@@ -252,7 +253,7 @@ class UnitController extends Controller
                             Yii::debug('Uploaded file name: ' . $uploadModel->imageFile->name, __METHOD__);
                         } else {
                             Yii::error('No file uploaded.', __METHOD__);
-                            Yii::$app->session->setFlash('error', 'Please upload a picture.');
+                            Yii::$app->session->setFlash('error', TranslationHelper::translate('Please upload a picture.'));
                             return $this->redirect(['return-unit', 'id_unit' => $lending->id_unit]); // Redirect back
                         }
 
@@ -263,7 +264,7 @@ class UnitController extends Controller
                                 var_dump($uploadModel->errors); // This will show validation error details on-screen
                                 die();
                             }// Dump errors to check on screen
-                            Yii::$app->session->setFlash('error', 'Picture validation failed.');
+                            Yii::$app->session->setFlash('error', TranslationHelper::translate('Picture validation failed.'));
                             return $this->redirect(['index']);
                         }
 
@@ -277,7 +278,7 @@ class UnitController extends Controller
                         }
                     $logController = new LogController('log', Yii::$app); // Pass the required parameters to the controller
                     $logController->actionReturnLog($model->id_unit, $lending->id_employee);
-                    Yii::$app->session->setFlash('success', 'Unit Returned successfully.');
+                    Yii::$app->session->setFlash('success', TranslationHelper::translate('Unit Returned successfully.'));
                     return $this->redirect(['lending/list']);
                 }
             }
@@ -305,7 +306,7 @@ class UnitController extends Controller
         $model = $this->findModel($id_unit);
 
         if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            Yii::$app->session->setFlash('success', 'Unit Updated successfully.');
+            Yii::$app->session->setFlash('success', TranslationHelper::translate('Unit Updated successfully.'));
             return $this->redirect(['view', 'id_unit' => $model->id_unit]);
         }
 
@@ -417,7 +418,7 @@ class UnitController extends Controller
                 return $this->redirect(['correction-unit', 'serial_number' => $serial_number]);
             } else {
                 // Handle the case when serial_number is not provided
-                Yii::$app->session->setFlash('error', 'Serial number cannot be null.');
+                Yii::$app->session->setFlash('error', TranslationHelper::translate('Serial number cannot be null.'));
             }
         }
     
@@ -446,7 +447,7 @@ class UnitController extends Controller
 
         // Check if the model was found
         if ($model === null) {
-            Yii::$app->session->setFlash('error', 'Serial number cannot be found. Check if you mistyped it.');
+            Yii::$app->session->setFlash('error', TranslationHelper::translate('Serial number cannot be found. Check if you mistyped it.'));
             return $this->redirect(['correction-search']);
         }
     
@@ -457,7 +458,7 @@ class UnitController extends Controller
             $model->save();
             $logController = new LogController('log', Yii::$app); // Pass the required parameters to the controller
             $logController->actionEditLog($serial_number);
-            Yii::$app->session->setFlash('success', 'Unit updated successfully.');
+            Yii::$app->session->setFlash('success', TranslationHelper::translate('Unit updated successfully.'));
             return $this->redirect('/item/details?id_item='.$model->id_item); // Prevents form resubmission
         }
     
@@ -494,7 +495,7 @@ class UnitController extends Controller
                     $repairLog = new RepairLogController('repair', Yii::$app);
                     $type = 1;
                     $repairLog->actionCreate($id_unit, $model->comment, $type);
-                    Yii::$app->session->setFlash('success', 'Unit sent to repair successfully.');
+                    Yii::$app->session->setFlash('success', TranslationHelper::translate('Unit sent to repair successfully.'));
                     return $this->redirect(['damaged']);
                 }
                 return;
@@ -535,7 +536,7 @@ class UnitController extends Controller
                     $repairLog = new RepairLogController('repair', Yii::$app);
                     $type = 2;
                     $repairLog->actionCreate($id_unit, $model->comment, $type);
-                    Yii::$app->session->setFlash('success', 'Unit repaired and updated.');
+                    Yii::$app->session->setFlash('success', TranslationHelper::translate('Unit repaired and updated.'));
                     return $this->redirect(['repair']);
                 }
                 return;
@@ -595,7 +596,7 @@ class UnitController extends Controller
                         $serialNumber = $row['B'] ?? null;
     
                         if ($serialNumber && isset($serialTracker[$serialNumber])) {
-                            Yii::$app->session->setFlash('error', "Serial number '{$serialNumber}' is not unique. Please ensure all serial numbers are unique.");
+                            Yii::$app->session->setFlash('error', TranslationHelper::translate("Serial number '{$serialNumber}' is not unique. Please ensure all serial numbers are unique."));
                             return $this->redirect(['index']);
                         }
     
@@ -637,7 +638,7 @@ class UnitController extends Controller
                     // Redirect to preview page
                     return $this->redirect(['bulk-add-preview']);
                 } else {
-                    Yii::$app->session->setFlash('error', 'Failed to save uploaded file.');
+                    Yii::$app->session->setFlash('error', TranslationHelper::translate('Failed to save uploaded file.'));
                     return $this->redirect(['index']);
                 }
             }
@@ -658,7 +659,7 @@ class UnitController extends Controller
             }
     
             $session->remove('unitData'); // Clear session data
-            Yii::$app->session->setFlash('success', 'Data saved successfully.');
+            Yii::$app->session->setFlash('success', TranslationHelper::translate('Data saved successfully.'));
             return $this->redirect(['index']);
         }
     

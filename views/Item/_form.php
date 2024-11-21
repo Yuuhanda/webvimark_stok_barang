@@ -18,7 +18,7 @@ use app\helpers\TranslationHelper;
 
     <?= $form->field($model, 'item_name')->textInput(['maxlength' => true])->label(TranslationHelper::translate('Item Name')) ?>
 
-    <?= $form->field($model, 'SKU')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'SKU')->textInput(['maxlength' => true])->label('SKU') ?>
 
 
     <?= $form->field($model, 'id_category')->widget(Select2::class, [

@@ -127,7 +127,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <!-- Modal for displaying the image -->
     <?php Modal::begin([
         'id' => 'imageModal',
-        'title' => '<h5>Item Image</h5>',
+        'title' => TranslationHelper::translate('Item Image'),
         'size' => Modal::SIZE_LARGE,
         'footer' => Html::button('Close', ['class' => 'btn btn-secondary', 'data-bs-dismiss' => 'modal']),
     ]); ?>

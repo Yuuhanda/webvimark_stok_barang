@@ -8,6 +8,9 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use app\components\MyMemoryService;
+use app\models\Item;
+use Yii;
+use app\helpers\TranslationHelper;
 
 /**
  * CategoryController implements the CRUD actions for ItemCategory model.
@@ -106,10 +109,28 @@ class CategoryController extends Controller
      */
     public function actionDelete($id_category)
     {
-        $this->findModel($id_category)->delete();
-
+        // Check if the category is being used in the Item table
+        $existingCategories = Item::find()
+            ->select(['id_category'])
+            ->where(['id_category' => $id_category])
+            ->exists(); // Check existence instead of fetching all results
+    
+        if (!$existingCategories) {
+            // If no items use this category, delete it
+            if($this->findModel($id_category)->delete()){
+                Yii::$app->session->setFlash('success', TranslationHelper::translate('Category deleted successfully.'));
+            } else {
+                Yii::$app->session->setFlash('alert', TranslationHelper::translate('Category deletion failed'));
+            }
+           
+        } else {
+            // If items use this category, prevent deletion
+            Yii::$app->session->setFlash('error', TranslationHelper::translate('Category is being used by items')); //this part not working
+        }
+    
         return $this->redirect(['index']);
     }
+    
 
     /**
      * Finds the ItemCategory model based on its primary key value.
@@ -124,6 +145,6 @@ class CategoryController extends Controller
             return $model;
         }
 
-        throw new NotFoundHttpException('The requested page does not exist.');
+        throw new NotFoundHttpException(TranslationHelper::translate('The requested page does not exist.'));
     }
 }
