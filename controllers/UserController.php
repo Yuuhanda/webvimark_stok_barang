@@ -11,6 +11,7 @@ use yii\db\Expression;
 use Yii;
 use yii\filters\AccessControl;
 use app\components\MyMemoryService;
+use app\helpers\TranslationHelper;
 /**
  * UserController implements the CRUD actions for User model.
  */
@@ -85,7 +86,7 @@ class UserController extends Controller
                 } else {
                     // Handle the error here (e.g., validation failure)
                     Yii::error('Failed to save the model: ' . json_encode($model->errors));
-                    Yii::$app->session->setFlash('error', 'Failed to save the model' . json_encode($model->errors));
+                    Yii::$app->session->setFlash('error', TranslationHelper::translate('Failed to save the model') . json_encode($model->errors));
                     return $this->redirect(['create']);
                 }
             }
@@ -114,7 +115,7 @@ class UserController extends Controller
                 $model->password_hash = Yii::$app->security->generatePasswordHash($model->password_hash);
             }
             $model->save();
-            Yii::$app->session->setFlash('success', 'Admin updated successfully.');
+            Yii::$app->session->setFlash('success', TranslationHelper::translate('Admin updated successfully.'));
             return $this->redirect(['index']);
         }
 
@@ -176,12 +177,12 @@ class UserController extends Controller
     
             // Attempt to save the user model
             if ($user->save()) {
-                Yii::$app->session->setFlash('success', 'User status updated successfully.');
+                Yii::$app->session->setFlash('success', TranslationHelper::translate('User status updated successfully.'));
             } else {
-                Yii::$app->session->setFlash('error', 'Failed to update user status.');
+                Yii::$app->session->setFlash('error', TranslationHelper::translate('Failed to update user status.'));
             }
         } else {
-            Yii::$app->session->setFlash('error', 'User not found.');
+            Yii::$app->session->setFlash('error', TranslationHelper::translate('User not found.'));
         }
     
         return $this->redirect(['index']);

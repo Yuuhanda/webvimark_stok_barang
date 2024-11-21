@@ -11,6 +11,7 @@ use PhpOffice\PhpSpreadsheet\IOFactory;
 use Yii;
 use yii\filters\AccessControl;
 use yii\helpers\FileHelper;
+use app\helpers\TranslationHelper;
 
 /**
  * DocsController implements the CRUD actions for DocUploaded model.
@@ -144,7 +145,7 @@ class DocsController extends Controller
             $sheetData = $sheet->toArray(null, true, true, true); // Load data as an array
     
         } catch (\Exception $e) {
-            Yii::$app->session->setFlash('error', 'Error loading file: ' . $e->getMessage());
+            Yii::$app->session->setFlash('error', TranslationHelper::translate('Error loading file: ') . $e->getMessage());
             return $this->redirect(['index']);
         }
     
@@ -161,7 +162,7 @@ class DocsController extends Controller
 
         // Ensure the directory exists
         if (!is_dir($documentPath)) {
-            Yii::$app->session->setFlash('error', 'Document directory does not exist.');
+            Yii::$app->session->setFlash('error', TranslationHelper::translate('Document directory does not exist.'));
             return $this->redirect(['index']);
         }
 
@@ -184,9 +185,9 @@ class DocsController extends Controller
         }
 
         if ($deletedFiles) {
-            Yii::$app->session->setFlash('success', 'Deleted files: ' . implode(', ', $deletedFiles));
+            Yii::$app->session->setFlash('success', TranslationHelper::translate('Deleted files: ') . implode(', ', $deletedFiles));
         } else {
-            Yii::$app->session->setFlash('info', 'No files older than the threshold were found.');
+            Yii::$app->session->setFlash('info', TranslationHelper::translate('No files older than the threshold were found.'));
         }
 
         return $this->redirect(['index']);

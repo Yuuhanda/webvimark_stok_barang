@@ -16,6 +16,7 @@ use Yii;
 use yii\filters\AccessControl;
 use yii\data\ArrayDataProvider;
 use app\components\MyMemoryService;
+use app\helpers\TranslationHelper;
 
 
 /**
@@ -329,7 +330,7 @@ class LogController extends Controller
             if ($model->serial_number !== null) {
                 return $this->redirect(['search-result', 'serial_number' => $model->serial_number]);
             } else{
-                Yii::$app->session->setFlash('error', 'Serial number cannot be null.');
+                Yii::$app->session->setFlash('error', TranslationHelper::translate('Serial number cannot be null.'));
             }
         }
     

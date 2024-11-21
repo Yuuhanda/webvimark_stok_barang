@@ -24,7 +24,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <?= $form->field($model, 'serial_number')->hiddenInput()->label(false) ?>
     
         <div class="form-group">
-            <?= Html::submitButton('Save', ['class' => 'btn btn-primary']) ?>
+            <?= Html::submitButton(TranslationHelper::translate('Save'), ['class' => 'btn btn-primary']) ?>
         </div>
     <?php ActiveForm::end(); ?>
 

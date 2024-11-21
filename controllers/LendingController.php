@@ -19,6 +19,9 @@ use app\models\Warehouse;
 use yii\filters\AccessControl;
 use yii\web\UploadedFile;
 use app\components\MyMemoryService;
+use app\helpers\TranslationHelper;
+use app\models\Item;
+
 /**
  * LendingController implements the CRUD actions for Lending model.
  */
@@ -85,7 +88,7 @@ class LendingController extends Controller
                         Yii::debug('Uploaded file name: ' . $uploadModel->imageFile->name, __METHOD__);
                     } else {
                         Yii::error('No file uploaded.', __METHOD__);
-                        Yii::$app->session->setFlash('error', 'Please upload a picture.');
+                        Yii::$app->session->setFlash('error', TranslationHelper::translate('Please upload a picture.'));
                         return $this->redirect(['loan-unit', 'id_item' => $id_item]); // Redirect back
                     }
                     
@@ -96,7 +99,7 @@ class LendingController extends Controller
                         var_dump($uploadModel->errors); // This will show validation error details on-screen
                         die();
                     }// Dump errors to check on screen
-                    Yii::$app->session->setFlash('error', 'Picture validation failed.');
+                    Yii::$app->session->setFlash('error', TranslationHelper::translate('Picture validation failed.'));
                     return $this->redirect(['index']);
                 }
                         
@@ -111,15 +114,22 @@ class LendingController extends Controller
                 if ($model->save()) {
                     $logController = new LogController('log', Yii::$app);
                     $logController->actionLendingLog($model->id_unit, $model->id_employee);
-                    Yii::$app->session->setFlash('success', 'Unit ' . $itemUnit->serial_number . ' loaned.');
+                    $itemData = Item::findOne($id_item);
+                    if ($itemData === null) {
+                        Yii::$app->session->setFlash('error', TranslationHelper::translate('Item not found.'));
+                        return $this->redirect(['index']);
+                    }
+                
+                    $itemName = $itemData->item_name;
+                    Yii::$app->session->setFlash('success', $itemName . ' ' . $itemUnit->serial_number . ' ' . TranslationHelper::translate('loaned.'));
                     return $this->redirect(['index']);
                 } else {
                     Yii::error($model->errors, __METHOD__);
-                    Yii::$app->session->setFlash('error', 'Failed to save the loan unit.');
+                    Yii::$app->session->setFlash('error', TranslationHelper::translate('Failed to save the loan unit.'));
                     return $this->redirect(['index']);
                     
                 }
-            } else {Yii::$app->session->setFlash('error', 'File validation failed.');
+            } else {Yii::$app->session->setFlash('error', TranslationHelper::translate('File validation failed.'));
                 var_dump($model->errors); // Dump errors to check on screen
             die();}
         } 
@@ -206,12 +216,12 @@ class LendingController extends Controller
                         Yii::debug("File uploaded successfully: $fileName", __METHOD__);
                     } else {
                         Yii::error("File upload failed", __METHOD__);
-                        Yii::$app->session->setFlash('error', 'Failed to upload file.');
+                        Yii::$app->session->setFlash('error', TranslationHelper::translate('Failed to upload file.'));
                         return $this->redirect(['index']);
                     }
                 } else {
                     Yii::error("Upload model validation failed", __METHOD__);
-                    Yii::$app->session->setFlash('error', 'File validation failed.');
+                    Yii::$app->session->setFlash('error', TranslationHelper::translate('File validation failed.'));
                 }
             
                 // Set other attributes and save the model
@@ -229,11 +239,13 @@ class LendingController extends Controller
                 if ($model->save()) {
                     $logController = new LogController('log', Yii::$app);
                     $logController->actionLendingLog($model->id_unit, $model->id_employee);
-                    Yii::$app->session->setFlash('success', 'Unit ' . $itemUnit->serial_number . ' loaned.');
+                    $itemData = Item::findOne($model->id_item);
+                    $itemName = $itemData->item_name;
+                    Yii::$app->session->setFlash('success', $itemName .' ' . $itemUnit->serial_number .' '. TranslationHelper::translate('loaned.'));
                     return $this->redirect(['index']);
                 } else {
                     Yii::error($model->errors, __METHOD__);
-                    Yii::$app->session->setFlash('error', 'Failed to save the loan unit.');
+                    Yii::$app->session->setFlash('error', TranslationHelper::translate('Failed to save the loan unit.'));
                 }
             } else {
                 $model->loadDefaultValues();
