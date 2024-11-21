@@ -129,6 +129,7 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
                                 ]
                             ),
                         ],
+                        ['label' =>     TranslationHelper::translate('User Options'), 'url' => ['/user/options'], 'options' => ['class' => 'nav-item'], 'template' => '<a href="{url}" class="nav-link">{label}</a>',]
                         
                         
                     ],
