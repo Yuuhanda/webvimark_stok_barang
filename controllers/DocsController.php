@@ -155,10 +155,10 @@ class DocsController extends Controller
         ]);
     }
 
-    public function actionDeleteOldDocs()
+    public function actionDeleteOldDocs($length)
     {
         $documentPath = Yii::getAlias('../web/document');
-        $thresholdTime = strtotime('-1 day'); // Change as needed
+        $thresholdTime = strtotime("-$length day"); // Change as needed
 
         // Ensure the directory exists
         if (!is_dir($documentPath)) {

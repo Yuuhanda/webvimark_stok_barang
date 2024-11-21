@@ -8,6 +8,7 @@ use yii\grid\ActionColumn;
 use yii\grid\GridView;
 use yii\web\JqueryAsset;
 use app\helpers\TranslationHelper;
+use yii\widgets\ActiveForm;
 
 JqueryAsset::register($this);
 
@@ -23,14 +24,48 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
 
 
+    <div class="Delete-form">
+        
+            <?php $form = ActiveForm::begin([
+                'method' => 'get',
+                'action' => ['delete-old-docs'],
+                'options' => [
+                    'onsubmit' => 'return confirm("' . TranslationHelper::translate('Are you sure you want to delete old files?') . '")',
+                ],
+            ]); ?>
+            <div class="row">
+            <div class="col-md-6">
+                <?= Html::dropDownList(
+                    'length',
+                    null,
+                    [
+                        '1' => TranslationHelper::translate('Older than 1 day'),
+                        '7' => TranslationHelper::translate('Older than 7 days (1 week)'),
+                        '30' => TranslationHelper::translate('Older than 30 days (1 month)'),
+                        '365' => TranslationHelper::translate('Older than 365 days (1 year)'),
+                    ],
+                    ['prompt' => TranslationHelper::translate('Select File Age'), 'class' => 'form-control']
+                ) ?>
+            </div>
+
+            <div class="col-md-6 text-left"> 
+                <?= Html::submitButton(TranslationHelper::translate('Delete old documents'), ['class' => 'btn btn-danger']) ?>
+            </div>
+            </div>
+            <?php ActiveForm::end(); ?>
+        
+    </div>
+    <br>
+
+
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
-    <?= Html::a(TranslationHelper::translate('Delete old documents'), ['delete-old-docs'], [
-            'class' => 'btn btn-danger',
-            'data' => [
-                'confirm' => TranslationHelper::translate('Are you sure you want to delete all old document?'),
-                'method' => 'post',
-            ],
-        ]) ?>
+    <?//= Html::a(TranslationHelper::translate('Delete old documents'), ['delete-old-docs'], [
+      //      'class' => 'btn btn-danger',
+      //      'data' => [
+      //          'confirm' => TranslationHelper::translate('Are you sure you want to delete all old document?'),
+      //          'method' => 'post',
+      //      ],
+      //  ]) ?>
         
     <?= GridView::widget([
         'dataProvider' => $dataProvider,

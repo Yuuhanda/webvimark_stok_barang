@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 20, 2024 at 05:02 AM
+-- Generation Time: Nov 21, 2024 at 05:30 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -70,6 +70,12 @@ CREATE TABLE `auth_item` (
 
 INSERT INTO `auth_item` (`name`, `type`, `description`, `rule_name`, `data`, `created_at`, `updated_at`, `group_code`) VALUES
 ('/*', 3, NULL, NULL, NULL, 1729233880, 1729233880, NULL),
+('/category/*', 3, NULL, NULL, NULL, 1732160071, 1732160071, NULL),
+('/category/create', 3, NULL, NULL, NULL, 1732160071, 1732160071, NULL),
+('/category/delete', 3, NULL, NULL, NULL, 1732160071, 1732160071, NULL),
+('/category/index', 3, NULL, NULL, NULL, 1732160071, 1732160071, NULL),
+('/category/update', 3, NULL, NULL, NULL, 1732160071, 1732160071, NULL),
+('/category/view', 3, NULL, NULL, NULL, 1732160071, 1732160071, NULL),
 ('/debug/*', 3, NULL, NULL, NULL, 1729233881, 1729233881, NULL),
 ('/debug/default/*', 3, NULL, NULL, NULL, 1729233881, 1729233881, NULL),
 ('/debug/default/db-explain', 3, NULL, NULL, NULL, 1729233881, 1729233881, NULL),
@@ -83,6 +89,7 @@ INSERT INTO `auth_item` (`name`, `type`, `description`, `rule_name`, `data`, `cr
 ('/docs/*', 3, NULL, NULL, NULL, 1730945389, 1730945389, NULL),
 ('/docs/create', 3, NULL, NULL, NULL, 1730945389, 1730945389, NULL),
 ('/docs/delete', 3, NULL, NULL, NULL, 1730945389, 1730945389, NULL),
+('/docs/delete-old-docs', 3, NULL, NULL, NULL, 1732160071, 1732160071, NULL),
 ('/docs/index', 3, NULL, NULL, NULL, 1730945389, 1730945389, NULL),
 ('/docs/update', 3, NULL, NULL, NULL, 1730945389, 1730945389, NULL),
 ('/docs/view', 3, NULL, NULL, NULL, 1730945389, 1730945389, NULL),
@@ -143,9 +150,11 @@ INSERT INTO `auth_item` (`name`, `type`, `description`, `rule_name`, `data`, `cr
 ('/lending/lending-list', 3, NULL, NULL, NULL, 1730945389, 1730945389, NULL),
 ('/lending/list', 3, NULL, NULL, NULL, 1730945389, 1730945389, NULL),
 ('/lending/loan-unit', 3, NULL, NULL, NULL, 1730945389, 1730945389, NULL),
+('/lending/return-image', 3, NULL, NULL, NULL, 1732160071, 1732160071, NULL),
 ('/lending/unit-report-active', 3, NULL, NULL, NULL, 1731032938, 1731032938, NULL),
 ('/lending/update', 3, NULL, NULL, NULL, 1730945389, 1730945389, NULL),
 ('/lending/view', 3, NULL, NULL, NULL, 1730945389, 1730945389, NULL),
+('/lending/view-image', 3, NULL, NULL, NULL, 1732160071, 1732160071, NULL),
 ('/log/*', 3, NULL, NULL, NULL, 1730945389, 1730945389, NULL),
 ('/log/create', 3, NULL, NULL, NULL, 1730945389, 1730945389, NULL),
 ('/log/delete', 3, NULL, NULL, NULL, 1730945389, 1730945389, NULL),
@@ -164,6 +173,12 @@ INSERT INTO `auth_item` (`name`, `type`, `description`, `rule_name`, `data`, `cr
 ('/rbac/*', 3, NULL, NULL, NULL, 1730945389, 1730945389, NULL),
 ('/rbac/init', 3, NULL, NULL, NULL, 1730945389, 1730945389, NULL),
 ('/rbac/list', 3, NULL, NULL, NULL, 1730945389, 1730945389, NULL),
+('/repair-log/*', 3, NULL, NULL, NULL, 1732160071, 1732160071, NULL),
+('/repair-log/create', 3, NULL, NULL, NULL, 1732160071, 1732160071, NULL),
+('/repair-log/delete', 3, NULL, NULL, NULL, 1732160071, 1732160071, NULL),
+('/repair-log/index', 3, NULL, NULL, NULL, 1732160071, 1732160071, NULL),
+('/repair-log/update', 3, NULL, NULL, NULL, 1732160071, 1732160071, NULL),
+('/repair-log/view', 3, NULL, NULL, NULL, 1732160071, 1732160071, NULL),
 ('/site/*', 3, NULL, NULL, NULL, 1730945389, 1730945389, NULL),
 ('/site/about', 3, NULL, NULL, NULL, 1730945389, 1730945389, NULL),
 ('/site/captcha', 3, NULL, NULL, NULL, 1730945389, 1730945389, NULL),
@@ -172,6 +187,8 @@ INSERT INTO `auth_item` (`name`, `type`, `description`, `rule_name`, `data`, `cr
 ('/site/index', 3, NULL, NULL, NULL, 1730945389, 1730945389, NULL),
 ('/site/login', 3, NULL, NULL, NULL, 1730945389, 1730945389, NULL),
 ('/site/logout', 3, NULL, NULL, NULL, 1730945389, 1730945389, NULL),
+('/site/set-language', 3, NULL, NULL, NULL, 1732160071, 1732160071, NULL),
+('/site/translate', 3, NULL, NULL, NULL, 1732160071, 1732160071, NULL),
 ('/unit/*', 3, NULL, NULL, NULL, 1730945389, 1730945389, NULL),
 ('/unit/add-unit', 3, NULL, NULL, NULL, 1730945389, 1730945389, NULL),
 ('/unit/available-lending', 3, NULL, NULL, NULL, 1730945389, 1730945389, NULL),
@@ -179,6 +196,7 @@ INSERT INTO `auth_item` (`name`, `type`, `description`, `rule_name`, `data`, `cr
 ('/unit/broken-unit', 3, NULL, NULL, NULL, 1730945389, 1730945389, NULL),
 ('/unit/bulk-add', 3, NULL, NULL, NULL, 1730945389, 1730945389, NULL),
 ('/unit/bulk-add-preview', 3, NULL, NULL, NULL, 1730945389, 1730945389, NULL),
+('/unit/check', 3, NULL, NULL, NULL, 1732160071, 1732160071, NULL),
 ('/unit/correction-search', 3, NULL, NULL, NULL, 1730945389, 1730945389, NULL),
 ('/unit/correction-unit', 3, NULL, NULL, NULL, 1730945389, 1730945389, NULL),
 ('/unit/create', 3, NULL, NULL, NULL, 1730945389, 1730945389, NULL),
@@ -280,10 +298,13 @@ INSERT INTO `auth_item` (`name`, `type`, `description`, `rule_name`, `data`, `cr
 ('/user/delete', 3, NULL, NULL, NULL, 1730945389, 1730945389, NULL),
 ('/user/generate-auth-keys', 3, NULL, NULL, NULL, 1730945389, 1730945389, NULL),
 ('/user/index', 3, NULL, NULL, NULL, 1730945389, 1730945389, NULL),
+('/user/options', 3, NULL, NULL, NULL, 1732160071, 1732160071, NULL),
 ('/user/toggle-status', 3, NULL, NULL, NULL, 1730945389, 1730945389, NULL),
 ('/user/update', 3, NULL, NULL, NULL, 1730945389, 1730945389, NULL),
 ('/user/view', 3, NULL, NULL, NULL, 1730945389, 1730945389, NULL),
 ('/warehouse/*', 3, NULL, NULL, NULL, 1730945389, 1730945389, NULL),
+('/warehouse/assign', 3, NULL, NULL, NULL, 1732160071, 1732160071, NULL),
+('/warehouse/assign-admins', 3, NULL, NULL, NULL, 1732160071, 1732160071, NULL),
 ('/warehouse/create', 3, NULL, NULL, NULL, 1730945389, 1730945389, NULL),
 ('/warehouse/delete', 3, NULL, NULL, NULL, 1730945389, 1730945389, NULL),
 ('/warehouse/index', 3, NULL, NULL, NULL, 1730945389, 1730945389, NULL),
@@ -362,6 +383,8 @@ INSERT INTO `auth_item_child` (`parent`, `child`) VALUES
 ('Admin', 'master-inventory'),
 ('Admin', 'warehouse'),
 ('App Admin', '/user-management/user-visit-log/*'),
+('App Admin', '/warehouse/assign'),
+('App Admin', '/warehouse/assign-admins'),
 ('App Admin', 'assignRolesToUsers'),
 ('App Admin', 'base'),
 ('App Admin', 'bindUserToIp'),
@@ -397,6 +420,7 @@ INSERT INTO `auth_item_child` (`parent`, `child`) VALUES
 ('base', '/item/item-name'),
 ('base', '/item/view-image'),
 ('base', '/site/*'),
+('base', '/user/options'),
 ('bulk-documents', '/docs/index'),
 ('bulk-documents', '/docs/update'),
 ('bulk-documents', '/docs/view'),
@@ -563,7 +587,12 @@ INSERT INTO `auth_item_child` (`parent`, `child`) VALUES
 ('viewUsers', '/user-management/user/grid-page-size'),
 ('viewUsers', '/user-management/user/index'),
 ('viewUsers', '/user-management/user/view'),
-('warehouse', '/warehouse/*'),
+('warehouse', '/warehouse/create'),
+('warehouse', '/warehouse/delete'),
+('warehouse', '/warehouse/index'),
+('warehouse', '/warehouse/item'),
+('warehouse', '/warehouse/update'),
+('warehouse', '/warehouse/view'),
 ('warehouse-view-only', '/warehouse/index'),
 ('warehouse-view-only', '/warehouse/item'),
 ('warehouse-view-only', '/warehouse/view');
@@ -650,35 +679,6 @@ CREATE TABLE `doc_uploaded` (
   `user_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dumping data for table `doc_uploaded`
---
-
-INSERT INTO `doc_uploaded` (`id_doc`, `file_name`, `datetime`, `user_id`) VALUES
-(12, 'bulk_unit693_1732072227.xlsx', '2024-11-20 10:10:27.00', 1),
-(13, 'bulk_unit696_1732072240.xlsx', '2024-11-20 10:10:40.00', 1),
-(14, 'bulk_unit296_1732072345.xlsx', '2024-11-20 10:12:25.00', 1),
-(15, 'bulk_unit794_1732072685.xlsx', '2024-11-20 10:18:05.00', 1),
-(16, 'bulk_unit716_1732073524.xlsx', '2024-11-20 10:32:04.00', 1),
-(17, 'bulk_unit918_1732073709.xlsx', '2024-11-20 10:35:09.00', 1),
-(18, 'bulk_unit812_1732073865.xlsx', '2024-11-20 10:37:45.00', 1),
-(19, 'bulk_unit673_1732073936.xlsx', '2024-11-20 10:38:56.00', 1),
-(20, 'bulk_unit426_1732074005.xlsx', '2024-11-20 10:40:05.00', 1),
-(21, 'bulk_unit692_1732074172.xlsx', '2024-11-20 10:42:52.00', 1),
-(22, 'bulk_unit164_1732074430.xlsx', '2024-11-20 10:47:10.00', 1),
-(23, 'bulk_unit834_1732074929.xlsx', '2024-11-20 10:55:29.00', 1),
-(24, 'bulk_unit162_1732075067.xlsx', '2024-11-20 10:57:47.00', 1),
-(25, 'bulk_unit962_1732075090.xlsx', '2024-11-20 10:58:10.00', 1),
-(26, 'bulk_unit691_1732075102.xlsx', '2024-11-20 10:58:22.00', 1),
-(27, 'bulk_unit928_1732075122.xlsx', '2024-11-20 10:58:42.00', 1),
-(28, 'bulk_unit247_1732075132.xlsx', '2024-11-20 10:58:52.00', 1),
-(29, 'bulk_unit385_1732075143.xlsx', '2024-11-20 10:59:03.00', 1),
-(30, 'bulk_unit529_1732075153.xlsx', '2024-11-20 10:59:13.00', 1),
-(31, 'bulk_unit370_1732075163.xlsx', '2024-11-20 10:59:23.00', 1),
-(32, 'bulk_unit992_1732075174.xlsx', '2024-11-20 10:59:34.00', 1),
-(33, 'bulk_unit231_1732075185.xlsx', '2024-11-20 10:59:45.00', 1),
-(34, 'bulk_unit733_1732075245.xlsx', '2024-11-20 11:00:45.00', 1);
-
 -- --------------------------------------------------------
 
 --
@@ -735,7 +735,9 @@ INSERT INTO `item` (`id_item`, `item_name`, `SKU`, `imagefile`, `id_category`) V
 (25, 'USB-C Hub Multi Dongle', 'PAA-0004', '624_1731395239.jpeg', 1),
 (26, 'Macbook Air M3', 'PCA-0002', '116_1731395279.jpeg', 3),
 (27, 'Sony A7 iv', 'VDA-0004', '302_1731460840.webp', 2),
-(28, 'Test FlakPz Gepard', 'TCA-0001', '945_1732075232.jpeg', 4);
+(28, 'Test FlakPz Gepard', 'TCA-0001', '945_1732075232.jpeg', 4),
+(29, 'Test Item 1', 'TCA-0002', '382_1732155439.jpeg', 4),
+(30, 'Test G1', 'TCA-0003', '744_1732155555.jpg', 4);
 
 -- --------------------------------------------------------
 
@@ -757,7 +759,8 @@ INSERT INTO `item_category` (`id_category`, `category_name`, `cat_code`) VALUES
 (1, 'Computer Peripherals', 'PA'),
 (2, 'Audio Visual Production', 'VD'),
 (3, 'Personal Computer', 'PC'),
-(4, 'Test Cat', 'TC');
+(4, 'Test Cat', 'TC'),
+(6, 'Test C2', 'TS');
 
 -- --------------------------------------------------------
 
@@ -781,8 +784,8 @@ CREATE TABLE `item_unit` (
 --
 
 INSERT INTO `item_unit` (`id_unit`, `id_item`, `status`, `id_wh`, `comment`, `serial_number`, `condition`, `updated_by`) VALUES
-(54294, 11, 1, 5, 'new data after purge', 'PAA-0001-0001', 1, 1),
-(54295, 11, 1, 6, 'new data after purge', 'PAA-0001-0002', 1, 1),
+(54294, 11, 1, 5, 'rep test at repair shop 1', 'PAA-0001-0001', 2, 1),
+(54295, 11, 2, 6, 'new data after purge', 'PAA-0001-0002', 1, 1),
 (54296, 11, 1, 7, 'new data after purge', 'PAA-0001-0003', 1, 1),
 (54297, 11, 1, 8, 'new data after purge', 'PAA-0001-0004', 1, 1),
 (54298, 11, 1, 9, 'new data after purge', 'PAA-0001-0005', 1, 1),
@@ -845,8 +848,8 @@ INSERT INTO `item_unit` (`id_unit`, `id_item`, `status`, `id_wh`, `comment`, `se
 (54355, 11, 1, 10, 'new data after purge', 'PAA-0001-0062', 1, 1),
 (54356, 11, 1, 11, 'new data after purge', 'PAA-0001-0063', 1, 1),
 (54357, 11, 1, 13, 'new data after purge', 'PAA-0001-0064', 1, 1),
-(54358, 12, 1, 5, 'new data after purge', 'PAA-0002-0001', 1, 1),
-(54359, 12, 1, 6, 'new data after purge', 'PAA-0002-0002', 1, 1),
+(54358, 12, 2, 5, 'new data after purge', 'PAA-0002-0001', 1, 1),
+(54359, 12, 2, 6, 'new data after purge', 'PAA-0002-0002', 1, 1),
 (54360, 12, 1, 7, 'new data after purge', 'PAA-0002-0003', 1, 1),
 (54361, 12, 1, 8, 'new data after purge', 'PAA-0002-0004', 1, 1),
 (54362, 12, 1, 9, 'new data after purge', 'PAA-0002-0005', 1, 1),
@@ -909,7 +912,7 @@ INSERT INTO `item_unit` (`id_unit`, `id_item`, `status`, `id_wh`, `comment`, `se
 (54419, 12, 1, 10, 'new data after purge', 'PAA-0002-0062', 1, 1),
 (54420, 12, 1, 11, 'new data after purge', 'PAA-0002-0063', 1, 1),
 (54421, 12, 1, 13, 'new data after purge', 'PAA-0002-0064', 1, 1),
-(54422, 13, 1, 5, 'new data after purge', 'PCA-0001-0001', 1, 1),
+(54422, 13, 1, 5, 'rep test', 'PCA-0001-0001', 2, 1),
 (54423, 13, 1, 6, 'new data after purge', 'PCA-0001-0002', 1, 1),
 (54424, 13, 1, 7, 'new data after purge', 'PCA-0001-0003', 1, 1),
 (54425, 13, 1, 8, 'new data after purge', 'PCA-0001-0004', 1, 1),
@@ -1101,7 +1104,7 @@ INSERT INTO `item_unit` (`id_unit`, `id_item`, `status`, `id_wh`, `comment`, `se
 (54611, 15, 1, 10, 'new data after purge', 'VDA-0001-0062', 1, 1),
 (54612, 15, 1, 11, 'new data after purge', 'VDA-0001-0063', 1, 1),
 (54613, 15, 1, 13, 'new data after purge', 'VDA-0001-0064', 1, 1),
-(54614, 16, 1, 5, 'new data after purge', 'VDA-0002-0001', 1, 1),
+(54614, 16, 2, 5, 'new data after purge', 'VDA-0002-0001', 1, 1),
 (54615, 16, 1, 6, 'new data after purge', 'VDA-0002-0002', 1, 1),
 (54616, 16, 1, 7, 'new data after purge', 'VDA-0002-0003', 1, 1),
 (54617, 16, 1, 8, 'new data after purge', 'VDA-0002-0004', 1, 1),
@@ -1439,6 +1442,18 @@ CREATE TABLE `lending` (
   `pic_return` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `lending`
+--
+
+INSERT INTO `lending` (`id_lending`, `id_unit`, `user_id`, `id_employee`, `type`, `date`, `pic_loan`, `pic_return`) VALUES
+(72, 54294, 1, 1, 2, '2024-11-21', '724_1732157149.jpeg', '646_1732157591.webp'),
+(73, 54295, 1, 5, 1, '2024-11-21', '834_1732157159.jpg', ''),
+(74, 54358, 1, 8, 1, '2024-11-21', '449_1732157171.jpeg', ''),
+(75, 54359, 1, 3, 1, '2024-11-21', '355_1732157182.jpeg', ''),
+(76, 54422, 1, 4, 2, '2024-11-21', '717_1732157214.jpeg', '334_1732157606.gif'),
+(77, 54614, 1, 3, 1, '2024-11-21', '693_1732157232.jpeg', '');
+
 -- --------------------------------------------------------
 
 --
@@ -1500,6 +1515,14 @@ CREATE TABLE `repair_log` (
   `datetime` datetime(2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `repair_log`
+--
+
+INSERT INTO `repair_log` (`id_repair`, `id_unit`, `comment`, `rep_type`, `datetime`) VALUES
+(1, 54294, 'PAA-0001-0001. rep test at repair shop 1', 1, '2024-11-21 09:54:11.00'),
+(2, 54294, 'PAA-0001-0001. rep test at repair shop 1', 2, '2024-11-21 09:57:17.00');
+
 -- --------------------------------------------------------
 
 --
@@ -1553,6 +1576,22 @@ CREATE TABLE `unit_log` (
   `update_at` datetime(6) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `unit_log`
+--
+
+INSERT INTO `unit_log` (`id_log`, `id_unit`, `content`, `update_at`) VALUES
+(139, 54294, 'Unit PAA-0001-0001 lent to Johan by superadmin', '2024-11-21 09:45:49.000000'),
+(140, 54295, 'Unit PAA-0001-0002 lent to Shiorin by superadmin', '2024-11-21 09:45:59.000000'),
+(141, 54358, 'Unit PAA-0002-0001 lent to Manfred Albrecht Freiherr von Richthofen by superadmin', '2024-11-21 09:46:11.000000'),
+(142, 54359, 'Unit PAA-0002-0002 lent to Oleg by superadmin', '2024-11-21 09:46:22.000000'),
+(143, 54422, 'Unit PCA-0001-0001 lent to Freddy by superadmin', '2024-11-21 09:46:54.000000'),
+(144, 54614, 'Unit VDA-0002-0001 lent to Oleg by superadmin', '2024-11-21 09:47:12.000000'),
+(145, 54294, 'Unit PAA-0001-0001 returned by Johan, recieved by superadmin', '2024-11-21 09:53:11.000000'),
+(146, 54422, 'Unit PCA-0001-0001 returned by Freddy, recieved by superadmin', '2024-11-21 09:53:26.000000'),
+(147, 54294, 'Unit PAA-0001-0001 sent for repair by superadmin', '2024-11-21 09:54:11.000000'),
+(148, 54294, 'Unit PAA-0001-0001 repaired. Taken to warehouse by superadmin', '2024-11-21 09:57:17.000000');
+
 -- --------------------------------------------------------
 
 --
@@ -1573,22 +1612,23 @@ CREATE TABLE `user` (
   `bind_to_ip` varchar(255) NOT NULL,
   `email_confirmed` int(11) NOT NULL,
   `confirmation_token` varchar(255) NOT NULL,
-  `id_wh` int(10) UNSIGNED NOT NULL
+  `id_wh` int(10) UNSIGNED NOT NULL,
+  `user_lang` varchar(3) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Dumping data for table `user`
 --
 
-INSERT INTO `user` (`id`, `username`, `password_hash`, `status`, `superadmin`, `created_at`, `updated_at`, `registration_ip`, `email`, `auth_key`, `bind_to_ip`, `email_confirmed`, `confirmation_token`, `id_wh`) VALUES
-(1, 'superadmin', '$2y$13$bp2w2.mTeJ/ORRVlEjA.jOHw0o49vwAJ.A15RTPjnSyk05M.20ZyS', 1, 1, '0000-00-00 00:00:00.00', '0000-00-00 00:00:00.00', NULL, 'super@mail.com', 'OtBMG-3O_ULHaEMKmM_pZIPvia1k_js_', '', 1, '', 5),
-(4, 'appadmin', '$2y$13$.X94ue5lX8Yt10motmlym.HyhumhiBXBZ7leukSITV7e9sTgLjNrK', 1, 0, '2024-10-28 13:20:22.00', '0000-00-00 00:00:00.00', '::1', 'bogosbinted@mail.com', 'pUwr74uXpIAq5h1XQU-3y3PuplNbm2P8', '', 1, '', 5),
-(5, 'franzferdinand', '$2y$13$QEUqv2hQRuKQ2uFtNfXbcuPoiz2pyiZsn1kpv3RfboEQEdA8MZC9e', 1, 0, '2024-10-28 14:32:42.00', '0000-00-00 00:00:00.00', '::1', 'ferdinand@mail.com', 'LZN0hVpdM-xAb6SA0AEALIcxiVeCAS5H', '', 1, '', 5),
-(8, 'warehouse@mail.com', '$2y$13$XZ6TofHa8d5cAMutTqSMs.QzdqeRCGMeRs3ZfqoMQCWveNyOjdTs2', 1, 0, '2024-10-30 08:40:40.00', '0000-00-00 00:00:00.00', '::1', 'fred@mail.com', 'JGU2pLcVye5PBUUqBlGuB7h1M8c6gkrx', '', 1, '', 5),
-(9, 'bobtherepairman', '$2y$13$0FJ7ZV.5Th2sydV4mDEP2u81kx56ocrbVEFZomEzdjK6xPfRt0xGa', 1, 0, '0000-00-00 00:00:00.00', '0000-00-00 00:00:00.00', '::1', 'bobrepair@mail.com', 'MbIXLNVCI6OHZFAZgwzyyLXTeiaVd6At', '', 1, '', 5),
-(10, 'bogosbinted', '$2y$13$byH/Orep9xl5ZWDL1IMtH.1NRxOm2IK/s9vDxODkiEp7o2gJ9TuZ2', 1, 0, '0000-00-00 00:00:00.00', '0000-00-00 00:00:00.00', '::1', 'bogosbinted@alien.com', 'LMStQ2EH_AMPtTfWSbwc9Li493FfLSTY', '', 1, '', 5),
-(11, 'manfred', '$2y$13$S.Pu6X0K3VWvc/kr2atfyuWdDK9xYc1BMFyvHBnjKWMjJCZuUwKRG', 1, 0, '0000-00-00 00:00:00.00', '0000-00-00 00:00:00.00', '::1', 'redbaron@mail.com', 'E8fnjVCzTMoHqvXiFnfAyEEw7aU80X5W', '', 1, '', 5),
-(12, 'hugh', '$2y$13$iREFX85Oa9udbjkKDslyy.46GR1OLNOKYh6JaiZ03pfwS59xaCnUS', 1, 0, '0000-00-00 00:00:00.00', '0000-00-00 00:00:00.00', '::1', 'hugh@mail.com', '-R2PpAC6v4_aTMieMxphBxZ3l_tgVRez', '', 1, '', 5);
+INSERT INTO `user` (`id`, `username`, `password_hash`, `status`, `superadmin`, `created_at`, `updated_at`, `registration_ip`, `email`, `auth_key`, `bind_to_ip`, `email_confirmed`, `confirmation_token`, `id_wh`, `user_lang`) VALUES
+(1, 'superadmin', '$2y$13$bp2w2.mTeJ/ORRVlEjA.jOHw0o49vwAJ.A15RTPjnSyk05M.20ZyS', 1, 1, '0000-00-00 00:00:00.00', '0000-00-00 00:00:00.00', NULL, 'super@mail.com', 'OtBMG-3O_ULHaEMKmM_pZIPvia1k_js_', '', 1, '', 5, 'id'),
+(4, 'appadmin', '$2y$13$.X94ue5lX8Yt10motmlym.HyhumhiBXBZ7leukSITV7e9sTgLjNrK', 1, 0, '2024-10-28 13:20:22.00', '0000-00-00 00:00:00.00', '::1', 'bogosbinted@mail.com', 'pUwr74uXpIAq5h1XQU-3y3PuplNbm2P8', '', 1, '', 5, NULL),
+(5, 'franzferdinand', '$2y$13$QEUqv2hQRuKQ2uFtNfXbcuPoiz2pyiZsn1kpv3RfboEQEdA8MZC9e', 1, 0, '2024-10-28 14:32:42.00', '0000-00-00 00:00:00.00', '::1', 'ferdinand@mail.com', 'LZN0hVpdM-xAb6SA0AEALIcxiVeCAS5H', '', 1, '', 5, 'id'),
+(8, 'warehouse@mail.com', '$2y$13$XZ6TofHa8d5cAMutTqSMs.QzdqeRCGMeRs3ZfqoMQCWveNyOjdTs2', 1, 0, '2024-10-30 08:40:40.00', '0000-00-00 00:00:00.00', '::1', 'fred@mail.com', 'JGU2pLcVye5PBUUqBlGuB7h1M8c6gkrx', '', 1, '', 5, NULL),
+(9, 'bobtherepairman', '$2y$13$0FJ7ZV.5Th2sydV4mDEP2u81kx56ocrbVEFZomEzdjK6xPfRt0xGa', 1, 0, '0000-00-00 00:00:00.00', '0000-00-00 00:00:00.00', '::1', 'bobrepair@mail.com', 'MbIXLNVCI6OHZFAZgwzyyLXTeiaVd6At', '', 1, '', 5, NULL),
+(10, 'bogosbinted', '$2y$13$byH/Orep9xl5ZWDL1IMtH.1NRxOm2IK/s9vDxODkiEp7o2gJ9TuZ2', 1, 0, '0000-00-00 00:00:00.00', '0000-00-00 00:00:00.00', '::1', 'bogosbinted@alien.com', 'LMStQ2EH_AMPtTfWSbwc9Li493FfLSTY', '', 1, '', 5, NULL),
+(11, 'manfred', '$2y$13$S.Pu6X0K3VWvc/kr2atfyuWdDK9xYc1BMFyvHBnjKWMjJCZuUwKRG', 1, 0, '0000-00-00 00:00:00.00', '0000-00-00 00:00:00.00', '::1', 'redbaron@mail.com', 'E8fnjVCzTMoHqvXiFnfAyEEw7aU80X5W', '', 1, '', 5, NULL),
+(12, 'hugh', '$2y$13$iREFX85Oa9udbjkKDslyy.46GR1OLNOKYh6JaiZ03pfwS59xaCnUS', 1, 0, '0000-00-00 00:00:00.00', '0000-00-00 00:00:00.00', '::1', 'hugh@mail.com', '-R2PpAC6v4_aTMieMxphBxZ3l_tgVRez', '', 1, '', 5, NULL);
 
 -- --------------------------------------------------------
 
@@ -1673,7 +1713,13 @@ INSERT INTO `user_visit_log` (`id`, `token`, `ip`, `language`, `user_agent`, `us
 (58, '67340022e2456', '::1', 'en', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36 Edg/131.0.0.0', 9, 1731461154, 'Chrome', 'Windows'),
 (59, '673400972f908', '::1', 'en', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36 Edg/131.0.0.0', 5, 1731461271, 'Chrome', 'Windows'),
 (60, '673d45b403fb5', '::1', 'en', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36 Edg/131.0.0.0', 1, 1732068788, 'Chrome', 'Windows'),
-(61, '673d4bca6ff9a', '::1', 'en', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36 Edg/131.0.0.0', 5, 1732070346, 'Chrome', 'Windows');
+(61, '673d4bca6ff9a', '::1', 'en', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36 Edg/131.0.0.0', 5, 1732070346, 'Chrome', 'Windows'),
+(62, '673e88c959f1f', '::1', 'en', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36 Edg/131.0.0.0', 1, 1732151497, 'Chrome', 'Windows'),
+(63, '673e88ca5f3d1', '::1', 'en', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36 Edg/131.0.0.0', 1, 1732151498, 'Chrome', 'Windows'),
+(64, '673eaa293ad8c', '::1', 'en', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36 Edg/131.0.0.0', 5, 1732160041, 'Chrome', 'Windows'),
+(65, '673eaa3839d9b', '::1', 'en', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36 Edg/131.0.0.0', 1, 1732160056, 'Chrome', 'Windows'),
+(66, '673eaa58113dc', '::1', 'en', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36 Edg/131.0.0.0', 5, 1732160088, 'Chrome', 'Windows'),
+(67, '673eae0ad8ae6', '::1', 'en', 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36 Edg/131.0.0.0', 4, 1732161034, 'Chrome', 'Windows');
 
 -- --------------------------------------------------------
 
@@ -1879,13 +1925,13 @@ ALTER TABLE `employee`
 -- AUTO_INCREMENT for table `item`
 --
 ALTER TABLE `item`
-  MODIFY `id_item` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+  MODIFY `id_item` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 
 --
 -- AUTO_INCREMENT for table `item_category`
 --
 ALTER TABLE `item_category`
-  MODIFY `id_category` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id_category` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `item_unit`
@@ -1897,7 +1943,7 @@ ALTER TABLE `item_unit`
 -- AUTO_INCREMENT for table `lending`
 --
 ALTER TABLE `lending`
-  MODIFY `id_lending` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=59;
+  MODIFY `id_lending` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=78;
 
 --
 -- AUTO_INCREMENT for table `lending_type_lookup`
@@ -1909,7 +1955,7 @@ ALTER TABLE `lending_type_lookup`
 -- AUTO_INCREMENT for table `repair_log`
 --
 ALTER TABLE `repair_log`
-  MODIFY `id_repair` int(10) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_repair` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `rep_type_lookup`
@@ -1927,7 +1973,7 @@ ALTER TABLE `status_lookup`
 -- AUTO_INCREMENT for table `unit_log`
 --
 ALTER TABLE `unit_log`
-  MODIFY `id_log` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=112;
+  MODIFY `id_log` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=149;
 
 --
 -- AUTO_INCREMENT for table `user`
@@ -1939,7 +1985,7 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `user_visit_log`
 --
 ALTER TABLE `user_visit_log`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=62;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=68;
 
 --
 -- AUTO_INCREMENT for table `warehouse`
