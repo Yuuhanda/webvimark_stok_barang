@@ -6,12 +6,13 @@ use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\grid\ActionColumn;
 use yii\grid\GridView;
+use app\helpers\TranslationHelper;
 
 /** @var yii\web\View $this */
 /** @var app\models\WarehouseSearch $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
-$this->title = 'Warehouses';
+$this->title = TranslationHelper::translate('Warehouses');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="warehouse-index">
@@ -19,7 +20,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <h1><?= Html::encode($this->title) ?></h1>
 
     <p>
-        <?= GhostHtml::a('Create Warehouse', ['warehouse/create'], ['class' => 'btn btn-success']) ?>
+        <?= GhostHtml::a(TranslationHelper::translate('Add Warehouse'), ['warehouse/create'], ['class' => 'btn btn-success']) ?>
     </p>
 
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
@@ -29,17 +30,25 @@ $this->params['breadcrumbs'][] = $this->title;
         'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
-
-            'id_wh',
-            'wh_name',
-            'wh_address',
+            [
+                'attribute' => 'id_wh',
+                'label' => TranslationHelper::translate('Id Warehouse'),
+            ],
+            [
+                'attribute' => 'wh_name',
+                'label' => TranslationHelper::translate('Warehouse Name'),
+            ],
+            [
+                'attribute' => 'wh_address',
+                'label' => TranslationHelper::translate('Warehouse Address'),
+            ],
             [
                 'class' => 'yii\grid\ActionColumn',
                 'template' => '{item-in-warehouse} {view} {update} {delete}',
-                'header' => 'Action',
+                'header' => TranslationHelper::translate('Action'),
                 'buttons' => [
                     'item-in-warehouse' => function ($url, $model, $key) {
-                        return GhostHtml::a('Item In Warehouse'
+                        return GhostHtml::a(TranslationHelper::translate('Item In Warehouse')
                         , ['warehouse/item', 'id_wh' => $model->id_wh], [
                             'class' => 'btn btn-primary',
                             'style' => 'margin-top: 1px; margin-bottom: 1px; font-size: 12px; padding: 3px 6px;'

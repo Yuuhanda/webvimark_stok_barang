@@ -3,12 +3,13 @@
 use kartik\select2\Select2;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use app\helpers\TranslationHelper;
 
 /** @var array $whList */
 /** @var string $username */
 /** @var \app\models\User $userdata */
 
-$this->title = "Assign Warehouse Admins #{$username}";
+$this->title = TranslationHelper::translate("Assign Warehouse Admins #{$username}");
 $this->params['breadcrumbs'][] = ['label' => 'Users', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -24,10 +25,10 @@ $this->params['breadcrumbs'][] = $this->title;
             'data' => $whList,
             'options' => ['placeholder' => 'Select a warehouse...'],
             'pluginOptions' => ['allowClear' => true],
-        ])->label('Warehouse') ?>
+        ])->label(TranslationHelper::translate('Warehouse')) ?>
 
         <div class="form-group mt-3">
-            <?= Html::submitButton('Assign', ['class' => 'btn btn-success']) ?>
+            <?= Html::submitButton(TranslationHelper::translate('Assign'), ['class' => 'btn btn-success']) ?>
         </div>
 
         <?php ActiveForm::end(); ?>
