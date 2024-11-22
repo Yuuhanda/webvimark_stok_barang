@@ -26,7 +26,7 @@ use app\helpers\TranslationHelper;
             return $category['category_name'] . ' (' . $category['cat_code'] . ')';
         }),
         'options' => [
-            'placeholder' => 'Select Item Category',
+            'placeholder' => TranslationHelper::translate('Select Item Category'),
             'id' => 'unit-dropdown',
         ],
         'pluginOptions' => [

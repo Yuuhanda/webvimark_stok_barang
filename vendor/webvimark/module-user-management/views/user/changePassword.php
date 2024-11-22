@@ -1,5 +1,6 @@
 <?php
 
+use app\helpers\TranslationHelper;
 use webvimark\modules\UserManagement\UserManagementModule;
 use yii\bootstrap5\ActiveForm;
 use yii\helpers\Html;
@@ -9,7 +10,7 @@ use yii\helpers\Html;
  * @var webvimark\modules\UserManagement\models\User $model
  */
 
-$this->title = UserManagementModule::t('back', 'Changing password for user: ') . ' ' . $model->username;
+$this->title = UserManagementModule::t('back', TranslationHelper::translate('Changing password for user: ')) . ' ' . $model->username;
 $this->params['breadcrumbs'][] = ['label' => UserManagementModule::t('back', 'Users'), 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->username, 'url' => ['view', 'id' => $model->id]];
 $this->params['breadcrumbs'][] = UserManagementModule::t('back', 'Changing password');
@@ -28,9 +29,9 @@ $this->params['breadcrumbs'][] = UserManagementModule::t('back', 'Changing passw
 					'layout'=>'horizontal',
 				]); ?>
 
-				<?= $form->field($model, 'password')->passwordInput(['maxlength' => 255, 'autocomplete'=>'off']) ?>
+				<?= $form->field($model, 'password')->passwordInput(['maxlength' => 255, 'autocomplete'=>'off'])->label(TranslationHelper::translate('Password')) ?>
 
-				<?= $form->field($model, 'repeat_password')->passwordInput(['maxlength' => 255, 'autocomplete'=>'off']) ?>
+				<?= $form->field($model, 'repeat_password')->passwordInput(['maxlength' => 255, 'autocomplete'=>'off'])->label(TranslationHelper::translate('Repeat Password')) ?>
 
 
 				<div class="form-group">

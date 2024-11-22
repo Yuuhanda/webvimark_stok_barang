@@ -77,7 +77,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     'model' => $searchModel,
                     'attribute' => 'status',
                     'data' => $statusList, 
-                    'options' => ['placeholder' => 'Select Status'],
+                    'options' => ['placeholder' => TranslationHelper::translate('Select Status')],
                     'pluginOptions' => [
                         'allowClear' => true,
                     ],

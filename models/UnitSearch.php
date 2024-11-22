@@ -1,6 +1,7 @@
 <?php
 namespace app\models;
 
+use app\helpers\TranslationHelper;
 use yii\base\Model;
 use yii\data\ArrayDataProvider;
 use yii\db\Query;
@@ -38,7 +39,7 @@ class UnitSearch extends Model
         if (User::hasRole('Admin') && !User::hasRole('superadmin')){
             $query = (new Query())
             ->select([
-                'condition' => 'condition_lookup.condition_name',
+                'condition' => 'condition_lookup.condition_name',// i want TranslationHelper::translate to be implemented to 'condition'
                 'serial_number' => 'item_unit.serial_number',
                 'id_unit' => 'item_unit.id_unit',
                 'status' => 'status_lookup.status_name',
@@ -121,6 +122,7 @@ class UnitSearch extends Model
         // Load the search parameters
         $this->load($params);
 
+
         // Apply filtering conditions
         if (!$this->validate()) {
             // Return all records if validation fails
@@ -139,6 +141,19 @@ class UnitSearch extends Model
         // Execute the query and return an ArrayDataProvider
         $command = $query->createCommand();
         $results = $command->queryAll();
+
+        // Apply TranslationHelper::translate to 'condition'
+        foreach ($results as &$result) {
+            if (isset($result['condition'])) {
+                $result['condition'] = TranslationHelper::translate($result['condition']);
+            }
+        }
+
+        foreach ($results as &$result) {
+            if (isset($result['status'])) {
+                $result['status'] = TranslationHelper::translate($result['status']);
+            }
+        }
 
         return new ArrayDataProvider([
             'allModels' => $results,

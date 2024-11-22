@@ -80,7 +80,6 @@ $this->params['breadcrumbs'][] = $this->title;
                 'attribute' => 'content',
                 'label' => TranslationHelper::translate('Log')
             ],
-            'content',
             [
                 'attribute' => 'log_date',
                 'format' => ['date', 'php:d-m-Y, H:i:s'],

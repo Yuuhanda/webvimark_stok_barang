@@ -51,7 +51,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'buttons' => [
                     'assign' => function ($url, $model, $key) {
                         return GhostHtml::a(
-                            'Assign Admin To Warehouse',
+                            TranslationHelper::translate('Assign Admin To Warehouse'),
                             ['/warehouse/assign-admins', 'id' => $model->id],
                             [
                                 'class' => 'btn btn-primary',

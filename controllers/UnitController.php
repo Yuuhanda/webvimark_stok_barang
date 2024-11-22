@@ -216,8 +216,7 @@ class UnitController extends Controller
         $whList = \yii\helpers\ArrayHelper::map($warehouses, 'id_wh', 'wh_name');
 
         // Condition lookup
-        $condition = \app\models\ConditionLookup::find()->all();
-        $condlist = \yii\helpers\ArrayHelper::map($condition, 'id_condition', 'condition_name');
+        $condlist = ConditionLookup::getConditionList();
 
         if (Yii::$app->request->isPost && $model->load(Yii::$app->request->post())) {
             if ($model->validate()) {
@@ -438,8 +437,7 @@ class UnitController extends Controller
         $whList = \yii\helpers\ArrayHelper::map($warehouses, 'id_wh', 'wh_name');
 
         // Condition lookup
-        $condition = \app\models\ConditionLookup::find()->all();
-        $condlist = \yii\helpers\ArrayHelper::map($condition, 'id_condition', 'condition_name');
+        $condlist = ConditionLookup::getConditionList();
 
         //status lookup
         $stats = \app\models\StatusLookup::find()->all();
@@ -516,8 +514,8 @@ class UnitController extends Controller
         $warehouses = Warehouse::find()->all();
         $whList = \yii\helpers\ArrayHelper::map($warehouses, 'id_wh', 'wh_name');
         // Condition lookup
-        $condition = \app\models\ConditionLookup::find()->all();
-        $condlist = \yii\helpers\ArrayHelper::map($condition, 'id_condition', 'condition_name');
+        $condlist = ConditionLookup::getConditionList();
+        
         if (!$unit) {
             throw new NotFoundHttpException('The requested ItemUnit does not exist.');
         }

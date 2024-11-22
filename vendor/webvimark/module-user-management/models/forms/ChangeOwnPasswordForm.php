@@ -1,6 +1,7 @@
 <?php
 namespace webvimark\modules\UserManagement\models\forms;
 
+use app\helpers\TranslationHelper;
 use webvimark\modules\UserManagement\models\User;
 use webvimark\modules\UserManagement\UserManagementModule;
 use yii\base\Model;
@@ -47,9 +48,9 @@ class ChangeOwnPasswordForm extends Model
 	public function attributeLabels()
 	{
 		return [
-			'current_password' => UserManagementModule::t('back', 'Current password'),
-			'password'         => UserManagementModule::t('front', 'Password'),
-			'repeat_password'  => UserManagementModule::t('front', 'Repeat password'),
+			'current_password' => UserManagementModule::t('back', TranslationHelper::translate('Current password')),
+			'password'         => UserManagementModule::t('front', TranslationHelper::translate('Password')),
+			'repeat_password'  => UserManagementModule::t('front', TranslationHelper::translate('Repeat password')),
 		];
 	}
 

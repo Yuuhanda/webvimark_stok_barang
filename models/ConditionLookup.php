@@ -2,6 +2,7 @@
 
 namespace app\models;
 
+use app\helpers\TranslationHelper;
 use Yii;
 use yii\helpers\ArrayHelper;
 
@@ -57,6 +58,14 @@ class ConditionLookup extends \yii\db\ActiveRecord
 
     public static function getConditionList()
     {
-        return ArrayHelper::map(self::find()->all(), 'id_condition', 'condition_name'); // assuming 'id' and 'username' columns
+        return ArrayHelper::map(
+            self::find()->all(),
+            'id_condition',
+            function ($model) {
+                return TranslationHelper::translate($model->condition_name);
+            }
+        );
+        //return ArrayHelper::map(self::find()->all(), 'id_condition', 'condition_name'); // assuming 'id' and 'username' columns
+        //i also needs 'condition_name' to be translated using TranslationHelper::translate
     }
 }
