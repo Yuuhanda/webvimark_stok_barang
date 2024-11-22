@@ -35,15 +35,18 @@ class UserVisitLog extends \webvimark\components\BaseActiveRecord
 	{
 		$browser = new Browser();
 
+		// Ensure the user language defaults to 'en' if not set
+		$user_lang = Yii::$app->user->identity->user_lang ?? 'id';
+
 		$model             = new self();
 		$model->user_id    = $userId;
 		$model->token      = uniqid();
 		$model->ip         = LittleBigHelper::getRealIp();
-		$model->language   = isset( $_SERVER['HTTP_ACCEPT_LANGUAGE'] ) ? substr($_SERVER['HTTP_ACCEPT_LANGUAGE'], 0, 2) : '';
+		$model->language   = $user_lang;
 		$model->browser    = $browser->getBrowser();
 		$model->os         = $browser->getPlatform();
 		$model->user_agent = $browser->getUserAgent();
-		$model->visit_time = time();
+		$model->visit_time = new \yii\db\Expression('NOW()'); // Correct this field if necessary
 		$model->save(false);
 
 		Yii::$app->session->set(self::SESSION_TOKEN, $model->token);
