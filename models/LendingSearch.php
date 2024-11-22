@@ -2,6 +2,7 @@
 
 namespace app\models;
 
+use app\helpers\TranslationHelper;
 use yii\base\Model;
 use yii\data\ArrayDataProvider;
 use yii\db\Query;
@@ -216,8 +217,8 @@ class LendingSearch extends Model
                 'pic_loan' => 'lending.pic_loan',
                 'pic_return' => 'lending.pic_return',
                 new \yii\db\Expression("CASE 
-                    WHEN lending.type = 1 THEN 'in_use' 
-                    ELSE 'returned'
+                    WHEN lending.type = 1 THEN 'In_Use' 
+                    ELSE 'Returned'
                     END AS status"),
             ])
             ->from('lending')
@@ -249,6 +250,13 @@ class LendingSearch extends Model
         // Execute the query
         $command = $query->createCommand();
         $results = $command->queryAll();
+
+        foreach ($results as &$result) {
+            if (isset($result['status'])) {
+                $result['status'] = TranslationHelper::translate($result['status']);
+            }
+        }
+
         // Execute the query and return results in an ArrayDataProvider
         return new ArrayDataProvider([
             'allModels' => $results,
@@ -311,10 +319,21 @@ class LendingSearch extends Model
               ->andFilterWhere(['like', 'item_unit.comment', $this->comment])
               ->andFilterWhere(['=', 'lending.date', $this->date])
               ->andFilterHaving(['status' => $this->status]);
+
+
+        // Execute the query
+        $command = $query->createCommand();
+        $results = $command->queryAll();
+
+        foreach ($results as &$result) {
+            if (isset($result['status'])) {
+                $result['status'] = TranslationHelper::translate($result['status']);
+            }
+        }
     
         // Execute the query and return results in an ArrayDataProvider
         return new ArrayDataProvider([
-            'allModels' => $query->all(),
+            'allModels' => $results,
             'pagination' => [
                 'pageSize' => 20, // Adjust as needed
             ],
