@@ -39,10 +39,6 @@ $this->params['breadcrumbs'][] = $this->title;
                 'label' => TranslationHelper::translate('In-Use')
             ],
             [
-                'attribute' => 'in_repair',
-                'label' => TranslationHelper::translate('In-Repair')
-            ],
-            [
                 'attribute' => 'lost',
                 'label' => TranslationHelper::translate('Unit Lost')
             ],
