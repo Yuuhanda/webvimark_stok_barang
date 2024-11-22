@@ -61,7 +61,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     'model' => $searchModel,
                     'attribute' => 'status',
                     'data' => $statusList, // Ensure $statusList is an array with valid status values
-                    'options' => ['placeholder' => 'Select Status'],
+                    'options' => ['placeholder' => TranslationHelper::translate('Select Status')],
                     'pluginOptions' => [
                         'allowClear' => true,
                     ],
@@ -77,7 +77,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     'model' => $searchModel,
                     'attribute' => 'warehouse',
                     'data' => $warehouseList, // Assume $warehouseList contains a list of warehouses
-                    'options' => ['placeholder' => 'Select Warehouse'],
+                    'options' => ['placeholder' => TranslationHelper::translate('Select Warehouse')],
                     'pluginOptions' => [
                         'allowClear' => true,
                     ],

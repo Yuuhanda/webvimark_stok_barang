@@ -16,7 +16,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="assign-admins">
     <h1><?= Html::encode($this->title) ?></h1>
 
-    <p><?=TranslationHelper::translate("Assign a warehouse to the admin")?> <strong><?= Html::encode($username) ?></strong>.</p>
+    <p><?=TranslationHelper::translate("Assigning a warehouse to an admin will restrict the account to only be able to access items & warehouse they are assigned to")?> <strong><?//= Html::encode($username) ?></strong>.</p>
 
     <div class="warehouse-assignment-form">
         <?php $form = ActiveForm::begin(); ?>

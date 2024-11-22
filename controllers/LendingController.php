@@ -375,8 +375,8 @@ class LendingController extends Controller
         //$dataProvider = $searchModel->searchHistoryDetail(Yii::$app->request->queryParams, $id_item);
         
         $statusList = [
-            'in_use' => 'In Use',
-            'returned' => 'Returned',
+            'in_use' => TranslationHelper::translate('In Use'),
+            'returned' => TranslationHelper::translate('Returned'),
         ];
     
         // Render the view with the search model and data provider
