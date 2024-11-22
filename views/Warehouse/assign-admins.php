@@ -9,14 +9,14 @@ use app\helpers\TranslationHelper;
 /** @var string $username */
 /** @var \app\models\User $userdata */
 
-$this->title = TranslationHelper::translate("Assign Warehouse Admins #{$username}");
+$this->title = TranslationHelper::translate("Assign Warehouse Admins {$username}");
 $this->params['breadcrumbs'][] = ['label' => 'Users', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="assign-admins">
     <h1><?= Html::encode($this->title) ?></h1>
 
-    <p>Assign a warehouse to the admin <strong><?= Html::encode($username) ?></strong>.</p>
+    <p><?=TranslationHelper::translate("Assign a warehouse to the admin")?> <strong><?= Html::encode($username) ?></strong>.</p>
 
     <div class="warehouse-assignment-form">
         <?php $form = ActiveForm::begin(); ?>

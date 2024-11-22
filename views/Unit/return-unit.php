@@ -20,9 +20,9 @@ $this->params['breadcrumbs'][] = $this->title;
         <?= $form->field($model, 'id_unit')->hiddenInput()->label(false) ?>
         <?= $form->field($model, 'id_item')->hiddenInput()->label(false) ?>
         <?= $form->field($model, 'status')->hiddenInput()->label(false) ?>
-        <?= $form->field($model, 'condition')->dropDownList($condlist, ['prompt' => 'Select Unit Condition'])->label(TranslationHelper::translate('Condition Name')) ?>
+        <?= $form->field($model, 'condition')->dropDownList($condlist, ['prompt' => TranslationHelper::translate('Select Unit Condition')])->label(TranslationHelper::translate('Condition Name')) ?>
         <!-- Dropdown for warehouses: visible wh_name but stores id_wh -->
-        <?= $form->field($model, 'id_wh')->dropDownList($whList, ['prompt' => 'Select Warehouse'])->label(TranslationHelper::translate('Warehouse Name')) ?>
+        <?= $form->field($model, 'id_wh')->dropDownList($whList, ['prompt' => TranslationHelper::translate('Select Warehouse')])->label(TranslationHelper::translate('Warehouse Name')) ?>
 
         <?= $form->field($model, 'comment')->label(TranslationHelper::translate('Comment')) ?>
         <?= $form->field($model, 'serial_number')->hiddenInput()->label(false) ?>

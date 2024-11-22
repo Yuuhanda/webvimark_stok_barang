@@ -1,5 +1,6 @@
 <?php
 
+use app\helpers\TranslationHelper;
 use webvimark\modules\UserManagement\UserManagementModule;
 use yii\bootstrap5\ActiveForm;
 use yii\helpers\Html;
@@ -9,7 +10,7 @@ use yii\helpers\Html;
  * @var webvimark\modules\UserManagement\models\forms\ChangeOwnPasswordForm $model
  */
 
-$this->title = UserManagementModule::t('back', 'Change own password');
+ $this->title = ucwords(UserManagementModule::t('back', TranslationHelper::translate('Change own password')));
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="change-own-password">

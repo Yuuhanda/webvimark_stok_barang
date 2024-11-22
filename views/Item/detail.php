@@ -44,7 +44,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     'model' => $searchModel,
                     'attribute' => 'condition',
                     'data' => $conditionList, 
-                    'options' => ['placeholder' => 'Select Unit Condition'],
+                    'options' => ['placeholder' => TranslationHelper::translate('Select Unit Condition')],
                     'pluginOptions' => [
                         'allowClear' => true,
                     ],
@@ -63,7 +63,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'model' => $searchModel,
                 'attribute' => 'status',
                 'data' => $statusList, 
-                'options' => ['placeholder' => 'Select Status'],
+                'options' => ['placeholder' => TranslationHelper::translate('Select Status')],
                 'pluginOptions' => [
                     'allowClear' => true,
                 ],
@@ -79,7 +79,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'model' => $searchModel,
                 'attribute' => 'updated_by',
                 'data' => $updatedByList, // Assume $updatedByList contains a list of users
-                'options' => ['placeholder' => 'Select Updated By'],
+                'options' => ['placeholder' => TranslationHelper::translate('Select Updated By')],
                 'pluginOptions' => [
                     'allowClear' => true,
                 ],
@@ -94,7 +94,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'model' => $searchModel,
                 'attribute' => 'warehouse',
                 'data' => $warehouseList, // Assume $warehouseList contains a list of warehouses
-                'options' => ['placeholder' => 'Select Warehouse'],
+                'options' => ['placeholder' => TranslationHelper::translate('Select Warehouse')],
                 'pluginOptions' => [
                     'allowClear' => true,
                 ],
@@ -109,7 +109,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'model' => $searchModel,
                 'attribute' => 'employee',
                 'data' => $employeeList, // Assume $employeeList contains a list of employees
-                'options' => ['placeholder' => 'Select Employee'],
+                'options' => ['placeholder' => TranslationHelper::translate('Select Employee')],
                 'pluginOptions' => [
                     'allowClear' => true,
                 ],

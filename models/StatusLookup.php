@@ -2,6 +2,7 @@
 
 namespace app\models;
 
+use app\helpers\TranslationHelper;
 use Yii;
 use yii\helpers\ArrayHelper;
 
@@ -57,6 +58,13 @@ class StatusLookup extends \yii\db\ActiveRecord
 
     public static function getStatusList()
     {
-        return ArrayHelper::map(self::find()->all(), 'id_status', 'status_name'); // assuming 'id' and 'username' columns
+        return ArrayHelper::map(
+            self::find()->all(),
+            'id_status',
+            function ($model) {
+                return TranslationHelper::translate($model->status_name);
+            }
+        );
+        //return ArrayHelper::map(self::find()->all(), 'id_status', 'status_name'); // assuming 'id' and 'username' columns
     }
 }

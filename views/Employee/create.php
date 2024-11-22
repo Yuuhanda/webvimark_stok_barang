@@ -6,7 +6,7 @@ use app\helpers\TranslationHelper;
 /** @var yii\web\View $this */
 /** @var app\models\Employee $model */
 
-$this->title = TranslationHelper::translate('Create Employee');
+$this->title = TranslationHelper::translate('Add Employee');
 $this->params['breadcrumbs'][] = ['label' => 'Employees', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>

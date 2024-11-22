@@ -247,7 +247,7 @@ class LogController extends Controller
     
         // Set log fields
         $model->id_unit = $id_unit;
-        $model->content = "Unit $sn sent for repair by $user->username";
+        $model->content = "Unit $sn sent to repair by $user->username";
         $model->update_at = new \yii\db\Expression('NOW()'); // Correct this field if necessary
     
         // Try saving and check for errors

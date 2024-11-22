@@ -2,6 +2,7 @@
 
 namespace app\models;
 
+use app\helpers\TranslationHelper;
 use yii\base\Model;
 use yii\data\ArrayDataProvider;
 use yii\db\Query;
@@ -66,6 +67,13 @@ class LogSearch extends Model
         $command = $query->createCommand();
         $results = $command->queryAll();
     
+        foreach ($results as &$result) {
+            if (isset($result['content'])) {
+                $result['content'] = TranslationHelper::translate($result['content']);
+            }
+        }
+
+
         return new ArrayDataProvider([
             'allModels' => $results,
             'pagination' => [
