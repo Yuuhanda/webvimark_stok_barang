@@ -126,7 +126,7 @@ class WarehouseController extends Controller
             Yii::$app->session->setFlash('success', TranslationHelper::translate('Warehouse data deleted successfully.'));
         } else {
             // Set an error notification if there are still item units in the warehouse
-            Yii::$app->session->setFlash('error', TranslationHelper::translate('Warehouse still has units of item inside.'));
+            Yii::$app->session->setFlash('error', TranslationHelper::translate('Warehouse still stores items inside'));
         }
         
         // Redirect to the index page

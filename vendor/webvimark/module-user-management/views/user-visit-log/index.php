@@ -13,7 +13,7 @@ use app\helpers\TranslationHelper;
  * @var webvimark\modules\UserManagement\models\search\UserVisitLogSearch $searchModel
  */
 
-$this->title = UserManagementModule::t('back', 'Visit log');
+$this->title = UserManagementModule::t('back', TranslationHelper::translate('User Visit log'));
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="user-visit-log-index">

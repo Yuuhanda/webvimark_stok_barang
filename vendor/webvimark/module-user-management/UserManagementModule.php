@@ -208,7 +208,7 @@ class UserManagementModule extends \yii\base\Module
 			['label' => UserManagementModule::t('back', 'Roles'), 'url' => ['/user-management/role/index']],
 			['label' => UserManagementModule::t('back', 'Permissions'), 'url' => ['/user-management/permission/index']],
 			['label' => UserManagementModule::t('back', 'Permission groups'), 'url' => ['/user-management/auth-item-group/index']],
-			['label' => UserManagementModule::t('back', 'Visit log'), 'url' => ['/user-management/user-visit-log/index']],
+			['label' => UserManagementModule::t('back', TranslationHelper::translate('User Visit log')), 'url' => ['/user-management/user-visit-log/index']],
 		];
 	}
 

@@ -32,7 +32,7 @@ $this->params['breadcrumbs'][] = $this->title;
 				<div class="col-sm-6">
 					<p>
 						<?= GhostHtml::a(
-							'<span class="glyphicon glyphicon-plus-sign"></span> ' . UserManagementModule::t('back', TranslationHelper::translate('Create')),
+							'<span class="glyphicon glyphicon-plus-sign"></span> ' . UserManagementModule::t('back', TranslationHelper::translate('Add User')),
 							['/user-management/user/create'],
 							['class' => 'btn btn-success']
 						) ?>

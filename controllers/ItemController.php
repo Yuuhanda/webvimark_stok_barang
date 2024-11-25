@@ -23,6 +23,7 @@ use app\models\ItemCategory;
 use app\models\StatusLookup;
 use app\components\MyMemoryService;
 use app\helpers\TranslationHelper;
+
 /**
  * ItemController implements the CRUD actions for Item model.
  */
@@ -50,7 +51,9 @@ class ItemController extends Controller
         // Create the search model and load the request data
         $searchModel = new ItemSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-
+        if(Yii::$app->user->identity->id_wh==null){
+            Yii::$app->session->setFlash('error', TranslationHelper::translate('Admin Warehouse. Your account has no Warehouse assigned to it. Contact App Admins to assign you to a warehouse'));
+        }
         // Render the view with the search model and data provider
         return $this->render('index', [
             'searchModel' => $searchModel,
@@ -157,22 +160,24 @@ class ItemController extends Controller
                         $model->imagefile = $imageFileName;
                     }
                     Yii::debug('Uploaded file name: ' . $uploadModel->imageFile->name, __METHOD__);
-                } else {
-                    Yii::error('No file uploaded.', __METHOD__);
-                    Yii::$app->session->setFlash('error', TranslationHelper::translate('Please upload a picture.'));
-                    return $this->redirect(['index']); // Redirect back
-                }
+                } 
+                //else {
+                //    Yii::error('No file uploaded.', __METHOD__);
+                //    Yii::$app->session->setFlash('error', TranslationHelper::translate('Please upload a picture.'));
+                //    return $this->redirect(['index']); // Redirect back
+                //}
                 
-            } else {
-                Yii::error("Upload model validation failed", __METHOD__);
-                if (!$uploadModel->validate()) {
-                    Yii::error('Upload model validation failed: ' . json_encode($uploadModel->errors), __METHOD__);
-                    var_dump($uploadModel->errors); // This will show validation error details on-screen
-                    die();
-                }// Dump errors to check on screen
-                Yii::$app->session->setFlash('error', TranslationHelper::translate('Picture validation failed.'));
-                return $this->redirect(['index']);
-            }
+            } 
+            //else {
+            //    Yii::error("Upload model validation failed", __METHOD__);
+            //    if (!$uploadModel->validate()) {
+            //        Yii::error('Upload model validation failed: ' . json_encode($uploadModel->errors), __METHOD__);
+            //        var_dump($uploadModel->errors); // This will show validation error details on-screen
+            //        die();
+            //    }// Dump errors to check on screen
+            //    Yii::$app->session->setFlash('error', TranslationHelper::translate('Picture validation failed.'));
+            //    return $this->redirect(['index']);
+            //}
     
             if ($model->save()) {
                 Yii::$app->session->setFlash('success', TranslationHelper::translate('Item added successfully.'));

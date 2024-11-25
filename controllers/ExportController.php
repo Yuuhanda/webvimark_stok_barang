@@ -337,8 +337,25 @@ class ExportController extends \yii\web\Controller
     }
 
     public function actionExportMain(){
-        $itemmodel = new Item();
-        $items = $itemmodel->getDashboard(); 
+        $searchModel = new ItemSearch();
+
+        // Load parameters from POST
+        $params = Yii::$app->request->post();
+
+        // Load parameters directly into the search model to ensure they apply
+        if (!$searchModel->load($params) || !$searchModel->validate()) {
+            // If params do not load or validate, handle it (e.g., return all data or show an error)
+            Yii::$app->session->setFlash('error', 'Invalid search parameters for export.');
+            return $this->redirect(['item/index']);
+        }
+
+        // Get the data provider with params applied
+        $dataProvider = $searchModel->search($params);
+        $dataProvider->pagination = false; // Disable pagination for export
+    
+        $items = $dataProvider->getModels(); // Retrieve data with filters applied
+    
+        // Create Spreadsheet object and export logic (same as before)
 
 
         // Create new Spreadsheet object
@@ -549,14 +566,14 @@ class ExportController extends \yii\web\Controller
         // Set headers
         $sheet->setCellValue('A1', TranslationHelper::translate('item_name'));
         $sheet->setCellValue('B1', 'SKU');
-        $sheet->setCellValue('C1', TranslationHelper::translate('number_of_times_item_is_lent'));
+        $sheet->setCellValue('C1', TranslationHelper::translate('total_item_lent'));
 
         // Populate data
         $row = 2;  // Row starts after the headers
         foreach ($items as $item) {
             $sheet->setCellValue('A' . $row, $item['item_name']);  // Access array keys instead of object properties
             $sheet->setCellValue('B' . $row, $item['SKU']);
-            $sheet->setCellValue('C' . $row, $item['number_of_times_item_is_lent']);
+            $sheet->setCellValue('C' . $row, $item['total_item_lent']);
             $row++;
         }
 

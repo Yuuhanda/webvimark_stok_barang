@@ -26,7 +26,7 @@ $this->params['breadcrumbs'][] = 'Update';
             'de' => 'Deutsche',
         ],
         ['prompt' => TranslationHelper::translate('Select Language')]
-    )->label(TranslationHelper::translate('Language Option')) ?>
+    )->label(TranslationHelper::translate('Language')) ?>
 
     <div class="form-group">
         <?= Html::submitButton(TranslationHelper::translate('Save'), ['class' => 'btn btn-primary']) ?>
