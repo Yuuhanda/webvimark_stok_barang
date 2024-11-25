@@ -71,7 +71,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                                 ['warehouse/delete', 'id_wh' => $model['id_wh']], [
                                                 'class' => 'btn btn-danger',
                                                 'data' => [
-                                                    'confirm' => 'Are you sure you want to delete this item?',
+                                                    'confirm' => TranslationHelper::translate('Are you sure you want to delete this warehouse?'),
                                                     'method' => 'post', // Yii2's built-in support for form submission on link click
                                                 ],
                                                 'style' => 'margin-top: 1px; margin-bottom: 1px; font-size: 12px; padding: 3px 6px;'

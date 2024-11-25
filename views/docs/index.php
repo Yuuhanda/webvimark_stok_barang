@@ -117,7 +117,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         'target' => '_blank',
                         'data-pjax' => '0',
                         'data' => [
-                            'confirm' => TranslationHelper::translate('Are you sure you want to delete this item?'),
+                            'confirm' => TranslationHelper::translate('Are you sure you want to delete this documen?'),
                             'method' => 'post', // Yii2's built-in support for form submission on link click
                         ],
                         'title' => 'View', 'style' => 'margin-top: 1px; margin-bottom: 1px; font-size: 12px; padding: 3px 6px;'
