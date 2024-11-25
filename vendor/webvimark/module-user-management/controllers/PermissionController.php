@@ -2,7 +2,7 @@
 
 namespace webvimark\modules\UserManagement\controllers;
 
-
+use app\helpers\TranslationHelper;
 use webvimark\modules\UserManagement\components\AuthHelper;
 use webvimark\modules\UserManagement\models\rbacDB\AbstractItem;
 use webvimark\modules\UserManagement\models\rbacDB\Permission;
@@ -73,7 +73,7 @@ class PermissionController extends AdminDefaultController
 		Permission::addChildren($item->name, $toAdd);
 		Permission::removeChildren($item->name, $toRemove);
 
-		Yii::$app->session->setFlash('success', UserManagementModule::t('back', 'Saved'));
+		Yii::$app->session->setFlash('success', UserManagementModule::t('back', TranslationHelper::translate('Saved')));
 
 		return $this->redirect(['view', 'id'=>$id]);
 	}
@@ -106,7 +106,7 @@ class PermissionController extends AdminDefaultController
 
 		AuthHelper::invalidatePermissions();
 
-		Yii::$app->session->setFlash('success', UserManagementModule::t('back', 'Saved'));
+		Yii::$app->session->setFlash('success', UserManagementModule::t('back', TranslationHelper::translate('Saved')));
 
 		return $this->redirect(['view', 'id'=>$id]);
 	}

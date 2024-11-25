@@ -81,7 +81,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 'value' => function ($model) {
                     return Yii::$app->formatter->asDateTime($model['datetime'], 'php: H:i, d F, Y');
                 },
-                'label' => 'Date Time',
+                'label' => TranslationHelper::translate('Date Time'),
             ],
             'username',
             [

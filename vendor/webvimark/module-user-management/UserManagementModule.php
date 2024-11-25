@@ -2,6 +2,7 @@
 
 namespace webvimark\modules\UserManagement;
 
+use app\helpers\TranslationHelper;
 use Yii;
 use yii\helpers\ArrayHelper;
 
@@ -203,7 +204,7 @@ class UserManagementModule extends \yii\base\Module
 	public static function menuItems()
 	{
 		return [
-			['label' => UserManagementModule::t('back', 'Users'), 'url' => ['/user-management/user/index']],
+			['label' => UserManagementModule::t('back', TranslationHelper::translate('Users')), 'url' => ['/user-management/user/index']],
 			['label' => UserManagementModule::t('back', 'Roles'), 'url' => ['/user-management/role/index']],
 			['label' => UserManagementModule::t('back', 'Permissions'), 'url' => ['/user-management/permission/index']],
 			['label' => UserManagementModule::t('back', 'Permission groups'), 'url' => ['/user-management/auth-item-group/index']],

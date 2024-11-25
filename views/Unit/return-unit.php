@@ -28,7 +28,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <?= $form->field($model, 'serial_number')->hiddenInput()->label(false) ?>
 
         <!-- Image Upload Field -->
-        <?= $form->field($uploadModel, 'imageFile')->fileInput()->label(TranslationHelper::translate('Unit Picture')) ?>
+        <?= $form->field($uploadModel, 'imageFile')->fileInput(['required' => true])->label(TranslationHelper::translate('Unit Picture')) ?>
     
         <div class="form-group">
             <?= Html::submitButton(TranslationHelper::translate('Return Unit To Warehouse'), ['class' => 'btn btn-primary']) ?>

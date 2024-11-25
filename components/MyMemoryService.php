@@ -41,8 +41,8 @@ class MyMemoryService
                 $translatedText = $response->data['responseData']['translatedText'];
 
                 // Save to cache for 30 days (60 * 60 * 24 * 30 seconds)
-                Yii::$app->cache->set($cacheKey, $translatedText, 60 * 60 * 24 * 30);
-
+                Yii::$app->cache->set($cacheKey, $translatedText, 60 * 60 * 24 * 30 * 365);
+                //i want to increase the size of the cache stored
                 return $translatedText;
             }
         } catch (Exception $e) {

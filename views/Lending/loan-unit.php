@@ -61,7 +61,7 @@ $this->params['breadcrumbs'][] = $this->title;
     ])->label(TranslationHelper::translate('Select Employee')); ?>
 
     <!-- Image Upload Field -->
-    <?= $form->field($uploadModel, 'imageFile')->fileInput()->label(TranslationHelper::translate('Unit Picture')) ?>
+    <?= $form->field($uploadModel, 'imageFile')->fileInput(['required' => true])->label(TranslationHelper::translate('Unit Picture')) //make this field required?> 
 
 
 
