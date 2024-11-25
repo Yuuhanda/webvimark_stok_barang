@@ -179,7 +179,7 @@ class UnitController extends Controller
                         // Combine the SKU prefix and the random number to create the serial number
                         $model->serial_number = $row['B'] ?? $this->generateUniqueSerialNumber($skuPrefix);
                     } else {
-                        throw new \yii\web\NotFoundHttpException("Item not found or SKU is empty.");
+                        throw new \yii\web\NotFoundHttpException(TranslationHelper::translate("Item not found or SKU is empty."));
                     }
                 }
                 $user = Yii::$app->user->identity;
@@ -207,7 +207,7 @@ class UnitController extends Controller
     {
         $model = $this->findModel($id_unit);
         if (!$model) {
-            throw new NotFoundHttpException('The requested ItemUnit does not exist.');
+            throw new NotFoundHttpException(TranslationHelper::translate('The requested ItemUnit does not exist.'));
         }
 
         $uploadModel = new UploadPicture();
@@ -341,7 +341,7 @@ class UnitController extends Controller
             return $model;
         }
 
-        throw new NotFoundHttpException('The requested page does not exist.');
+        throw new NotFoundHttpException(TranslationHelper::translate('The requested page does not exist.'));
     }
 
     public function actionWarehouseDistribution($id_item){
@@ -475,7 +475,7 @@ class UnitController extends Controller
         $unit = \app\models\ItemUnit::findOne(['id_unit'=>$id_unit]);
         $model = $this->findModel($id_unit);
         if (!$unit) {
-            throw new NotFoundHttpException('The requested ItemUnit does not exist.');
+            throw new NotFoundHttpException(TranslationHelper::translate('The requested ItemUnit does not exist.'));
         }
         $user = Yii::$app->user->identity;
         $model->id_unit = $id_unit;
@@ -517,7 +517,7 @@ class UnitController extends Controller
         $condlist = ConditionLookup::getConditionList();
         
         if (!$unit) {
-            throw new NotFoundHttpException('The requested ItemUnit does not exist.');
+            throw new NotFoundHttpException(TranslationHelper::translate('The requested ItemUnit does not exist.'));
         }
         $user = Yii::$app->user->identity;
         $model->id_unit = $id_unit;

@@ -148,7 +148,7 @@ class WarehouseController extends Controller
             return $model;
         }
 
-        throw new NotFoundHttpException('The requested page does not exist.');
+        throw new NotFoundHttpException(TranslationHelper::translate('The requested page does not exist.'));
     }
 
     protected function findUnit($id_wh)
@@ -187,7 +187,7 @@ class WarehouseController extends Controller
         $userdata = User::findOne($id);
     
         if (!$userdata) {
-            throw new \yii\web\NotFoundHttpException('User not found.');
+            throw new \yii\web\NotFoundHttpException(TranslationHelper::translate('User not found.'));
         }
     
         // Prepare warehouse data as [id_wh => wh_name] for the dropdown
