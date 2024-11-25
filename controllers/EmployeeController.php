@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\helpers\TranslationHelper;
 use app\models\Employee;
 use app\models\EmployeeSearch;
 use yii\web\Controller;
@@ -68,7 +69,7 @@ class EmployeeController extends Controller
 
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->save()) 
-            Yii::$app->session->setFlash('success', 'Employee added successfully.');{
+            Yii::$app->session->setFlash('success', TranslationHelper::translate('Employee added successfully.'));{
                 return $this->redirect(['index']);
             }
         } else {
@@ -92,7 +93,7 @@ class EmployeeController extends Controller
         $model = $this->findModel($id_employee);
 
         if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
-            Yii::$app->session->setFlash('success', 'Employee updated successfully.');
+            Yii::$app->session->setFlash('success', TranslationHelper::translate('Employee updated successfully.'));
             return $this->redirect(['index']);
         }
 
@@ -118,10 +119,10 @@ class EmployeeController extends Controller
             $this->findModel($id_employee)->delete();
             
             // Set a success notification
-            Yii::$app->session->setFlash('success', 'Employee data deleted successfully.');
+            Yii::$app->session->setFlash('success', TranslationHelper::translate('Employee data deleted successfully.'));
         } else {
             // Set an error notification if the employee has lending records
-            Yii::$app->session->setFlash('error', 'Employee cannot be deleted. Unit of item still being lent to this employee');
+            Yii::$app->session->setFlash('error', TranslationHelper::translate('Employee cannot be deleted. Unit of item still being lent to this employee'));
         }
         
         // Redirect to the index page

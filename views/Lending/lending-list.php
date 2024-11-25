@@ -16,7 +16,7 @@ use app\helpers\TranslationHelper;
 /** @var app\models\LendigSearch $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
-$this->title = TranslationHelper::translate('Loaning List');
+$this->title = TranslationHelper::translate('Lending List');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="unit-loan-list">

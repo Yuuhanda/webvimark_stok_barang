@@ -10,6 +10,8 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use app\components\MyMemoryService;
+use app\helpers\TranslationHelper;
+
 /**
  * RepairLogController implements the CRUD actions for RepairLog model.
  */
@@ -66,7 +68,7 @@ class RepairLogController extends Controller
         $model = new RepairLog();
         $unit = ItemUnit::findOne($id_unit);
         if (!$unit) {
-            throw new \yii\web\NotFoundHttpException("Unit not found.");
+            throw new \yii\web\NotFoundHttpException(TranslationHelper::translate("Unit not found."));
         }
         $sn = $unit->serial_number;
         $model->id_unit = $id_unit;
@@ -75,7 +77,7 @@ class RepairLogController extends Controller
         $model->datetime = new \yii\db\Expression('NOW()'); // Correct this field if necessary
         $unit = ItemUnit::findOne($id_unit);
         if (!$unit) {
-            throw new \yii\web\NotFoundHttpException("Unit not found.");
+            throw new \yii\web\NotFoundHttpException(TranslationHelper::translate("Unit not found."));
         }
         // Try saving and check for errors
         if ($model->save()) {
@@ -134,6 +136,6 @@ class RepairLogController extends Controller
             return $model;
         }
 
-        throw new NotFoundHttpException('The requested page does not exist.');
+        throw new NotFoundHttpException(TranslationHelper::translate('The requested page does not exist.'));
     }
 }

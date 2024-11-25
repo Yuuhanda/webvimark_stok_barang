@@ -75,6 +75,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
                 <?= Html::hiddenInput('LendingSearch[item_name]', $searchModel->item_name) ?>
                 <?= Html::hiddenInput('LendingSearch[content]', $searchModel->SKU) ?>
+                <?= Html::hiddenInput('LendingSearch[id_item]', $searchModel->id_item) ?>
         <?php ActiveForm::end(); ?>
 
 </div>
