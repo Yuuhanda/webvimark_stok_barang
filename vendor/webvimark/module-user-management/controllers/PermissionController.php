@@ -53,7 +53,6 @@ class PermissionController extends AdminDefaultController
 	}
 
 	/**
-	 * Add or remove child permissions (including routes) and return back to view
 	 *
 	 * @param string $id
 	 *
