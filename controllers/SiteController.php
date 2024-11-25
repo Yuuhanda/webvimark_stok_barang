@@ -174,18 +174,14 @@ class SiteController extends Controller
         }
     }
 
-    public function actionSetLanguage()
-{
-    $language = Yii::$app->request->post('language', 'en');
-    Yii::$app->session->set('language', $language);
-    Yii::$app->language = $language;
-    return $this->redirect(Yii::$app->request->referrer);
-}
-
-    public function actionRoletest()
-    {
-        
-    }
+    //translation tester
+    //public function actionSetLanguage()
+    //{
+    //    $language = Yii::$app->request->post('language', 'en');
+    //    Yii::$app->session->set('language', $language);
+    //    Yii::$app->language = $language;
+    //    return $this->redirect(Yii::$app->request->referrer);
+    //}
 
     
 }
