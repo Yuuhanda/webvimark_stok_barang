@@ -10,8 +10,7 @@ class TranslationHelper
     public static function translate($text, $sourceLang = 'en', $targetLang = 'id')
     {
         $user_lang = User::findOne(Yii::$app->user->id);
-        $targetLang = $user_lang->user_lang;
-        $targetLang = $targetLang ?:'id'; // Default to the indonesian
+        $targetLang = $user_lang->user_lang ?? 'id'; //it defaults to indonesian
         if ($sourceLang === $targetLang) {
             return $text; // Skip translation for the same language
         }

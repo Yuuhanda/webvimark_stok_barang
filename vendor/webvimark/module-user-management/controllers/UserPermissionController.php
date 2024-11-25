@@ -2,6 +2,7 @@
 
 namespace webvimark\modules\UserManagement\controllers;
 
+use app\helpers\TranslationHelper;
 use webvimark\components\BaseController;
 use webvimark\modules\UserManagement\models\rbacDB\Permission;
 use webvimark\modules\UserManagement\models\rbacDB\Role;
@@ -53,7 +54,7 @@ class UserPermissionController extends BaseController
 	{
 		if ( !Yii::$app->user->isSuperadmin AND Yii::$app->user->id == $id )
 		{
-			Yii::$app->session->setFlash('error', UserManagementModule::t('back', 'You can not change own permissions'));
+			Yii::$app->session->setFlash('error', UserManagementModule::t('back', TranslationHelper::translate('You can not change own permissions')));
 			return $this->redirect(['set', 'id'=>$id]);
 		}
 
@@ -75,7 +76,7 @@ class UserPermissionController extends BaseController
 			User::assignRole($id, $role);
 		}
 
-		Yii::$app->session->setFlash('success', UserManagementModule::t('back', 'Saved'));
+		Yii::$app->session->setFlash('success', UserManagementModule::t('back', TranslationHelper::translate('Saved')));
 
 		return $this->redirect(['set', 'id'=>$id]);
 	}

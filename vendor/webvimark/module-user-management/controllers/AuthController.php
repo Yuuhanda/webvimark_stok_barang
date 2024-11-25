@@ -2,6 +2,7 @@
 
 namespace webvimark\modules\UserManagement\controllers;
 
+use app\helpers\TranslationHelper;
 use webvimark\components\BaseController;
 use webvimark\modules\UserManagement\components\UserAuthEvent;
 use webvimark\modules\UserManagement\models\forms\ChangeOwnPasswordForm;
@@ -197,7 +198,7 @@ class AuthController extends BaseController
 				return $this->renderIsAjax('confirmEmailSuccess', compact('user'));
 			}
 
-			throw new NotFoundHttpException(UserManagementModule::t('front', 'Token not found. It may be expired'));
+			throw new NotFoundHttpException(UserManagementModule::t('front', TranslationHelper::translate('Token not found. It may be expired')));
 		}
 	}
 
@@ -241,7 +242,7 @@ class AuthController extends BaseController
 				}
 				else
 				{
-					Yii::$app->session->setFlash('error', UserManagementModule::t('front', "Unable to send message for email provided"));
+					Yii::$app->session->setFlash('error', UserManagementModule::t('front', TranslationHelper::translate("Unable to send message for email provided")));
 				}
 			}
 		}
@@ -268,7 +269,7 @@ class AuthController extends BaseController
 
 		if ( !$user )
 		{
-			throw new NotFoundHttpException(UserManagementModule::t('front', 'Token not found. It may be expired. Try reset password once more'));
+			throw new NotFoundHttpException(UserManagementModule::t('front', TranslationHelper::translate('Token not found. It may be expired. Try reset password once more')));
 		}
 
 		$model = new ChangeOwnPasswordForm([
@@ -333,7 +334,7 @@ class AuthController extends BaseController
 				}
 				else
 				{
-					Yii::$app->session->setFlash('error', UserManagementModule::t('front', "Unable to send message for email provided"));
+					Yii::$app->session->setFlash('error', UserManagementModule::t('front', TranslationHelper::translate("Unable to send message for email provided")));
 				}
 			}
 		}
@@ -355,7 +356,7 @@ class AuthController extends BaseController
 
 		if ( !$user )
 		{
-			throw new NotFoundHttpException(UserManagementModule::t('front', 'Token not found. It may be expired'));
+			throw new NotFoundHttpException(UserManagementModule::t('front', TranslationHelper::translate('Token not found. It may be expired')));
 		}
 		
 		$user->email_confirmed = 1;

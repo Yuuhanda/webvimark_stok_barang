@@ -7,6 +7,7 @@ $config = [
     'id' => 'basic',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
+
     //'timeZone' => 'Asia/Jakarta', // Replace with the desired time zone
     'aliases' => [
         '@bower' => '@vendor/bower-asset',
@@ -17,8 +18,12 @@ $config = [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
             'cookieValidationKey' => '2eXxFfmVxxAAA4syZwMVGOW6xM6Sqbfj',
         ],
+        //'cache' => [
+        //    'class' => 'yii\caching\FileCache',
+        //],
         'cache' => [
-            'class' => 'yii\caching\FileCache',
+            'class' => 'yii\caching\DbCache',
+            'cacheTable' => 'cache', // The table where cache data will be stored
         ],
         'user' => [
             'class' => 'webvimark\modules\UserManagement\components\UserConfig',

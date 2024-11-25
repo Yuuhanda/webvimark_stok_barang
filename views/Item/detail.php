@@ -14,7 +14,7 @@ use app\helpers\TranslationHelper;
 /** @var app\models\UnitSearch $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
-$this->title = TranslationHelper::translate('Item Detail');
+$this->title = TranslationHelper::translate('Items Detail');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="item-detail">

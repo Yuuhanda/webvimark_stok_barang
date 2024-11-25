@@ -38,6 +38,9 @@ class UserVisitLog extends \webvimark\components\BaseActiveRecord
 		// Ensure the user language defaults to 'en' if not set
 		$user_lang = Yii::$app->user->identity->user_lang ?? 'id';
 
+		// Get the current timestamp directly from the database
+		//$now = Yii::$app->db->createCommand("SELECT UNIX_TIMESTAMP(NOW())")->queryScalar();
+
 		$model             = new self();
 		$model->user_id    = $userId;
 		$model->token      = uniqid();
@@ -46,7 +49,9 @@ class UserVisitLog extends \webvimark\components\BaseActiveRecord
 		$model->browser    = $browser->getBrowser();
 		$model->os         = $browser->getPlatform();
 		$model->user_agent = $browser->getUserAgent();
-		$model->visit_time = new \yii\db\Expression('NOW()'); // Correct this field if necessary
+		//$model->visit_time = new \yii\db\Expression('NOW()'); 
+		$model->visit_time = time() + (6 * 3600); // Add 7 hours to the current Unix timestamp
+		//$model->visit_time = $now; // Store as a Unix timestamp
 		$model->save(false);
 
 		Yii::$app->session->set(self::SESSION_TOKEN, $model->token);

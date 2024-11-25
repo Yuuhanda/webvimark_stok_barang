@@ -2,6 +2,7 @@
 
 namespace webvimark\modules\UserManagement\controllers;
 
+use app\helpers\TranslationHelper;
 use webvimark\modules\UserManagement\components\AuthHelper;
 use webvimark\modules\UserManagement\models\rbacDB\Permission;
 use webvimark\modules\UserManagement\models\rbacDB\Role;
@@ -92,7 +93,7 @@ class RoleController extends AdminDefaultController
 		Role::addChildren($role->name, $toAdd);
 		Role::removeChildren($role->name, $toRemove);
 
-		Yii::$app->session->setFlash('success', UserManagementModule::t('back', 'Saved'));
+		Yii::$app->session->setFlash('success', UserManagementModule::t('back', TranslationHelper::translate('Saved')));
 
 		return $this->redirect(['view', 'id'=>$id]);
 	}
@@ -120,7 +121,7 @@ class RoleController extends AdminDefaultController
 		Role::addChildren($role->name, $toAdd);
 		Role::removeChildren($role->name, $toRemove);
 
-		Yii::$app->session->setFlash('success', UserManagementModule::t('back', 'Saved'));
+		Yii::$app->session->setFlash('success', UserManagementModule::t('back', TranslationHelper::translate('Saved')));
 
 		return $this->redirect(['view', 'id'=>$id]);
 	}
