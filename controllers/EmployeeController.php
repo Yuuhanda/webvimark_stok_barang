@@ -122,7 +122,7 @@ class EmployeeController extends Controller
             Yii::$app->session->setFlash('success', TranslationHelper::translate('Employee data deleted successfully.'));
         } else {
             // Set an error notification if the employee has lending records
-            Yii::$app->session->setFlash('error', TranslationHelper::translate('Employee cannot be deleted. Unit of item still being lent to this employee'));
+            Yii::$app->session->setFlash('error', TranslationHelper::translate('Employee cannot be deleted. There is an item still being lent to this employee'));
         }
         
         // Redirect to the index page

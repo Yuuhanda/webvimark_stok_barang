@@ -8,6 +8,7 @@ use yii\bootstrap5\Modal;
 use yii\web\View;
 use webvimark\modules\UserManagement\models\User;
 use app\helpers\TranslationHelper;
+use yii\bootstrap5\ActiveForm;
 
 /** @var yii\web\View $this */
 /** @var app\models\ItemSearch $searchModel */
@@ -22,7 +23,13 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <p>
         <?php echo GhostHtml::a(TranslationHelper::translate('Add New Item'), ['create'], ['class' => 'btn btn-success']); ?>
-        <?php echo GhostHtml::a(TranslationHelper::translate('Export Data to .xlsx'), ['export/export-main'], ['class' => 'btn btn-success']);?>
+        <?php 
+            // Button to trigger hidden export form
+            echo GhostHtml::button(TranslationHelper::translate('Export Data to .xlsx'), [
+                'class' => 'btn btn-success',
+                'onclick' => "$('#export-form').submit();"
+            ]);
+        ?>
     </p>
 
     <?= GridView::widget([
@@ -135,6 +142,18 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php Modal::end(); ?>
 
 </div>
+
+<?php $exportForm = ActiveForm::begin([
+        'id' => 'export-form',
+        'method' => 'post',
+        'action' => ['export/export-main'],
+    ]); ?>
+
+        <?= Html::hiddenInput('ItemSearch[item_name]', $searchModel->item_name) ?>
+        <?= Html::hiddenInput('ItemSearch[SKU]', $searchModel->SKU) ?>
+        <?= Html::hiddenInput('ItemSearch[category]', $searchModel->category) ?>
+
+    <?php ActiveForm::end(); ?>
 
 <?php
 $this->registerJs(<<<JS
