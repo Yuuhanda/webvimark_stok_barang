@@ -55,7 +55,10 @@ $this->params['breadcrumbs'][] = $this->title;
 							},
 						'format'=>'raw',
 					],
-					'language',
+					[
+						'attribute' => 'language',
+						'label' => TranslationHelper::translate('Language'),
+					],
 					'os',
 					'browser',
 					array(
@@ -70,6 +73,7 @@ $this->params['breadcrumbs'][] = $this->title;
 						return Yii::$app->formatter->asDate($model['visit_time'], 'php:H:i d F, Y');
 					},
 					'format' => 'raw',
+					'label' => TranslationHelper::translate('Visit Time : Date')
 					],
 					[
 						'class' => 'yii\grid\ActionColumn',
