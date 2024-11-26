@@ -52,7 +52,7 @@ class ItemController extends Controller
         $searchModel = new ItemSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         if(Yii::$app->user->identity->id_wh==null){
-            Yii::$app->session->setFlash('error', TranslationHelper::translate('Admin Warehouse, your account has no warehouse assigned. Contact App Admins to assign you to a warehouse'));
+            Yii::$app->session->setFlash('error', TranslationHelper::translate('Warehouse Admin, your account has no warehouse assigned. Contact App Admins to assign you to a warehouse'));
         }
         // Render the view with the search model and data provider
         return $this->render('index', [
