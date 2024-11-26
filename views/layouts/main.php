@@ -122,7 +122,7 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
                                 UserManagementModule::menuItems(),
                                 [
                                     [
-                                        'label' => TranslationHelper::translate('Assign Admin Warehouse'),
+                                        'label' => TranslationHelper::translate('Assign Warehouse Admin'),
                                         'url' => ['/warehouse/assign'], // The route for the new item
                                         'options' => ['class' => 'nav-item'],
                                     ],

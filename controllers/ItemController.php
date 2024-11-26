@@ -16,6 +16,7 @@ use yii\web\UploadedFile;
 use yii\filters\AccessControl;
 use app\models\UploadPicture;
 use app\models\User;
+use webvimark\modules\UserManagement\models\User as WebvimarkUser;
 use app\models\Employee;
 use app\models\Warehouse;
 use app\models\ConditionLookup;
@@ -51,7 +52,7 @@ class ItemController extends Controller
         // Create the search model and load the request data
         $searchModel = new ItemSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-        if(Yii::$app->user->identity->id_wh==null){
+        if(Yii::$app->user->identity->id_wh==null && (WebvimarkUser::hasRole('Admin') && !WebvimarkUser::hasRole('superadmin'))){
             Yii::$app->session->setFlash('error', TranslationHelper::translate('Warehouse Admin, your account has no warehouse assigned. Contact App Admins to assign you to a warehouse'));
         }
         // Render the view with the search model and data provider
