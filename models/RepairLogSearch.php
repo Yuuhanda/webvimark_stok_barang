@@ -104,7 +104,11 @@ class RepairLogSearch extends RepairLog
         ->andFilterHaving(['like', 'rep_type_lookup.rep_type', $this->rep_type])
         ->andFilterWhere(['rep_type_lookup.id_rep_t' => $this->id_rep_t]);
 
-
+        if(!empty($this->id_rep_t)){
+            $query->orderBy(['item_unit.serial_number' => SORT_DESC]);
+        } else{
+            $query->orderBy(['repair_log.datetime' => SORT_DESC]);
+        }
         $command = $query->createCommand();
         $results = $command->queryAll();
 
