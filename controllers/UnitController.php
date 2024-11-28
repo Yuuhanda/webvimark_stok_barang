@@ -27,6 +27,7 @@ use app\models\ConditionLookup;
 use app\models\UploadPicture;
 use app\components\MyMemoryService;
 use app\helpers\TranslationHelper;
+use webvimark\modules\UserManagement\models\User as WebvimarkUser;
 
 /**
  * UnitController implements the CRUD actions for ItemUnit model.
@@ -604,8 +605,16 @@ class UnitController extends Controller
                                 $serialNumber = $this->generateUniqueSerialNumberBulk($skuPrefix, $serialTracker);
                             } while (isset($serialTracker[$serialNumber]));
                         }
-    
-    
+                        //add checking for each to check $id_wh = row['A'] with  $user_wh = Yii::$app->user->identity->id_wh; if (WebvimarkUser::hasRole('Admin') && !WebvimarkUser::hasRole('superadmin'))
+                        //inside that if user_wh != $id_wh setflash error and redirect to index
+                        $user_wh = Yii::$app->user->identity->id_wh; 
+                        $id_wh = $row['A'];
+                        if (WebvimarkUser::hasRole('Admin') && !WebvimarkUser::hasRole('superadmin')){
+                            if($user_wh != $id_wh){
+                                Yii::$app->session->setFlash('error', TranslationHelper::translate("Warehouse admin is not allowed to add unit to another warehouse not they're assigned to"));
+                            return $this->redirect(['index']);
+                            }
+                        }
                         // Mark the serial number as used
                         $serialTracker[$serialNumber] = true;
     
@@ -711,4 +720,5 @@ class UnitController extends Controller
         }
         
     }
+
 }

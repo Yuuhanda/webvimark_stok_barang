@@ -4,6 +4,7 @@ namespace app\models;
 
 use Yii;
 use yii\db\Query;
+use webvimark\modules\UserManagement\models\User as WebvimarkUser;
 
 /**
  * This is the model class for table "item_unit".
@@ -188,14 +189,29 @@ class ItemUnit extends \yii\db\ActiveRecord
 
     //get unit available to be lent
     public function getAvailableUnit($id_item){
-        $query = (new Query())
-        ->select('serial_number, condition_lookup.condition_name, id_unit')
-        ->from('item_unit')
-        ->leftJoin('condition_lookup', 'item_unit.condition = condition_lookup.id_condition')
-        ->where("item_unit.status = 1 AND item_unit.condition != 4 AND item_unit.condition != 5 AND item_unit.id_item = $id_item")
-        ->groupBy('item_unit.serial_number');
-        $command = $query->createCommand();
-        $results = $command->queryAll();
+        $id_wh = Yii::$app->user->identity->id_wh;
+
+        if (WebvimarkUser::hasRole('Admin') && !WebvimarkUser::hasRole('superadmin')){
+            $query = (new Query())
+            ->select('serial_number, condition_lookup.condition_name, id_unit')
+            ->from('item_unit')
+            ->leftJoin('condition_lookup', 'item_unit.condition = condition_lookup.id_condition')
+            ->where("item_unit.status = 1 AND item_unit.condition != 4 AND item_unit.condition != 5 AND item_unit.id_item = $id_item")
+            ->andWhere(['item_unit.id_wh'=> $id_wh])
+            ->groupBy('item_unit.serial_number');
+            $command = $query->createCommand();
+            $results = $command->queryAll();}
+        else {
+            $query = (new Query())
+            ->select('serial_number, condition_lookup.condition_name, id_unit')
+            ->from('item_unit')
+            ->leftJoin('condition_lookup', 'item_unit.condition = condition_lookup.id_condition')
+            ->where("item_unit.status = 1 AND item_unit.condition != 4 AND item_unit.condition != 5 AND item_unit.id_item = $id_item")
+            ->groupBy('item_unit.serial_number');
+            $command = $query->createCommand();
+            $results = $command->queryAll();
+        }
+
         return $results;
     }
 
