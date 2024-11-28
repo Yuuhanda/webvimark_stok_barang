@@ -153,9 +153,10 @@ class RepairLogController extends Controller
     public function actionDetailSingle($month, $year)
     {
         $searchModel = new RepairLogSearch();
+        
+        $searchModel->month = $month; // Set month
+        $searchModel->year = $year;   // Set year
         $params = Yii::$app->request->queryParams;
-        $params['RepairLogSearch']['month'] = $month;
-        $params['RepairLogSearch']['year'] = $year;
         $dataProvider = $searchModel->searchDetail($params);
     
         return $this->render('detail', [
