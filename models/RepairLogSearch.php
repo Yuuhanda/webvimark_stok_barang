@@ -14,6 +14,7 @@ class RepairLogSearch extends RepairLog
 
     public $item_name;
     public $serial_number;
+    public $id_rep_t;
 
     /**
      * {@inheritdoc}
@@ -22,7 +23,7 @@ class RepairLogSearch extends RepairLog
     {
         return [
             [['month', 'year'], 'integer'],
-            [['serial_number', 'item_name', 'datetime', 'rep_type'], 'safe']
+            [['serial_number', 'item_name', 'datetime', 'rep_type', 'id_rep_t'], 'safe']
         ];
     }
 
@@ -100,7 +101,8 @@ class RepairLogSearch extends RepairLog
         // Add conditions based on filters
         $query->andFilterWhere(['like', 'item_unit.serial_number', $this->serial_number])
         ->andFilterWhere(['like', 'item.item_name', $this->item_name])
-        ->andFilterHaving(['like', 'rep_type_lookup.rep_type', $this->rep_type]);
+        ->andFilterHaving(['like', 'rep_type_lookup.rep_type', $this->rep_type])
+        ->andFilterWhere(['rep_type_lookup.id_rep_t' => $this->id_rep_t]);
 
 
         $command = $query->createCommand();
@@ -120,5 +122,7 @@ class RepairLogSearch extends RepairLog
             ],
         ]);
     }
+
+
     
 }

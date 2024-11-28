@@ -11,10 +11,12 @@ use webvimark\modules\UserManagement\components\GhostHtml;
 
 $this->title = TranslationHelper::translate('Repair Logs Summary');
 $this->params['breadcrumbs'][] = $this->title;
+
 ?>
 <div class="repair-log-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
+
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
@@ -56,7 +58,7 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
             [
                 'attribute' => 'rep_type_1_count',
-                'label' => TranslationHelper::translate('Unit Sent to Repair'),
+                'label' => TranslationHelper::translate('Repair Initiated'),
             ],
             [
                 'attribute' => 'rep_type_2_count',
