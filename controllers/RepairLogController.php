@@ -156,12 +156,21 @@ class RepairLogController extends Controller
         
         $searchModel->month = $month; // Set month
         $searchModel->year = $year;   // Set year
+        $searchModel->id_rep_t = 1; // repair opened type
+
+        //repair open
         $params = Yii::$app->request->queryParams;
         $dataProvider = $searchModel->searchDetail($params);
-    
-        return $this->render('detail', [
+
+        //repair closed
+        $searchModel->id_rep_t = 2; // repair closed type
+        $params = Yii::$app->request->queryParams;
+        $closedRepair = $searchModel->searchDetail($params);
+
+        return $this->render('detail-single', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'closedRepair' => $closedRepair,
             'month' => $month,
             'year' => $year,
         ]);
