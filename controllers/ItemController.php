@@ -200,13 +200,9 @@ class ItemController extends Controller
     }
 
     protected function generateSKU($cat_code) {
-        // Get the current year and calculate the corresponding alphabet letter
+        // Get the last two digits of the current year
         $currentYear = (int) date('Y');
-        $startYear = 2024; // Define the start year where 'A' represents 2024
-        $yearOffset = $currentYear - $startYear;
-    
-        // Ensure the offset is within 0 to 25 (A-Z), cycling back if exceeding 'Z'
-        $letter = chr(65 + ($yearOffset % 26)); // 65 is ASCII for 'A'
+        $letter = substr($currentYear, -2); // e.g., '24' for 2024
     
         // Get the last generated SKU for the category and increment it for a new serialized number
         $lastSKU = Item::find()->where(['LIKE', 'SKU', $cat_code . $letter])->orderBy(['SKU' => SORT_DESC])->one();

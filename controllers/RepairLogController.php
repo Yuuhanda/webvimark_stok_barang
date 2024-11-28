@@ -138,4 +138,32 @@ class RepairLogController extends Controller
 
         throw new NotFoundHttpException(TranslationHelper::translate('The requested page does not exist.'));
     }
+
+    public function actionDetail()
+    {
+        $searchModel = new RepairLogSearch();
+        $dataProvider = $searchModel->searchDetail(Yii::$app->request->queryParams);
+    
+        return $this->render('detail', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+        ]);
+    }
+
+    public function actionDetailSingle($month, $year)
+    {
+        $searchModel = new RepairLogSearch();
+        $params = Yii::$app->request->queryParams;
+        $params['RepairLogSearch']['month'] = $month;
+        $params['RepairLogSearch']['year'] = $year;
+        $dataProvider = $searchModel->searchDetail($params);
+    
+        return $this->render('detail', [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+            'month' => $month,
+            'year' => $year,
+        ]);
+    }
+
 }
