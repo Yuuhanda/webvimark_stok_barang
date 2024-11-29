@@ -17,6 +17,8 @@ use app\models\LogSearch;
 use app\models\UnitSearch;
 use app\models\LendingSearch;
 use app\models\DamagedSearch;
+use app\models\RepairLogSearch;
+
 class ExportController extends \yii\web\Controller
 {
 
@@ -690,6 +692,145 @@ class ExportController extends \yii\web\Controller
 
         // Set filename and export
         $filename = 'exported_lending_history' . $this->username . date('_Y-m-d_H-i-s') . '.xlsx';
+        $writer = new Xlsx($spreadsheet);
+
+        // Send file as response for download
+        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        header('Content-Disposition: attachment; filename="' . $filename . '"');
+        $writer->save('php://output');
+        exit();
+    }
+
+    public function actionRepairLog()
+    {
+        $searchModel = new RepairLogSearch();
+       
+        //filter params
+        $params = Yii::$app->request->post();
+
+        // Load parameters directly into the search model to ensure they apply
+        if (!$searchModel->load($params) || !$searchModel->validate()) {
+            // If params do not load or validate, handle it (e.g., return all data or show an error)
+            Yii::$app->session->setFlash('error', 'Invalid search parameters for export.');
+            return $this->redirect(['repair-log/detail']);
+        }
+        //echo var_dump($params);
+        //exit();
+        // Get the data provider with params applied
+        $dataProvider = $searchModel->searchDetail($params);
+        $dataProvider->pagination = false; // Disable pagination for export
+
+        $items = $dataProvider->getModels(); // Retrieve data with filters applied
+        
+        // Fetch data (for example, from a model)
+        //$lendingmodel = new Lending();
+        //$items = $lendingmodel->getLendingList();  // change it to calling getLendingList in Lending model
+
+        // Create new Spreadsheet object
+        $spreadsheet = new Spreadsheet();
+        $sheet = $spreadsheet->getActiveSheet();
+
+        // Set headers
+        $sheet->setCellValue('A1', TranslationHelper::translate('serial_number'));
+        $sheet->setCellValue('B1', TranslationHelper::translate('item_name'));
+        $sheet->setCellValue('C1', TranslationHelper::translate('type'));
+        $sheet->setCellValue('D1', TranslationHelper::translate('datetime'));
+
+        // Populate data
+        $row = 2;  // Row starts after the headers
+        foreach ($items as $item) {
+            $sheet->setCellValue('A' . $row, $item['serial_number']);  // Access array keys instead of object properties
+            $sheet->setCellValue('B' . $row, $item['item_name']);
+            $sheet->setCellValue('C' . $row, $item['rep_type']);
+            $sheet->setCellValue('D' . $row, $item['datetime']);
+            $row++;
+        }
+
+        // Set filename and export
+        $filename = 'exported_repair_log' . $this->username . date('_Y-m-d_H-i-s') . '.xlsx';
+        $writer = new Xlsx($spreadsheet);
+
+        // Send file as response for download
+        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        header('Content-Disposition: attachment; filename="' . $filename . '"');
+        $writer->save('php://output');
+        exit();
+    }
+
+    public function actionRepairLogSingle($month, $year)
+    {
+        $searchModel = new RepairLogSearch();
+        
+        $searchModel->month = $month; // Set month
+        $searchModel->year = $year;   // Set year
+        $searchModel->id_rep_t = 1; // repair opened type
+
+        //filter params
+        $params = Yii::$app->request->post();
+
+        //repair open
+        $dataProvider = $searchModel->searchDetail($params);
+       
+
+
+        // Load parameters directly into the search model to ensure they apply
+        if (!$searchModel->load($params) || !$searchModel->validate()) {
+            // If params do not load or validate, handle it (e.g., return all data or show an error)
+            Yii::$app->session->setFlash('error', 'Invalid search parameters for export.');
+            return $this->redirect(['repair-log/detail']);
+        }
+
+
+        //echo var_dump($params);
+        //exit();
+        // Get the data provider with params applied
+        $dataProvider = $searchModel->searchDetail($params);
+        $dataProvider->pagination = false; // Disable pagination for export
+
+        $items = $dataProvider->getModels(); // Retrieve data with filters applied
+        
+        //repair closed
+        $searchModel->id_rep_t = 2; // repair closed type
+        $params = Yii::$app->request->post();
+        $closedRepair = $searchModel->searchDetail($params);
+        $closedRepair->pagination = false; // Disable pagination for export
+
+        $closeds = $closedRepair->getModels(); // Retrieve data with filters applied
+        // Fetch data (for example, from a model)
+        //$lendingmodel = new Lending();
+        //$items = $lendingmodel->getLendingList();  // change it to calling getLendingList in Lending model
+
+        // Create new Spreadsheet object
+        $spreadsheet = new Spreadsheet();
+        $sheet = $spreadsheet->getActiveSheet();
+
+        // Set headers
+        $sheet->setCellValue('A1', TranslationHelper::translate('Repair Initated'));
+        $sheet->setCellValue('A2', TranslationHelper::translate('serial_number'));
+        $sheet->setCellValue('B2', TranslationHelper::translate('item_name'));
+        $sheet->setCellValue('C2', TranslationHelper::translate('datetime'));
+        $sheet->setCellValue('E1', TranslationHelper::translate('Repair Initated'));
+        $sheet->setCellValue('E2', TranslationHelper::translate('serial_number'));
+        $sheet->setCellValue('F2', TranslationHelper::translate('item_name'));
+        $sheet->setCellValue('G2', TranslationHelper::translate('datetime'));
+
+        // Populate data
+        $row = 3;  // Row starts after the headers
+        foreach ($items as $item) {
+            $sheet->setCellValue('A' . $row, $item['serial_number']);  // Access array keys instead of object properties
+            $sheet->setCellValue('B' . $row, $item['item_name']);
+            $sheet->setCellValue('C' . $row, $item['datetime']);
+            $row++;
+        }
+        $row = 3;  // Row starts after the headers
+        foreach ($closeds as $closed) {
+            $sheet->setCellValue('E' . $row, $closed['serial_number']);  // Access array keys instead of object properties
+            $sheet->setCellValue('F' . $row, $closed['item_name']);
+            $sheet->setCellValue('G' . $row, $closed['datetime']);
+            $row++;
+        }
+        // Set filename and export
+        $filename = 'exported_repair_log_monthly' . $this->username . date('_Y-m-d_H-i-s') . '.xlsx';
         $writer = new Xlsx($spreadsheet);
 
         // Send file as response for download
