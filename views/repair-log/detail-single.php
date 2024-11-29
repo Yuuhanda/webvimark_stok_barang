@@ -73,7 +73,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     'attribute' => 'datetime',
                     'label' => TranslationHelper::translate('date'),
                     'value' => function ($model) {
-                        return Yii::$app->formatter->asDatetime($model['datetime'], 'php:F j, Y H:i'); 
+                        return Yii::$app->formatter->asDatetime($model['datetime'], 'php:d F, Y, H:i'); 
                     },
                     'filter' => '<div style="display: flex; gap: 10px;">' . Html::dropDownList(
                         'RepairLogSearch[month]', // Ensure the search model has a `month` attribute

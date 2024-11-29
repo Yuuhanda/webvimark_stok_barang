@@ -483,7 +483,7 @@ class UnitController extends Controller
         $model->status = 3;
         $model->id_item = $unit->id_item;
         $model->condition = $unit->condition;
-        $model->id_wh = NULL;
+        //$model->id_wh = NULL;
         $model->updated_by = $user->id;
         if ($model->load(Yii::$app->request->post())) {
 
@@ -525,7 +525,7 @@ class UnitController extends Controller
         $model->status = 1;
         $model->id_item = $unit->id_item;
         $model->condition = $unit->condition;
-        $model->id_wh = NULL;
+        //$model->id_wh = NULL;
         $model->updated_by = $user->id;
         if ($model->load(Yii::$app->request->post())) {
             if ($model->validate()) {
