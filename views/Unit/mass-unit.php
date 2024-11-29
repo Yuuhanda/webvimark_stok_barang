@@ -26,7 +26,24 @@ $this->params['breadcrumbs'][] = $this->title;
 
 <?= $form->field($model, 'file')->fileInput() ?>
 
-<?= Html::submitButton(TranslationHelper::translate('Upload'), ['class' => 'btn btn-success']) ?>
+<div class="form-group">
+    <?= Html::submitButton(TranslationHelper::translate('Save'), [
+        'class' => 'btn btn-primary',
+        'id' => 'submit-button', // Assign an ID for JavaScript targeting
+    ]) ?>
+</div>
+
+<?php
+// Add JavaScript code to handle the button disable logic
+$this->registerJs("
+    $('#submit-button').on('click', function () {
+        $(this).prop('disabled', true); // Disable the button
+        $(this).text('" . TranslationHelper::translate('Saving...') . "'); // Optionally change the button text
+        $(this).closest('form').submit(); // Submit the form
+    });
+");
+?>
+
 
 <?php ActiveForm::end() ?>
 </div>

@@ -26,6 +26,21 @@ use app\helpers\TranslationHelper;
     </tbody>
 </table>
 
-<?= Html::beginForm(['bulk-add-preview'], 'post') ?>
-    <?= Html::submitButton(TranslationHelper::translate('Confirm Save'), ['class' => 'btn btn-success']) ?>
+<?= Html::beginForm(['bulk-add-preview'], 'post', ['id' => 'bulk-add-form']) ?>
+    <?= Html::submitButton(TranslationHelper::translate('Confirm Save'), [
+        'class' => 'btn btn-success',
+        'id' => 'confirm-save-button', // Assign an ID for JavaScript targeting
+    ]) ?>
 <?= Html::endForm() ?>
+
+<?php
+// Add JavaScript code to handle the button disable logic
+$this->registerJs("
+    $('#confirm-save-button').on('click', function () {
+        $(this).prop('disabled', true); // Disable the button
+        $(this).text('" . TranslationHelper::translate('Saving...') . "'); // Optionally change the button text
+        $('#bulk-add-form').submit(); // Submit the form
+    });
+");
+?>
+

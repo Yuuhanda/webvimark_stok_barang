@@ -25,9 +25,25 @@ $this->params['breadcrumbs'][] = $this->title;
         <?= $form->field($model, 'id_wh')->hiddenInput()->label(false) ?>
         <?= $form->field($model, 'comment')->label(TranslationHelper::translate('Comment should be information about repair')) ?>
     
+
         <div class="form-group">
-            <?= Html::submitButton(TranslationHelper::translate('Send Unit To Repair'), ['class' => 'btn btn-primary']) ?>
+            <?= Html::submitButton(TranslationHelper::translate('Send Unit To Repair'), [
+                'class' => 'btn btn-primary',
+                'id' => 'submit-button', // Assign an ID for JavaScript targeting
+            ]) ?>
         </div>
+
+<?php
+// Add JavaScript code to handle the button disable logic
+$this->registerJs("
+    $('#submit-button').on('click', function () {
+        $(this).prop('disabled', true); // Disable the button
+        $(this).text('" . TranslationHelper::translate('Saving...') . "'); // Optionally change the button text
+        $(this).closest('form').submit(); // Submit the form
+    });
+");
+?>
+
     <?php ActiveForm::end(); ?>
 
 </div><!-- send-repair -->
