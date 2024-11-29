@@ -101,7 +101,7 @@ class RepairLogSearch extends RepairLog
         // Add conditions based on filters
         $query->andFilterWhere(['like', 'item_unit.serial_number', $this->serial_number])
         ->andFilterWhere(['like', 'item.item_name', $this->item_name])
-        ->andFilterHaving(['like', 'rep_type_lookup.rep_type', $this->rep_type])
+        ->andFilterWhere(['like', 'repair_log.rep_type', $this->rep_type])
         ->andFilterWhere(['rep_type_lookup.id_rep_t' => $this->id_rep_t]);
 
         if(!empty($this->id_rep_t)){

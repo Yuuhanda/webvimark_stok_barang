@@ -2,7 +2,9 @@
 
 namespace app\models;
 
+use app\helpers\TranslationHelper;
 use Yii;
+use yii\helpers\ArrayHelper;
 
 /**
  * This is the model class for table "rep_type_lookup".
@@ -41,5 +43,17 @@ class RepTypeLookup extends \yii\db\ActiveRecord
             'id_rep_t' => 'Id Rep T',
             'rep_type' => 'Rep Type',
         ];
+    }
+
+    public static function getTypeList()
+    {
+        return ArrayHelper::map(
+            self::find()->all(),
+            'id_rep_t',
+            function ($model) {
+                return TranslationHelper::translate($model->rep_type);
+            }
+        );
+
     }
 }

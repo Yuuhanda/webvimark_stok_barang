@@ -11,6 +11,7 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use app\components\MyMemoryService;
 use app\helpers\TranslationHelper;
+use app\models\RepTypeLookup;
 
 /**
  * RepairLogController implements the CRUD actions for RepairLog model.
@@ -143,10 +144,12 @@ class RepairLogController extends Controller
     {
         $searchModel = new RepairLogSearch();
         $dataProvider = $searchModel->searchDetail(Yii::$app->request->queryParams);
+        $typeList = RepTypeLookup::getTypeList();
     
         return $this->render('detail', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'typeList' => $typeList,
         ]);
     }
 

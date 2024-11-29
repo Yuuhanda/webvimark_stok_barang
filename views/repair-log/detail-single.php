@@ -4,6 +4,7 @@ use yii\helpers\Html;
 use yii\grid\GridView;
 use app\helpers\TranslationHelper;
 use webvimark\modules\UserManagement\components\GhostHtml;
+use yii\bootstrap5\ActiveForm;
 
 /** @var yii\web\View $this */
 /** @var app\models\RepairLogSearch $searchModel */
@@ -39,6 +40,15 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="repair-log-index">
 
 <h1><?= Html::encode($this->title) ?></h1>
+<p>
+        <?php 
+            // Button to trigger hidden export form
+            echo GhostHtml::button(TranslationHelper::translate('Export Data to .xlsx'), [
+                'class' => 'btn btn-success',
+                'onclick' => "$('#export-form').submit();"
+            ]);
+        ?>
+    </p>
 <br>
 
 <div class="row">
@@ -154,5 +164,17 @@ $this->params['breadcrumbs'][] = $this->title;
         ]); ?>
     </div>
 </div>
+<?php $exportForm = ActiveForm::begin([
+        'id' => 'export-form',
+        'method' => 'post',
+        'action' => ['export/repair-log-single', 'month' => Yii::$app->request->get('month'), 'year' => Yii::$app->request->get('year')],
+    ]); ?>
+
+        <?= Html::hiddenInput('RepairLogSearch[serial_number]', $searchModel->serial_number) ?>
+        <?= Html::hiddenInput('RepairLogSearch[item_name]', $searchModel->item_name) ?>
+        <?= Html::hiddenInput('RepairLogSearch[month]', $searchModel->month) ?>
+        <?= Html::hiddenInput('RepairLogSearch[year]', $searchModel->year) ?>
+
+    <?php ActiveForm::end(); ?>
 </div>
 

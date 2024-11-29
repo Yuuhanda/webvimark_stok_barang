@@ -3,7 +3,9 @@
 use yii\helpers\Html;
 use yii\grid\GridView;
 use app\helpers\TranslationHelper;
+use kartik\select2\Select2;
 use webvimark\modules\UserManagement\components\GhostHtml;
+use yii\bootstrap5\ActiveForm;
 
 /** @var yii\web\View $this */
 /** @var app\models\RepairLogSearch $searchModel */
@@ -39,7 +41,15 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="repair-log-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
-
+    <p>
+        <?php 
+            // Button to trigger hidden export form
+            echo GhostHtml::button(TranslationHelper::translate('Export Data to .xlsx'), [
+                'class' => 'btn btn-success',
+                'onclick' => "$('#export-form').submit();"
+            ]);
+        ?>
+    </p>
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
@@ -56,7 +66,16 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
             [
                 'attribute' => 'rep_type',
-                'label' => TranslationHelper::translate('Type'),
+                'filter' => Select2::widget([
+                    'model' => $searchModel,
+                    'attribute' => 'rep_type',
+                    'data' => $typeList, // Assume $updatedByList contains a list of users
+                    'options' => ['placeholder' => TranslationHelper::translate('Select Type')],
+                    'pluginOptions' => [
+                        'allowClear' => true,
+                    ],
+                ]),
+                'label' =>TranslationHelper::translate('Type'),
             ],
             [
                 'attribute' => 'datetime',
@@ -98,5 +117,19 @@ $this->params['breadcrumbs'][] = $this->title;
 
         ],
     ]); ?>
+
+<?php $exportForm = ActiveForm::begin([
+        'id' => 'export-form',
+        'method' => 'post',
+        'action' => ['export/repair-log'],
+    ]); ?>
+
+        <?= Html::hiddenInput('RepairLogSearch[serial_number]', $searchModel->serial_number) ?>
+        <?= Html::hiddenInput('RepairLogSearch[item_name]', $searchModel->item_name) ?>
+        <?= Html::hiddenInput('RepairLogSearch[rep_type]', $searchModel->rep_type) ?>
+        <?= Html::hiddenInput('RepairLogSearch[month]', $searchModel->month) ?>
+        <?= Html::hiddenInput('RepairLogSearch[year]', $searchModel->year) ?>
+
+    <?php ActiveForm::end(); ?>
 
 </div>
