@@ -39,7 +39,7 @@ class ItemUnit extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id_item', 'condition'], 'required'],
+            [['id_item', 'condition', 'status'], 'required'],
             [['id_item', 'status', 'id_wh', 'condition'], 'integer'],
             [['comment', 'serial_number'], 'string', 'max' => 120],
             [['serial_number'], 'unique'],

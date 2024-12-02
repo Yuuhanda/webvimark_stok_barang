@@ -56,16 +56,49 @@ use webvimark\extensions\BootstrapSwitch\BootstrapSwitch;
             <?php if ($model->isNewRecord): ?>
                 <?= Html::submitButton(
                     '<span class="glyphicon glyphicon-plus-sign"></span> ' . UserManagementModule::t('back', TranslationHelper::translate('Create')),
-                    ['class' => 'btn btn-success']
+                    [
+                        'class' => 'btn btn-success',
+                        'id' => 'create-button', // ID for JavaScript targeting
+                    ]
                 ) ?>
             <?php else: ?>
                 <?= Html::submitButton(
                     '<span class="glyphicon glyphicon-ok"></span> ' . UserManagementModule::t('back', TranslationHelper::translate('Save')),
-                    ['class' => 'btn btn-primary']
+                    [
+                        'class' => 'btn btn-primary',
+                        'id' => 'save-button', // ID for JavaScript targeting
+                    ]
                 ) ?>
             <?php endif; ?>
         </div>
     </div>
+
+<?php
+// JavaScript to disable the button and handle form submission
+$this->registerJs("
+    $('#create-button, save-button').on('click', function () {
+        var button = $(this);
+        button.prop('disabled', true); // Disable the button
+        button.text('" . TranslationHelper::translate('Saving...') . "'); // Change button text
+        
+        // Ensure the form is validated before final submission
+        var form = button.closest('form');
+        form.on('beforeValidate', function () {
+            button.prop('disabled', true).text('" . TranslationHelper::translate('Saving...') . "');
+        });
+        
+        form.on('afterValidate', function (event, messages, errorAttributes) {
+            if (errorAttributes.length > 0) {
+                // If there are validation errors, re-enable the button
+                button.prop('disabled', false).text('" . TranslationHelper::translate('Save') . "');
+            }
+        });
+
+        form.submit(); // Submit the form
+    });
+");
+?>
+
 
     <?php ActiveForm::end(); ?>
 
