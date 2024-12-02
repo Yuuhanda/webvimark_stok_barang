@@ -264,7 +264,7 @@ class UnitController extends Controller
                                 var_dump($uploadModel->errors); // This will show validation error details on-screen
                                 die();
                             }// Dump errors to check on screen
-                            Yii::$app->session->setFlash('error', TranslationHelper::translate('Picture validation failed.'));
+                            Yii::$app->session->setFlash('error', TranslationHelper::translate('Please upload of unit picture'));
                             return $this->redirect(['index']);
                         }
 
