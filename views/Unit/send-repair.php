@@ -7,7 +7,7 @@ use app\helpers\TranslationHelper;
 /** @var yii\web\View $this */
 /** @var app\models\ItemUnit $model */
 /** @var ActiveForm $form */
-$this->title = 'Send Unit To Repair';
+$this->title = TranslationHelper::translate('Send Unit To Repair');
 $this->params['breadcrumbs'][] = ['label' => 'Item Units', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
