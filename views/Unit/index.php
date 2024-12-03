@@ -14,7 +14,7 @@ use app\helpers\TranslationHelper;
 /** @var app\models\Itemearch $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
-$this->title = TranslationHelper::translate('Item Units');
+$this->title = TranslationHelper::translate('Manage Units');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="item-unit-index">
