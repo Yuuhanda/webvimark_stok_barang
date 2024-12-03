@@ -95,8 +95,8 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
                                 ['label' => TranslationHelper::translate('Lending'), 'url' => ['/lending/index'], 'options' => ['class' => 'nav-item']], //dropdown item
                                 ['label' => TranslationHelper::translate('Lending List'), 'url' => ['/lending/list'], 'options' => ['class' => 'nav-item']], //dropdown item
                                 ['label' => TranslationHelper::translate('Lending History'), 'url' => ['/lending/lending-history'], 'options' => ['class' => 'nav-item']], //dropdown item
-                                ['label' => TranslationHelper::translate('Item Loan Report'), 'url' => ['/lending/item-report-active'], 'options' => ['class' => 'nav-item']], //dropdown item
-                                ['label' => TranslationHelper::translate('Unit Loan Report'), 'url' => ['/lending/unit-report-active'], 'options' => ['class' => 'nav-item']], //dropdown item
+                                ['label' => TranslationHelper::translate('Item Lending Report'), 'url' => ['/lending/item-report-active'], 'options' => ['class' => 'nav-item']], //dropdown item
+                                ['label' => TranslationHelper::translate('Unit Lending Report'), 'url' => ['/lending/unit-report-active'], 'options' => ['class' => 'nav-item']], //dropdown item
                             ],
                         ],
                         [
