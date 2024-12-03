@@ -13,7 +13,7 @@ use app\helpers\TranslationHelper;
 /** @var app\models\LogSearch $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
-$this->title = 'Unit Loan Report';
+$this->title = 'Unit Lending Report';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="unit-loan-report">
