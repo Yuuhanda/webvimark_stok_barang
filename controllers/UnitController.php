@@ -104,9 +104,6 @@ class UnitController extends Controller
 
    public function actionDamaged()
    {
-       //$unitModel = new ItemUnit();
-       //$damagedlist = $unitModel->getBrokenUnit();
-   
        // Initialize search model
        $searchModel = new DamagedSearch();
 

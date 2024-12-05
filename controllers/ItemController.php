@@ -154,32 +154,10 @@ class ItemController extends Controller
                 $model->SKU = $this->generateSKU($cat_code);
             }
     
-            if ($uploadModel->imageFile && $uploadModel->validate()) {
-                if ($uploadModel->imageFile) {
-                    $imageFileName = $uploadModel->upload();
-                    if ($imageFileName) {
-                        $model->imagefile = $imageFileName;
-                    }
-                    Yii::debug('Uploaded file name: ' . $uploadModel->imageFile->name, __METHOD__);
-                } 
-                //else {
-                //    Yii::error('No file uploaded.', __METHOD__);
-                //    Yii::$app->session->setFlash('error', TranslationHelper::translate('Please upload a picture.'));
-                //    return $this->redirect(['index']); // Redirect back
-                //}
-                
-            } 
-            //else {
-            //    Yii::error("Upload model validation failed", __METHOD__);
-            //    if (!$uploadModel->validate()) {
-            //        Yii::error('Upload model validation failed: ' . json_encode($uploadModel->errors), __METHOD__);
-            //        var_dump($uploadModel->errors); // This will show validation error details on-screen
-            //        die();
-            //    }// Dump errors to check on screen
-            //    Yii::$app->session->setFlash('error', TranslationHelper::translate('Picture validation failed.'));
-            //    return $this->redirect(['index']);
-            //}
-    
+            if ($uploadModel->imageFile) {
+                $model->imagefile = $this->handleFileUpload($uploadModel);
+            }
+
             if ($model->save()) {
                 Yii::$app->session->setFlash('success', TranslationHelper::translate('Item added successfully.'));
                 return $this->redirect(['index']);
@@ -238,7 +216,6 @@ class ItemController extends Controller
         $category = ItemCategory::getCategoryList(); // Should return `id_category`, `category_name`, and `cat_code`
 
         if ($this->request->isPost && $model->load($this->request->post())) {
-            $model->load(Yii::$app->request->post());
             $uploadModel->imageFile = UploadedFile::getInstance($uploadModel, 'imageFile');
             
 
@@ -252,20 +229,23 @@ class ItemController extends Controller
                 $model->SKU = $this->generateSKU($cat_code);
             }
 
-            if ($uploadModel->imageFile && $uploadModel->validate()) {
-                if ($uploadModel->imageFile) {
-                    $imageFileName = $uploadModel->upload();
-                    if ($imageFileName) {
-                        $model->imagefile = $imageFileName;
-                    }
-                    Yii::debug('Uploaded file name: ' . $uploadModel->imageFile->name, __METHOD__);
-                }
-                
+            if ($uploadModel->imageFile) {
+                $model->imagefile = $this->handleFileUpload($uploadModel);
             }
+            
             if ($model->save()) {
                 Yii::$app->session->setFlash('success', TranslationHelper::translate('Item Updated successfully.'));
                 return $this->redirect(['index']);
             }
+            if (!$model->save()) {
+                Yii::$app->session->setFlash('error', TranslationHelper::translate('Failed to save item: ') . implode(', ', $model->getFirstErrors()));
+                return $this->render('create', [
+                    'model' => $model,
+                    'uploadModel' => $uploadModel,
+                    'category' => $category,
+                ]);
+            }
+            
         }
 
         return $this->render('update', [
@@ -327,5 +307,18 @@ class ItemController extends Controller
         ]);
     }
 
+    private function handleFileUpload($uploadModel) {
+        if ($uploadModel->imageFile && $uploadModel->validate()) {
+            if ($uploadModel->imageFile) {
+                $imageFileName = $uploadModel->upload();
+                if ($imageFileName) {
+                    return $imageFileName;
+                }
+            }
+        }
+        return null;
+    }
+    
 
 }
+
