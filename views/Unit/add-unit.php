@@ -23,7 +23,7 @@ $this->params['breadcrumbs'][] = $this->title;
         <!-- Dropdown for warehouses: visible wh_name but stores id_wh -->
         <?= $form->field($model, 'id_wh')->dropDownList($whList, ['prompt' => 'Select Warehouse'])->label(TranslationHelper::translate('Warehouse Name')) ?>
 
-        <?= $form->field($model, 'comment')->label(TranslationHelper::translate('Comment')) ?>
+        <?= $form->field($model, 'comment')->textarea( ['rows' => 2])->label(TranslationHelper::translate('Comment')) ?>
         <?= $form->field($model, 'serial_number')->label(TranslationHelper::translate('Serial Number')) ?>
     
         <div class="form-group">
