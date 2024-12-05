@@ -20,7 +20,7 @@ use app\helpers\TranslationHelper;
 
     <?= $form->field($model, 'id_wh')->textInput() ?>
 
-    <?= $form->field($model, 'comment')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'comment')->textarea( ['rows' => 2]) ?>
 
     <?= $form->field($model, 'serial_number')->textInput(['maxlength' => true]) ?>
 

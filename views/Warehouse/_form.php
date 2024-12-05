@@ -15,7 +15,7 @@ use app\helpers\TranslationHelper;
 
     <?= $form->field($model, 'wh_name')->textInput(['maxlength' => true])->label(TranslationHelper::translate('Warehouse Name')) ?>
 
-    <?= $form->field($model, 'wh_address')->textInput(['maxlength' => true])->label(TranslationHelper::translate('Warehouse Address')) ?>
+    <?= $form->field($model, 'wh_address')->textarea( ['rows' => 2])->label(TranslationHelper::translate('Warehouse Address')) ?>
 
     <div class="form-group">
     <?= Html::submitButton(TranslationHelper::translate('Save'), [

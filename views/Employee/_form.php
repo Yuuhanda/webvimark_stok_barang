@@ -18,7 +18,7 @@ use app\helpers\TranslationHelper;
 
     <?= $form->field($model, 'email')->textInput(['maxlength' => true])->label(TranslationHelper::translate('Email')) ?>
 
-    <?= $form->field($model, 'address')->textInput(['maxlength' => true])->label(TranslationHelper::translate('Address')) ?>
+    <?= $form->field($model, 'address')->textInput(['maxlength' => true])->textarea( ['rows' => 2])->label(TranslationHelper::translate('Address')) ?>
 
     <div class="form-group">
     <?= Html::submitButton(TranslationHelper::translate('Save'), [

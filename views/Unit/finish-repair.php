@@ -29,7 +29,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'prompt' => 'Select Warehouse',
             'required' => true
         ])->label(TranslationHelper::translate('Warehouse Name')) ?>
-        <?= $form->field($model, 'comment') ?>
+        <?= $form->field($model, 'comment')->textarea( ['rows' => 2])->label(TranslationHelper::translate('Comment')) ?>
     
         <div class="form-group">
     <?= Html::submitButton(TranslationHelper::translate('Save'), [
