@@ -10,18 +10,31 @@
     color: #ffffff;
     transform: translateX(5px);
 }
+  /* Active menu item styling */
+  .nav-sidebar .nav-item .nav-link.active {
+      background-color: #007bff !important;
+      color: #ffffff !important;
+  }
+    /* Indent specifically dropdown menu items */
+    .has-treeview .nav-treeview .nav-item .nav-link {
+        margin-left: 25px;
+        padding-left: 20px !important;
+        border-left: 1px solid rgba(255,255,255,.2);
+    }
+  /* Highlight active dropdown items */
+  .nav-sidebar .nav-treeview .nav-item .nav-link.active {
+      background-color: rgba(255,255,255,.2) !important;
+      color: #fff !important;
+  }
 
-.nav-sidebar .menu-open > .nav-link,
-.nav-sidebar .active > .nav-link {
-    background-color: #007bff !important;
-    color: #fff !important;
-}
+  /* Parent menu highlight when dropdown is open */
+  .nav-sidebar .nav-item.menu-is-opening.menu-open > .nav-link {
+      background-color: #007bff !important;
+      color: #fff !important;
+  }
 
-.nav-sidebar .nav-treeview > .nav-item > .nav-link.active {
-    background-color: rgba(255,255,255,.1) !important;
-    color: #fff !important;
-}
-
-.nav-sidebar .menu-open {
-    background-color: rgba(255,255,255,.1);
-}
+  /* All items in active dropdown */
+  .nav-sidebar .menu-open > .nav-treeview .nav-link {
+      background-color: rgba(255,255,255,.1);
+      color: #fff;
+  }

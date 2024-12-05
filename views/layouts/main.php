@@ -83,11 +83,11 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
                             'options' => ['class' => 'nav-item has-treeview'],
                             'template' => '<a href="#" class="nav-link">{label}</a>',
                             'items' => [
-                                ['label' => TranslationHelper::translate('Master Inventory'), 'url' => ['/item/index'], 'options' => ['class' => 'nav-item']], //dropdown item
-                                ['label' => TranslationHelper::translate('Item Category'), 'url' => ['/category/index'], 'options' => ['class' => 'nav-item']], //dropdown item
-                                ['label' => TranslationHelper::translate('Manage Unit'), 'url' => ['/unit/index'], 'options' => ['class' => 'nav-item']], //dropdown item
-                                ['label' => TranslationHelper::translate('Bulk Upload History'), 'url' => ['/docs/index'], 'options' => ['class' => 'nav-item']], //dropdown item
-                                ['label' => TranslationHelper::translate('Unit Usage Log'), 'url' => ['/log/index'], 'options' => ['class' => 'nav-item']], //dropdown item
+                                ['label' => TranslationHelper::translate('Master Inventory'), 'url' => ['/item/index'], 'options' => ['class' => 'nav-item dropdown-indent']], //dropdown item
+                                ['label' => TranslationHelper::translate('Item Category'), 'url' => ['/category/index'], 'options' => ['class' => 'nav-item dropdown-indent']], //dropdown item
+                                ['label' => TranslationHelper::translate('Manage Unit'), 'url' => ['/unit/index'], 'options' => ['class' => 'nav-item dropdown-indent']], //dropdown item
+                                ['label' => TranslationHelper::translate('Bulk Upload History'), 'url' => ['/docs/index'], 'options' => ['class' => 'nav-item dropdown-indent']], //dropdown item
+                                ['label' => TranslationHelper::translate('Unit Usage Log'), 'url' => ['/log/index'], 'options' => ['class' => 'nav-item dropdown-indent']], //dropdown item
                             ],
                         ],
                         [
@@ -96,11 +96,11 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
                             'options' => ['class' => 'nav-item has-treeview'],
                             'template' => '<a href="#" class="nav-link">{label}</a>',
                             'items' => [
-                                ['label' => TranslationHelper::translate('Lending'), 'url' => ['/lending/index'], 'options' => ['class' => 'nav-item']], //dropdown item
-                                ['label' => TranslationHelper::translate('Lending List'), 'url' => ['/lending/list'], 'options' => ['class' => 'nav-item']], //dropdown item
-                                ['label' => TranslationHelper::translate('Lending History'), 'url' => ['/lending/lending-history'], 'options' => ['class' => 'nav-item']], //dropdown item
-                                ['label' => TranslationHelper::translate('Item Lending Report'), 'url' => ['/lending/item-report-active'], 'options' => ['class' => 'nav-item']], //dropdown item
-                                ['label' => TranslationHelper::translate('Units Lending Report'), 'url' => ['/lending/unit-report-active'], 'options' => ['class' => 'nav-item']], //dropdown item
+                                ['label' => TranslationHelper::translate('Lending'), 'url' => ['/lending/index'], 'options' => ['class' => 'nav-item dropdown-indent']], //dropdown item
+                                ['label' => TranslationHelper::translate('Lending List'), 'url' => ['/lending/list'], 'options' => ['class' => 'nav-item dropdown-indent']], //dropdown item
+                                ['label' => TranslationHelper::translate('Lending History'), 'url' => ['/lending/lending-history'], 'options' => ['class' => 'nav-item dropdown-indent']], //dropdown item
+                                ['label' => TranslationHelper::translate('Item Lending Report'), 'url' => ['/lending/item-report-active'], 'options' => ['class' => 'nav-item dropdown-indent']], //dropdown item
+                                ['label' => TranslationHelper::translate('Units Lending Report'), 'url' => ['/lending/unit-report-active'], 'options' => ['class' => 'nav-item dropdown-indent']], //dropdown item
                             ],
                         ],
                         [
@@ -109,10 +109,10 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
                             'options' => ['class' => 'nav-item has-treeview'],
                             'template' => '<a href="#" class="nav-link">{label}</a>',
                             'items' => [
-                                ['label' => TranslationHelper::translate('Repair Summary'), 'url' => ['/repair-log/index'], 'options' => ['class' => 'nav-item']], //dropdown item
-                                ['label' => TranslationHelper::translate('Damaged Unit'), 'url' => ['/unit/damaged'], 'options' => ['class' => 'nav-item']], //dropdown item
-                                ['label' => TranslationHelper::translate('Unit In-Repair'), 'url' => ['/unit/repair'], 'options' => ['class' => 'nav-item']], //dropdown item
-                                ['label' => TranslationHelper::translate('Repair Log'), 'url' => ['/repair-log/detail'], 'options' => ['class' => 'nav-item']], //dropdown item
+                                ['label' => TranslationHelper::translate('Repair Summary'), 'url' => ['/repair-log/index'], 'options' => ['class' => 'nav-item dropdown-indent']], //dropdown item
+                                ['label' => TranslationHelper::translate('Damaged Unit'), 'url' => ['/unit/damaged'], 'options' => ['class' => 'nav-item dropdown-indent']], //dropdown item
+                                ['label' => TranslationHelper::translate('Unit In-Repair'), 'url' => ['/unit/repair'], 'options' => ['class' => 'nav-item dropdown-indent']], //dropdown item
+                                ['label' => TranslationHelper::translate('Repair Log'), 'url' => ['/repair-log/detail'], 'options' => ['class' => 'nav-item dropdown-indent']], //dropdown item
                             ],
                         ],
                         ['label' =>     TranslationHelper::translate('Edit Unit Data'), 'url' => ['/unit/correction-search'], 'options' => ['class' => 'nav-item'], 'template' => '<a href="{url}" class="nav-link">{label}</a>',], //dropdown item
@@ -129,7 +129,7 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
                                     [
                                         'label' => TranslationHelper::translate('Assign Warehouse Admin'),
                                         'url' => ['/warehouse/assign'], // The route for the new item
-                                        'options' => ['class' => 'nav-item'],
+                                        'options' => ['class' => 'nav-item dropdown-indent'],
                                     ],
                                 ]
                             ),
