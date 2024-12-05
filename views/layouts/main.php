@@ -72,6 +72,10 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
             <nav class="mt-2">
             <?= GhostMenu::widget([
                     'options' => ['class' => 'nav nav-pills nav-sidebar flex-column', 'data-widget' => 'treeview', 'role' => 'menu', 'data-accordion' => 'false'],
+                    'activateParents' => true,
+                    'activeCssClass' => 'active menu-open',
+                    'linkTemplate' => '<a href="{url}" class="nav-link {active}">{label}</a>',
+                    'submenuTemplate' => "\n<ul class='nav nav-treeview'>\n{items}\n</ul>\n",
                     'items' => [
                         [
                             'label' => TranslationHelper::translate('Inventory'),

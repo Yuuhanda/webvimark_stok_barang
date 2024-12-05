@@ -1,0 +1,27 @@
+
+.nav-sidebar .nav-item:hover > .nav-link {
+    background-color: #494E53;
+    color: #ffffff;
+    transition: all 0.3s ease;
+}
+
+.nav-sidebar .nav-item .nav-link:hover {
+    background-color: #494E53;
+    color: #ffffff;
+    transform: translateX(5px);
+}
+
+.nav-sidebar .menu-open > .nav-link,
+.nav-sidebar .active > .nav-link {
+    background-color: #007bff !important;
+    color: #fff !important;
+}
+
+.nav-sidebar .nav-treeview > .nav-item > .nav-link.active {
+    background-color: rgba(255,255,255,.1) !important;
+    color: #fff !important;
+}
+
+.nav-sidebar .menu-open {
+    background-color: rgba(255,255,255,.1);
+}
