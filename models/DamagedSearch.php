@@ -146,7 +146,7 @@ class DamagedSearch extends Model
         }
 
         if ($this->condition) {
-            $query->andWhere(['like', 'condition_lookup.condition_name', $this->condition]);
+            $query->andWhere(['like', 'item_unit.condition', $this->condition]);
         }
         if ($this->serial_number) {
             $query->andWhere(['like', 'item_unit.serial_number', $this->serial_number]);
