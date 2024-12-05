@@ -18,6 +18,7 @@ use app\models\UnitSearch;
 use app\models\LendingSearch;
 use app\models\DamagedSearch;
 use app\models\RepairLogSearch;
+use app\services\ExcelExportService;
 
 class ExportController extends \yii\web\Controller
 {
@@ -85,220 +86,159 @@ class ExportController extends \yii\web\Controller
 
     public function actionExportLending()
     {
-        
         $searchModel = new LendingSearch();
-
-        //filter params
         $params = Yii::$app->request->post();
-
-        // Load parameters directly into the search model to ensure they apply
+    
         if (!$searchModel->load($params) || !$searchModel->validate()) {
-            // If params do not load or validate, handle it (e.g., return all data or show an error)
             Yii::$app->session->setFlash('error', 'Invalid search parameters for export.');
             return $this->redirect(['lending/list']);
         }
-        //echo var_dump($params);
-        //exit();
-        // Get the data provider with params applied
+    
         $dataProvider = $searchModel->search($params);
-        $dataProvider->pagination = false; // Disable pagination for export
-
-        $items = $dataProvider->getModels(); // Retrieve data with filters applied
+        $dataProvider->pagination = false;
+        $items = $dataProvider->getModels();
+    
+        $excelService = new ExcelExportService($this->username);
         
-        // Fetch data (for example, from a model)
-        //$lendingmodel = new Lending();
-        //$items = $lendingmodel->getLendingList();  // change it to calling getLendingList in Lending model
-
-        // Create new Spreadsheet object
-        $spreadsheet = new Spreadsheet();
-        $sheet = $spreadsheet->getActiveSheet();
-
-        // Set headers
-        $sheet->setCellValue('A1', TranslationHelper::translate('serial_number'));
-        $sheet->setCellValue('B1', TranslationHelper::translate('employee'));
-        $sheet->setCellValue('C1', TranslationHelper::translate('updated_by'));
-        $sheet->setCellValue('D1', TranslationHelper::translate('comment'));
-        $sheet->setCellValue('E1', TranslationHelper::translate('date'));
-
-        // Populate data
-        $row = 2;  // Row starts after the headers
-        foreach ($items as $item) {
-            $sheet->setCellValue('A' . $row, $item['serial_number']);  // Access array keys instead of object properties
-            $sheet->setCellValue('B' . $row, $item['employee']);
-            $sheet->setCellValue('C' . $row, $item['updated_by']);
-            $sheet->setCellValue('D' . $row, $item['comment']);
-            $sheet->setCellValue('E' . $row, $item['date']);
-            $row++;
-        }
-
-        // Set filename and export
-        $filename = 'exported_lending_' . $this->username . date('_Y-m-d_H-i-s') . '.xlsx';
-        $writer = new Xlsx($spreadsheet);
-
-        // Send file as response for download
-        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-        header('Content-Disposition: attachment; filename="' . $filename . '"');
-        $writer->save('php://output');
-        exit();
+        // Define headers and columns mapping
+        $headers = [
+            'serial_number',
+            'employee',
+            'updated_by', 
+            'comment',
+            'date'
+        ];
+        
+        // Map to data keys
+        $columns = [
+            'serial_number',
+            'employee',
+            'updated_by',
+            'comment', 
+            'date'
+        ];
+    
+        $excelService
+            ->setHeaders($headers)
+            ->populateData($items, $columns)
+            ->download('lending');
     }
+    
 
     public function actionExportDamaged()
     {
         $unitModel = new ItemUnit();
         $damagedlist = $unitModel->getBrokenUnit();
-
-        //filter params
-         $params = Yii::$app->request->post();   
-        // Initialize search model
-
+        $params = Yii::$app->request->post();   
         $searchModel = new DamagedSearch();
         
-        // Load parameters directly into the search model to ensure they apply
         if (!$searchModel->load($params) || !$searchModel->validate()) {
-            // If params do not load or validate, handle it (e.g., return all data or show an error)
             Yii::$app->session->setFlash('error', 'Invalid search parameters for export.');
             return $this->redirect(['unit/damaged']);
         }
-        // Filter the data based on search input
+    
         $dataProvider = $searchModel->search($params, $damagedlist);
-        $dataProvider->pagination = false; // Disable pagination for export
-
-        $items =  $dataProvider->getModels(); // Retrieve data with filters applied
-
-        // Create new Spreadsheet object
-        $spreadsheet = new Spreadsheet();
-        $sheet = $spreadsheet->getActiveSheet();
-
-        // Set headers
-        $sheet->setCellValue('A1', TranslationHelper::translate('Unit condition'));
-        $sheet->setCellValue('B1', TranslationHelper::translate('serial_number'));
-        $sheet->setCellValue('C1', TranslationHelper::translate('status'));
-        $sheet->setCellValue('D1', TranslationHelper::translate('warehouse'));
-        $sheet->setCellValue('E1', TranslationHelper::translate('comment'));
-
-        // Populate data
-        $row = 2;  // Row starts after the headers
-        foreach ($items as $item) {
-            $sheet->setCellValue('A' . $row, TranslationHelper::translate($item['condition']));  // Access array keys instead of object properties
-            $sheet->setCellValue('B' . $row, $item['serial_number']);
-            $sheet->setCellValue('C' . $row, TranslationHelper::translate($item['status']));
-            $sheet->setCellValue('D' . $row, $item['warehouse']);
-            $sheet->setCellValue('E' . $row, $item['comment']);
-            $row++;
-        }
-
-        // Set filename and export
-        $filename = 'exported_damaged_unit_' . $this->username . date('_Y-m-d_H-i-s') . '.xlsx';
-        $writer = new Xlsx($spreadsheet);
-
-        // Send file as response for download
-        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-        header('Content-Disposition: attachment; filename="' . $filename . '"');
-        $writer->save('php://output');
-        exit();
-            
+        $dataProvider->pagination = false;
+        $items = $dataProvider->getModels();
+    
+        $excelService = new ExcelExportService($this->username);
+        
+        $headers = [
+            'Unit condition',
+            'serial_number',
+            'status',
+            'warehouse',
+            'comment'
+        ];
+        
+        $columns = [
+            'translate_condition',
+            'serial_number', 
+            'translate_status',
+            'warehouse',
+            'comment'
+        ];
+    
+        $excelService
+            ->setHeaders($headers)
+            ->populateData($items, $columns)
+            ->download('damaged_unit');
     }
+    
 
     public function actionExportRepair()
     {
         $searchModel = new DamagedSearch();
-        
         $params = Yii::$app->request->post();
-
-        // Load parameters directly into the search model to ensure they apply
+    
         if (!$searchModel->load($params) || !$searchModel->validate()) {
-            // If params do not load or validate, handle it (e.g., return all data or show an error)
             Yii::$app->session->setFlash('error', 'Invalid search parameters for export.');
             return $this->redirect(['unit/repair']);
         }
-        //echo var_dump($params);
-        //exit();
-        // Get the data provider with params applied
+    
         $dataProvider = $searchModel->searchRepair($params);
-        $dataProvider->pagination = false; // Disable pagination for export
-
-        $items = $dataProvider->getModels(); 
-
-        // Create new Spreadsheet object
-        $spreadsheet = new Spreadsheet();
-        $sheet = $spreadsheet->getActiveSheet();
-
-        // Set headers
-        $sheet->setCellValue('A1', TranslationHelper::translate('unit condition'));
-        $sheet->setCellValue('B1', TranslationHelper::translate('serial_number'));
-        $sheet->setCellValue('C1', TranslationHelper::translate('status'));
-        $sheet->setCellValue('D1', TranslationHelper::translate('updated_by'));
-        $sheet->setCellValue('E1', TranslationHelper::translate('comment'));
-
-        // Populate data
-        $row = 2;  // Row starts after the headers
-        foreach ($items as $item) {
-            $sheet->setCellValue('A' . $row, TranslationHelper::translate($item['condition']));  // Access array keys instead of object properties
-            $sheet->setCellValue('B' . $row, $item['serial_number']);
-            $sheet->setCellValue('C' . $row, TranslationHelper::translate($item['status']));
-            $sheet->setCellValue('D' . $row, $item['updated_by']);
-            $sheet->setCellValue('E' . $row, $item['comment']);
-            $row++;
-        }
-
-        // Set filename and export
-        $filename = 'exported_unit_inrepair_data_' . $this->username . date('_Y-m-d_H-i-s') . '.xlsx';
-        $writer = new Xlsx($spreadsheet);
-
-        // Send file as response for download
-        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-        header('Content-Disposition: attachment; filename="' . $filename . '"');
-        $writer->save('php://output');
-        exit();
+        $dataProvider->pagination = false;
+        $items = $dataProvider->getModels();
+    
+        $excelService = new ExcelExportService($this->username);
+        
+        $headers = [
+            'unit condition',
+            'serial_number',
+            'status',
+            'updated_by',
+            'comment'
+        ];
+        
+        $columns = [
+            'translate_condition',
+            'serial_number',
+            'translate_status',
+            'updated_by',
+            'comment'
+        ];
+    
+        $excelService
+            ->setHeaders($headers)
+            ->populateData($items, $columns)
+            ->download('unit_inrepair_data');
     }
+    
 
     public function actionExportLog()
     {
         $searchModel = new LogSearch();
-        
-        // Load parameters from POST
         $params = Yii::$app->request->post();
     
-        // Load parameters directly into the search model to ensure they apply
         if (!$searchModel->load($params) || !$searchModel->validate()) {
-            // If params do not load or validate, handle it (e.g., return all data or show an error)
             Yii::$app->session->setFlash('error', 'Invalid search parameters for export.');
             return $this->redirect(['log/index']);
         }
     
-        // Get the data provider with params applied
         $dataProvider = $searchModel->search($params);
-        $dataProvider->pagination = false; // Disable pagination for export
+        $dataProvider->pagination = false;
+        $items = $dataProvider->getModels();
     
-        $items = $dataProvider->getModels(); // Retrieve data with filters applied
+        $excelService = new ExcelExportService($this->username);
+        
+        $headers = [
+            'serial_number',
+            'content', 
+            'log date'
+        ];
+        
+        $columns = [
+            'serial_number',
+            'translate_content',
+            'log_date'
+        ];
     
-        // Create Spreadsheet object and export logic (same as before)
-        $spreadsheet = new Spreadsheet();
-        $sheet = $spreadsheet->getActiveSheet();
-    
-        // Set headers
-        $sheet->setCellValue('A1', TranslationHelper::translate('serial_number'));
-        $sheet->setCellValue('B1', TranslationHelper::translate('content'));
-        $sheet->setCellValue('C1', TranslationHelper::translate('log date'));
-    
-        // Populate data
-        $row = 2;
-        foreach ($items as $item) {
-            $sheet->setCellValue('A' . $row, $item['serial_number']);
-            $sheet->setCellValue('B' . $row, TranslationHelper::translate($item['content']));
-            $sheet->setCellValue('C' . $row, $item['log_date']);
-            $row++;
-        }
-    
-        // Set filename and export
-        $filename = 'exported_log_all_data_' . $this->username . date('_Y-m-d_H-i-s') . '.xlsx';
-        $writer = new Xlsx($spreadsheet);
-    
-        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-        header('Content-Disposition: attachment; filename="' . $filename . '"');
-        $writer->save('php://output');
-        exit();
+        $excelService
+            ->setHeaders($headers)
+            ->populateData($items, $columns)
+            ->download('log_all_data');
     }
+    
     
     
 
@@ -338,424 +278,306 @@ class ExportController extends \yii\web\Controller
         exit();
     }
 
-    public function actionExportMain(){
+    public function actionExportMain()
+    {
         $searchModel = new ItemSearch();
-
-        // Load parameters from POST
         $params = Yii::$app->request->post();
-
-        // Load parameters directly into the search model to ensure they apply
+    
         if (!$searchModel->load($params) || !$searchModel->validate()) {
-            // If params do not load or validate, handle it (e.g., return all data or show an error)
             Yii::$app->session->setFlash('error', 'Invalid search parameters for export.');
             return $this->redirect(['item/index']);
         }
-
-        // Get the data provider with params applied
+    
         $dataProvider = $searchModel->search($params);
-        $dataProvider->pagination = false; // Disable pagination for export
+        $dataProvider->pagination = false;
+        $items = $dataProvider->getModels();
     
-        $items = $dataProvider->getModels(); // Retrieve data with filters applied
-    
-        // Create Spreadsheet object and export logic (same as before)
-
-
-        // Create new Spreadsheet object
-        $spreadsheet = new Spreadsheet();
-        $sheet = $spreadsheet->getActiveSheet();
-
-        // Set headers
-        $sheet->setCellValue('A1', TranslationHelper::translate('item_name'));
-        $sheet->setCellValue('B1', 'SKU');
-        $sheet->setCellValue('C1', TranslationHelper::translate('available in warehouse'));
-        $sheet->setCellValue('D1', TranslationHelper::translate('in_use'));
-        $sheet->setCellValue('E1', TranslationHelper::translate('in-repair'));
-        $sheet->setCellValue('F1', TranslationHelper::translate('unit lost'));
-
-        // Populate data
-        $row = 2;  // Row starts after the headers
-        foreach ($items as $item) {
-            $sheet->setCellValue('A' . $row, $item['item_name']);  // Access array keys instead of object properties
-            $sheet->setCellValue('B' . $row, $item['SKU']);
-            $sheet->setCellValue('C' . $row, $item['available']);
-            $sheet->setCellValue('D' . $row, $item['in_use']);
-            $sheet->setCellValue('E' . $row, $item['in_repair']);
-            $sheet->setCellValue('F' . $row, $item['lost']);
-            $row++;
-        }
-
-        // Set filename and export
-        $filename = 'exported_master_inventory_data_' . $this->username . date('_Y-m-d_H-i-s') . '.xlsx';
-        $writer = new Xlsx($spreadsheet);
-
-        // Send file as response for download
-        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-        header('Content-Disposition: attachment; filename="' . $filename . '"');
-        $writer->save('php://output');
-        exit();
-    }
-
-    public function actionItemDetail($id_item){
-        $searchModel = new UnitSearch();
-
-        //params filter
-        $params = Yii::$app->request->post();
-
-        // Load parameters directly into the search model to ensure they apply
-        //if (!$searchModel->load($params) || !$searchModel->validate()) {
-        //    // If params do not load or validate, handle it (e.g., return all data or show an error)
-        //    Yii::$app->session->setFlash('error', 'Invalid search parameters for export.');
-        //    return $this->redirect(['item/details?id_item='.$id_item]);
-        //}
-
+        $excelService = new ExcelExportService($this->username);
         
-        // Get the data provider with params applied
-        $dataProvider = $searchModel->search($params, $id_item);
-        $dataProvider->pagination = false; // Disable pagination for export
-
-        $items = $dataProvider->getModels(); 
-
-        // Create new Spreadsheet object
-        $spreadsheet = new Spreadsheet();
-        $sheet = $spreadsheet->getActiveSheet();
-
-        // Set headers
-        $sheet->setCellValue('A1', TranslationHelper::translate('unit condition'));
-        $sheet->setCellValue('B1', TranslationHelper::translate('serial_number'));
-        $sheet->setCellValue('C1', TranslationHelper::translate('id_unit'));
-        $sheet->setCellValue('D1', TranslationHelper::translate('status'));
-        $sheet->setCellValue('E1', TranslationHelper::translate('updated_by'));
-        $sheet->setCellValue('F1', TranslationHelper::translate('warehouse'));
-        $sheet->setCellValue('G1', TranslationHelper::translate('employee'));
-        $sheet->setCellValue('H1', TranslationHelper::translate('comment'));
-
-        // Populate data
-        $row = 2;  // Row starts after the headers
-        foreach ($items as $item) {
-            $sheet->setCellValue('A' . $row, TranslationHelper::translate($item['condition']));  // Access array keys instead of object properties
-            $sheet->setCellValue('B' . $row, $item['serial_number']);
-            $sheet->setCellValue('C' . $row, $item['id_unit']);
-            $sheet->setCellValue('D' . $row, TranslationHelper::translate($item['status']));
-            $sheet->setCellValue('E' . $row, $item['updated_by']);
-            $sheet->setCellValue('F' . $row, $item['warehouse']);
-            $sheet->setCellValue('G' . $row, $item['employee']);
-            $sheet->setCellValue('H' . $row, $item['comment']);
-            $row++;
-        }
-
-        // Set filename and export
-        $filename = 'exported_master_inventory_data_' . $this->username . date('_Y-m-d_H-i-s') . '.xlsx';
-        $writer = new Xlsx($spreadsheet);
-
-        // Send file as response for download
-        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-        header('Content-Disposition: attachment; filename="' . $filename . '"');
-        $writer->save('php://output');
-        exit();
+        $headers = [
+            'item_name',
+            'SKU',
+            'available in warehouse',
+            'in_use',
+            'in-repair',
+            'unit lost'
+        ];
+        
+        $columns = [
+            'item_name',
+            'SKU',
+            'available',
+            'in_use',
+            'in_repair',
+            'lost'
+        ];
+    
+        $excelService
+            ->setHeaders($headers)
+            ->populateData($items, $columns)
+            ->download('master_inventory_data');
     }
+    
+    public function actionItemDetail($id_item)
+    {
+        $searchModel = new UnitSearch();
+        $params = Yii::$app->request->post();
+        
+        $dataProvider = $searchModel->search($params, $id_item);
+        $dataProvider->pagination = false;
+        $items = $dataProvider->getModels();
+    
+        $excelService = new ExcelExportService($this->username);
+        
+        $headers = [
+            'unit condition',
+            'serial_number',
+            'id_unit',
+            'status',
+            'updated_by',
+            'warehouse',
+            'employee',
+            'comment'
+        ];
+        
+        $columns = [
+            'translate_condition',
+            'serial_number',
+            'id_unit',
+            'translate_status',
+            'updated_by',
+            'warehouse',
+            'employee',
+            'comment'
+        ];
+    
+        $excelService
+            ->setHeaders($headers)
+            ->populateData($items, $columns)
+            ->download('master_inventory_data');
+    }
+    
 
 
-    public function actionWarehouse($id_wh){
+    public function actionWarehouse($id_wh)
+    {
         $model = new Warehouse();
         $items = $model->getExport($id_wh);
-
-        // Create new Spreadsheet object
-        $spreadsheet = new Spreadsheet();
-        $sheet = $spreadsheet->getActiveSheet();
-
-        // Set headers
-        $sheet->setCellValue('A1', TranslationHelper::translate('item_name'));
-        $sheet->setCellValue('B1', 'SKU');
-        $sheet->setCellValue('C1', TranslationHelper::translate('available in warehouse'));
-        $sheet->setCellValue('D1', TranslationHelper::translate('in_use'));
-        $sheet->setCellValue('E1', TranslationHelper::translate('unit lost'));
-
-        // Populate data
-        $row = 2;  // Row starts after the headers
-        foreach ($items as $item) {
-            $sheet->setCellValue('A' . $row, $item['item_name']);  // Access array keys instead of object properties
-            $sheet->setCellValue('B' . $row, $item['SKU']);
-            $sheet->setCellValue('C' . $row, $item['available']);
-            $sheet->setCellValue('D' . $row, $item['in_use']);
-            $sheet->setCellValue('E' . $row, $item['lost']);
-            $row++;
-        }
-
-        // Set filename and export
-        $filename = 'exported_warehouse_data_' . $this->username . date('_Y-m-d_H-i-s') . '.xlsx';
-        $writer = new Xlsx($spreadsheet);
-
-        // Send file as response for download
-        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-        header('Content-Disposition: attachment; filename="' . $filename . '"');
-        $writer->save('php://output');
-        exit();
+    
+        $excelService = new ExcelExportService($this->username);
+        
+        $headers = [
+            'item_name',
+            'SKU',
+            'available in warehouse',
+            'in_use',
+            'unit lost'
+        ];
+        
+        $columns = [
+            'item_name',
+            'SKU',
+            'available',
+            'in_use',
+            'lost'
+        ];
+    
+        $excelService
+            ->setHeaders($headers)
+            ->populateData($items, $columns)
+            ->download('warehouse_data');
     }
     
+    
     //item detail in warehouse export
-    public function actionWhDist($id_item) {
+    public function actionWhDist($id_item)
+    {
         $model = new ItemUnit();
         $items = $model->getWhDistribution($id_item) ?? [];
     
         $wh_mod = new WarehouseSearch();
         $repairs = $wh_mod->searchInRepair(Yii::$app->request->queryParams, $id_item);
-    
-        // Extract data from ArrayDataProvider
         $repairsData = $repairs->getModels();
-        $totalInRepair = array_sum(array_column($repairsData, 'in_repair')); // Sum up 'in_repair' values
+        $totalInRepair = array_sum(array_column($repairsData, 'in_repair'));
     
-        $spreadsheet = new Spreadsheet();
-        $sheet = $spreadsheet->getActiveSheet();
+        $excelService = new ExcelExportService($this->username);
+        
+        $headers = [
+            'warehouse',
+            'available in warehouse',
+            'in_use',
+            'unit lost'
+        ];
+        
+        $columns = [
+            'warehouse',
+            'available',
+            'in_use',
+            'lost'
+        ];
     
-        // Set headers
-        $sheet->setCellValue('A1', TranslationHelper::translate('warehouse'));
-        $sheet->setCellValue('B1', TranslationHelper::translate('available in warehouse'));
-        $sheet->setCellValue('C1', TranslationHelper::translate('in_use'));
-        $sheet->setCellValue('D1', TranslationHelper::translate('unit lost'));
+        $excelService
+            ->setHeaders($headers)
+            ->populateData($items, $columns);
     
-        // Populate data
-        $row = 2;
-        foreach ($items as $item) {
-            if (!is_array($item)) continue; // Skip invalid entries
-            $sheet->setCellValue('A' . $row, $item['warehouse'] ?? 'N/A');
-            $sheet->setCellValue('B' . $row, $item['available'] ?? 0);
-            $sheet->setCellValue('C' . $row, $item['in_use'] ?? 0);
-            $sheet->setCellValue('D' . $row, $item['lost'] ?? 0);
-            $row++;
-        }
-        $row++;
-        // Add in-repair data
-        $sheet->setCellValue('A' . $row, 'Units In-repair');
-        $row++;
-        $sheet->setCellValue('A' . $row, $totalInRepair);
+        $row = count($items) + 3;
+        $excelService
+            ->setCellValue('A' . $row, 'Units In-repair')
+            ->setCellValue('A' . ($row + 1), $totalInRepair);
     
-        // Export file
-        $filename = 'exported_item_in_warehouses_data_' . $this->username . date('_Y-m-d_H-i-s') . '.xlsx';
-        $writer = new Xlsx($spreadsheet);
-    
-        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-        header('Content-Disposition: attachment; filename="' . $filename . '"');
-        $writer->save('php://output');
-        exit();
+        $excelService->download('item_in_warehouses_data');
     }
+    
     
     
 
     public function actionExportItemReport()
     {
-        //filter params
-         $params = Yii::$app->request->post();   
-        // Initialize search model
-
         $searchModel = new LendingSearch();
-        
-        // Load parameters directly into the search model to ensure they apply
+        $params = Yii::$app->request->post();
+    
         if (!$searchModel->load($params) || !$searchModel->validate()) {
-            // If params do not load or validate, handle it (e.g., return all data or show an error)
             Yii::$app->session->setFlash('error', 'Invalid search parameters for export.');
             return $this->redirect(['lending/item-report-active']);
         }
-        // Filter the data based on search input
+    
         $dataProvider = $searchModel->searchItemReport($params);
-        $dataProvider->pagination = false; // Disable pagination for export
-
-        $items =  $dataProvider->getModels(); // Retrieve data with filters applied
-
-        // Create new Spreadsheet object
-        $spreadsheet = new Spreadsheet();
-        $sheet = $spreadsheet->getActiveSheet();
-
-        // Set headers
-        $sheet->setCellValue('A1', TranslationHelper::translate('item_name'));
-        $sheet->setCellValue('B1', 'SKU');
-        $sheet->setCellValue('C1', TranslationHelper::translate('total_item_lent'));
-
-        // Populate data
-        $row = 2;  // Row starts after the headers
-        foreach ($items as $item) {
-            $sheet->setCellValue('A' . $row, $item['item_name']);  // Access array keys instead of object properties
-            $sheet->setCellValue('B' . $row, $item['SKU']);
-            $sheet->setCellValue('C' . $row, $item['total_item_lent']);
-            $row++;
-        }
-
-        // Set filename and export
-        $filename = 'export_loan_item_report' . $this->username . date('_Y-m-d_H-i-s') . '.xlsx';
-        $writer = new Xlsx($spreadsheet);
-
-        // Send file as response for download
-        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-        header('Content-Disposition: attachment; filename="' . $filename . '"');
-        $writer->save('php://output');
-        exit();
-            
+        $dataProvider->pagination = false;
+        $items = $dataProvider->getModels();
+    
+        $excelService = new ExcelExportService($this->username);
+        
+        $headers = [
+            'item_name',
+            'SKU',
+            'total_item_lent'
+        ];
+        
+        $columns = [
+            'item_name',
+            'SKU',
+            'total_item_lent'
+        ];
+    
+        $excelService
+            ->setHeaders($headers)
+            ->populateData($items, $columns)
+            ->download('loan_item_report');
     }
+    
     
     public function actionExportUnitReport()
     {
-        //filter params
-         $params = Yii::$app->request->post();   
-        // Initialize search model
-
         $searchModel = new LendingSearch();
-        
-        // Load parameters directly into the search model to ensure they apply
+        $params = Yii::$app->request->post();
+    
         if (!$searchModel->load($params) || !$searchModel->validate()) {
-            // If params do not load or validate, handle it (e.g., return all data or show an error)
             Yii::$app->session->setFlash('error', 'Invalid search parameters for export.');
             return $this->redirect(['lending/item-report-active']);
         }
-        // Filter the data based on search input
+    
         $dataProvider = $searchModel->searchUnitReport($params);
-        $dataProvider->pagination = false; // Disable pagination for export
-
-        $items =  $dataProvider->getModels(); // Retrieve data with filters applied
-
-        // Create new Spreadsheet object
-        $spreadsheet = new Spreadsheet();
-        $sheet = $spreadsheet->getActiveSheet();
-
-        // Set headers
-        $sheet->setCellValue('A1', TranslationHelper::translate('item_name'));
-        $sheet->setCellValue('B1', TranslationHelper::translate('serial_number'));
-        $sheet->setCellValue('C1', TranslationHelper::translate('number_of_times_unit_is_lent'));
-
-        // Populate data
-        $row = 2;  // Row starts after the headers
-        foreach ($items as $item) {
-            $sheet->setCellValue('A' . $row, $item['item_name']);  // Access array keys instead of object properties
-            $sheet->setCellValue('B' . $row, $item['serial_number']);
-            $sheet->setCellValue('C' . $row, $item['number_of_times_unit_is_lent']);
-            $row++;
-        }
-
-        // Set filename and export
-        $filename = 'export_loan_unit_report' . $this->username . date('_Y-m-d_H-i-s') . '.xlsx';
-        $writer = new Xlsx($spreadsheet);
-
-        // Send file as response for download
-        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-        header('Content-Disposition: attachment; filename="' . $filename . '"');
-        $writer->save('php://output');
-        exit();
-            
+        $dataProvider->pagination = false;
+        $items = $dataProvider->getModels();
+    
+        $excelService = new ExcelExportService($this->username);
+        
+        $headers = [
+            'item_name',
+            'serial_number',
+            'number_of_times_unit_is_lent'
+        ];
+        
+        $columns = [
+            'item_name',
+            'serial_number',
+            'number_of_times_unit_is_lent'
+        ];
+    
+        $excelService
+            ->setHeaders($headers)
+            ->populateData($items, $columns)
+            ->download('loan_unit_report');
     }
+    
 
     public function actionExportLendingHistory()
     {
         $searchModel = new LendingSearch();
-
-        //filter params
         $params = Yii::$app->request->post();
-
-        // Load parameters directly into the search model to ensure they apply
+    
         if (!$searchModel->load($params) || !$searchModel->validate()) {
-            // If params do not load or validate, handle it (e.g., return all data or show an error)
             Yii::$app->session->setFlash('error', 'Invalid search parameters for export.');
             return $this->redirect(['lending/lending-history']);
         }
-        //echo var_dump($params);
-        //exit();
-        // Get the data provider with params applied
+    
         $dataProvider = $searchModel->searchLendingHistory($params);
-        $dataProvider->pagination = false; // Disable pagination for export
-
-        $items = $dataProvider->getModels(); // Retrieve data with filters applied
+        $dataProvider->pagination = false;
+        $items = $dataProvider->getModels();
+    
+        $excelService = new ExcelExportService($this->username);
         
-        // Fetch data (for example, from a model)
-        //$lendingmodel = new Lending();
-        //$items = $lendingmodel->getLendingList();  // change it to calling getLendingList in Lending model
-
-        // Create new Spreadsheet object
-        $spreadsheet = new Spreadsheet();
-        $sheet = $spreadsheet->getActiveSheet();
-
-        // Set headers
-        $sheet->setCellValue('A1', TranslationHelper::translate('serial_number'));
-        $sheet->setCellValue('B1', TranslationHelper::translate('employee'));
-        $sheet->setCellValue('C1', TranslationHelper::translate('updated_by'));
-        $sheet->setCellValue('D1', TranslationHelper::translate('comment'));
-        $sheet->setCellValue('E1', TranslationHelper::translate('date'));
-        $sheet->setCellValue('F1', TranslationHelper::translate('status'));
-
-        // Populate data
-        $row = 2;  // Row starts after the headers
-        foreach ($items as $item) {
-            $sheet->setCellValue('A' . $row, $item['serial_number']);  // Access array keys instead of object properties
-            $sheet->setCellValue('B' . $row, $item['employee']);
-            $sheet->setCellValue('C' . $row, $item['updated_by']);
-            $sheet->setCellValue('D' . $row, $item['comment']);
-            $sheet->setCellValue('E' . $row, $item['date']);
-            $sheet->setCellValue('F' . $row, TranslationHelper::translate($item['status']));
-            $row++;
-        }
-
-        // Set filename and export
-        $filename = 'exported_lending_history' . $this->username . date('_Y-m-d_H-i-s') . '.xlsx';
-        $writer = new Xlsx($spreadsheet);
-
-        // Send file as response for download
-        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-        header('Content-Disposition: attachment; filename="' . $filename . '"');
-        $writer->save('php://output');
-        exit();
+        $headers = [
+            'serial_number',
+            'employee',
+            'updated_by',
+            'comment',
+            'date',
+            'status'
+        ];
+        
+        $columns = [
+            'serial_number',
+            'employee',
+            'updated_by',
+            'comment',
+            'date',
+            'translate_status'
+        ];
+    
+        $excelService
+            ->setHeaders($headers)
+            ->populateData($items, $columns)
+            ->download('lending_history');
     }
+    
 
     public function actionRepairLog()
     {
         $searchModel = new RepairLogSearch();
-       
-        //filter params
         $params = Yii::$app->request->post();
-
-        // Load parameters directly into the search model to ensure they apply
+    
         if (!$searchModel->load($params) || !$searchModel->validate()) {
-            // If params do not load or validate, handle it (e.g., return all data or show an error)
             Yii::$app->session->setFlash('error', 'Invalid search parameters for export.');
             return $this->redirect(['repair-log/detail']);
         }
-        //echo var_dump($params);
-        //exit();
-        // Get the data provider with params applied
+    
         $dataProvider = $searchModel->searchDetail($params);
-        $dataProvider->pagination = false; // Disable pagination for export
-
-        $items = $dataProvider->getModels(); // Retrieve data with filters applied
+        $dataProvider->pagination = false;
+        $items = $dataProvider->getModels();
+    
+        $excelService = new ExcelExportService($this->username);
         
-        // Fetch data (for example, from a model)
-        //$lendingmodel = new Lending();
-        //$items = $lendingmodel->getLendingList();  // change it to calling getLendingList in Lending model
-
-        // Create new Spreadsheet object
-        $spreadsheet = new Spreadsheet();
-        $sheet = $spreadsheet->getActiveSheet();
-
-        // Set headers
-        $sheet->setCellValue('A1', TranslationHelper::translate('serial_number'));
-        $sheet->setCellValue('B1', TranslationHelper::translate('item_name'));
-        $sheet->setCellValue('C1', TranslationHelper::translate('type'));
-        $sheet->setCellValue('D1', TranslationHelper::translate('datetime'));
-
-        // Populate data
-        $row = 2;  // Row starts after the headers
-        foreach ($items as $item) {
-            $sheet->setCellValue('A' . $row, $item['serial_number']);  // Access array keys instead of object properties
-            $sheet->setCellValue('B' . $row, $item['item_name']);
-            $sheet->setCellValue('C' . $row, $item['rep_type']);
-            $sheet->setCellValue('D' . $row, $item['datetime']);
-            $row++;
-        }
-
-        // Set filename and export
-        $filename = 'exported_repair_log' . $this->username . date('_Y-m-d_H-i-s') . '.xlsx';
-        $writer = new Xlsx($spreadsheet);
-
-        // Send file as response for download
-        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-        header('Content-Disposition: attachment; filename="' . $filename . '"');
-        $writer->save('php://output');
-        exit();
+        $headers = [
+            'serial_number',
+            'item_name',
+            'type',
+            'datetime'
+        ];
+        
+        $columns = [
+            'serial_number',
+            'item_name',
+            'rep_type',
+            'datetime'
+        ];
+    
+        $excelService
+            ->setHeaders($headers)
+            ->populateData($items, $columns)
+            ->download('repair_log');
     }
+    
 
     public function actionRepairLogSingle($month, $year)
     {
