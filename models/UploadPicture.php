@@ -56,17 +56,5 @@ class UploadPicture extends Model
         return false;
     }
 
-    //public function uploadLoan()
-    //{
-    //    if ($this->validate()) {
-    //        $fileName = uniqid() . '.' . $this->imageFile->extension;
-    //        $filePath = Yii::getAlias('@webroot/uploads/') . $fileName;
-    //    
-    //        if ($this->imageFile->saveAs($filePath)) {
-    //            return $fileName;
-    //        }
-    //    }
-    //    return false;
-    //}
-    //
+
 }

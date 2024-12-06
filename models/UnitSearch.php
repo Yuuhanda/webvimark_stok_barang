@@ -103,6 +103,7 @@ class UnitSearch extends Model
 
     private function getBaseQuery($id_item)
     {
+        
         return (new Query())
             ->select([
                 'condition' => 'condition_lookup.condition_name',
@@ -141,59 +142,6 @@ class UnitSearch extends Model
             ->where(['item_unit.id_item' => $id_item])
             ->groupBy('item_unit.id_unit');
     
-        // Load the search parameters
-        $this->load($params);
-
-
-        // Apply filtering conditions
-        if (!$this->validate()) {
-            // Return all records if validation fails
-            $query->where('0=1');
-        }
-
-        // Add conditions based on filters
-        $query->andFilterWhere(['item_unit.serial_number' => $this->serial_number])
-            ->andFilterWhere(['item_unit.condition' => $this->condition])
-            ->andFilterWhere(['item_unit.status' => $this->status])
-            ->andFilterWhere(['item_unit.updated_by' => $this->updated_by])
-            ->andFilterWhere(['item_unit.id_wh' => $this->warehouse])
-            ->andFilterHaving(['like', 'employee', $this->employee])
-            ->andFilterWhere(['item_unit.comment' => $this->comment]);
-
-        // Execute the query and return an ArrayDataProvider
-        $command = $query->createCommand();
-        $results = $command->queryAll();
-
-        // Apply TranslationHelper::translate to 'condition'
-        foreach ($results as &$result) {
-            if (isset($result['condition'])) {
-                $result['condition'] = TranslationHelper::translate($result['condition']);
-            }
-        }
-
-        foreach ($results as &$result) {
-            if (isset($result['status'])) {
-                $result['status'] = TranslationHelper::translate($result['status']);
-            }
-        }
-
-        return new ArrayDataProvider([
-            'allModels' => $results,
-            'pagination' => [
-                'pageSize' => 20, // Adjust as needed
-            ],
-            'sort' => [
-                'attributes' => [
-                    'serial_number',
-                    'condition',
-                    'status',
-                    'updated_by',
-                    'warehouse',
-                    'employee',
-                    'comment',
-                ],
-            ],
-        ]);
     }
 
 
