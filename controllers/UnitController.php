@@ -113,7 +113,7 @@ class UnitController extends Controller
        $warehouseList = Warehouse::getWarehouseList();
    
        // Filter the data based on search input
-       $dataProvider = $searchModel->search(\Yii::$app->request->queryParams);
+       $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
    
        return $this->render('damaged', [
            'searchModel' => $searchModel,
@@ -148,7 +148,7 @@ class UnitController extends Controller
 
     public function actionAddUnit($id_item)
     {
-        $model = new \app\models\ItemUnit();
+        $model = new ItemUnit();
         
         // Set the $id_item in the model
         $model->id_item = $id_item;
@@ -158,7 +158,7 @@ class UnitController extends Controller
         $warehouses = Warehouse::find()->all();
 
         // Prepare warehouse data as [id_wh => wh_name] for the dropdown
-        $whList = \yii\helpers\ArrayHelper::map($warehouses, 'id_wh', 'wh_name');
+        $whList = ArrayHelper::map($warehouses, 'id_wh', 'wh_name');
     
         if ($model->load(Yii::$app->request->post())) {
             if ($model->validate()) {
@@ -178,7 +178,7 @@ class UnitController extends Controller
                         // Combine the SKU prefix and the random number to create the serial number
                         $model->serial_number = $row['B'] ?? $this->generateUniqueSerialNumber($skuPrefix);
                     } else {
-                        throw new \yii\web\NotFoundHttpException(TranslationHelper::translate("Item not found or SKU is empty."));
+                        throw new NotFoundHttpException(TranslationHelper::translate("Item not found or SKU is empty."));
                     }
                 }
                 $user = Yii::$app->user->identity;
@@ -212,7 +212,7 @@ class UnitController extends Controller
         $uploadModel = new UploadPicture();
 
         $warehouses = Warehouse::find()->all();
-        $whList = \yii\helpers\ArrayHelper::map($warehouses, 'id_wh', 'wh_name');
+        $whList = ArrayHelper::map($warehouses, 'id_wh', 'wh_name');
 
         // Condition lookup
         $condlist = ConditionLookup::getConditionList();
@@ -407,7 +407,7 @@ class UnitController extends Controller
 
     public function actionCorrectionSearch()
     {
-        $model = new \app\models\ItemUnit();
+        $model = new ItemUnit();
     
         if ($model->load(Yii::$app->request->post())) {
             if ($model->serial_number !== null) {
@@ -433,14 +433,14 @@ class UnitController extends Controller
         
         //Warehouse name lookup
         $warehouses = Warehouse::find()->all();
-        $whList = \yii\helpers\ArrayHelper::map($warehouses, 'id_wh', 'wh_name');
+        $whList = ArrayHelper::map($warehouses, 'id_wh', 'wh_name');
 
         // Condition lookup
         $condlist = ConditionLookup::getConditionList();
 
         //status lookup
-        $stats = \app\models\StatusLookup::find()->all();
-        $statslist = \yii\helpers\ArrayHelper::map($stats, 'id_status', 'status_name');
+        $stats = StatusLookup::find()->all();
+        $statslist = ArrayHelper::map($stats, 'id_status', 'status_name');
 
         // Check if the model was found
         if ($model === null) {
@@ -471,7 +471,7 @@ class UnitController extends Controller
 
     public function actionSendRepair($id_unit)
     {
-        $unit = \app\models\ItemUnit::findOne(['id_unit'=>$id_unit]);
+        $unit = ItemUnit::findOne(['id_unit'=>$id_unit]);
         $model = $this->findModel($id_unit);
         if (!$unit) {
             throw new NotFoundHttpException(TranslationHelper::translate('The requested ItemUnit does not exist.'));
@@ -506,12 +506,12 @@ class UnitController extends Controller
 
     public function actionFinishRepair($id_unit)
     {
-        $unit = \app\models\ItemUnit::findOne(['id_unit'=>$id_unit]);
+        $unit = ItemUnit::findOne(['id_unit'=>$id_unit]);
         $model = $this->findModel($id_unit);
 
         //wh list
         $warehouses = Warehouse::find()->all();
-        $whList = \yii\helpers\ArrayHelper::map($warehouses, 'id_wh', 'wh_name');
+        $whList = ArrayHelper::map($warehouses, 'id_wh', 'wh_name');
         // Condition lookup
         $condlist = ConditionLookup::getConditionList();
         
@@ -713,7 +713,7 @@ class UnitController extends Controller
     }
 
     public function actionCheck(){
-        if (\webvimark\modules\UserManagement\models\User::hasRole('superadmin')) {
+        if (WebvimarkUser::hasRole('superadmin')) {
            echo'User is superadmin';
         } else {
             echo'User is not superadmin';
