@@ -204,9 +204,17 @@ class ItemController extends Controller
         $category = ItemCategory::getCategoryList(); // Should return `id_category`, `category_name`, and `cat_code`
 
         if ($this->request->isPost && $model->load($this->request->post())) {
+            //check if imageFile in the db is not null. if not null, then delete the image file in the server in the @web/uploads folder
+            if ($model->imagefile) {
+                $imagePath = Yii::getAlias('@webroot') . '/uploads/' . $model->imagefile;
+                if (file_exists($imagePath)) {
+                    unlink($imagePath);
+                }
+            } //this is not working. i want it to delete the image file in the server in the @web/uploads folder
+
+ 
             $uploadModel->imageFile = UploadedFile::getInstance($uploadModel, 'imageFile');
             
-
             // Generate SKU if empty
             if (empty($model->SKU)) {
                 $id_cat = $model->id_category;
