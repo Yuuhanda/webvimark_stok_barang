@@ -59,9 +59,9 @@ class LendingController extends Controller
     
     public function actionLoanUnit($id_item)
     {
-        $model = new \app\models\Lending();
-        $employee = \app\models\Employee::find()->all();
-        $unitmodel = new \app\models\ItemUnit();
+        $model = new Lending();
+        $employee = Employee::find()->all();
+        $unitmodel = new ItemUnit();
         $avalunit = $unitmodel->getAvailableUnit($id_item);
         $uploadModel = new UploadPicture();
     

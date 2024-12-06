@@ -127,8 +127,6 @@ class ExportController extends \yii\web\Controller
 
     public function actionExportDamaged()
     {
-        $unitModel = new ItemUnit();
-        $damagedlist = $unitModel->getBrokenUnit();
         $params = Yii::$app->request->post();   
         $searchModel = new DamagedSearch();
         
@@ -137,7 +135,7 @@ class ExportController extends \yii\web\Controller
             return $this->redirect(['unit/damaged']);
         }
     
-        $dataProvider = $searchModel->search($params, $damagedlist);
+        $dataProvider = $searchModel->search($params);
         $dataProvider->pagination = false;
         $items = $dataProvider->getModels();
     
