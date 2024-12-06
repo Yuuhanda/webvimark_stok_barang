@@ -152,8 +152,8 @@ class UnitController extends Controller
         
         // Set the $id_item in the model
         $model->id_item = $id_item;
-        $model->condition = 1;  // Default value for 'condition'
-        $model->status = 1;     // Default value for 'status'
+        $model->condition = 1;  // Default value for 'condition' it means the condition is 'OK'
+        $model->status = 1;     // Default value for 'status' it means the status is 'Available'
 
         $warehouses = Warehouse::find()->all();
 
@@ -221,11 +221,11 @@ class UnitController extends Controller
             if ($model->validate()) {
                 // Set the status based on the condition value from the POST request
                 if ($model->condition == 5) {
-                    $model->status = 4;
+                    $model->status = 4; // Set status to 4 (Damaged) or lost
                 } elseif ($model->condition == 4) {
-                    $model->status = 4;
+                    $model->status = 4; // set status to 4 (Damaged) or lost
                 } else {
-                    $model->status = 1;
+                    $model->status = 1; // set status to 1 (Available)
                 }
                 $user = Yii::$app->user->identity;
                 $user_id = $user->id;
@@ -520,10 +520,9 @@ class UnitController extends Controller
         }
         $user = Yii::$app->user->identity;
         $model->id_unit = $id_unit;
-        $model->status = 1;
+        $model->status = 1; //status 1 = available
         $model->id_item = $unit->id_item;
         $model->condition = $unit->condition;
-        //$model->id_wh = NULL;
         $model->updated_by = $user->id;
         if ($model->load(Yii::$app->request->post())) {
             if ($model->validate()) {
@@ -692,7 +691,7 @@ class UnitController extends Controller
             // Start with 0001 if no previous serial number exists
             $newNumber = '0001';
         }
-    
+        // the rule for the serial number is SKU then separated by a dash ' - ' and then serialized number
         // Construct the new serial number
         return $skuPrefix . '-' . $newNumber;
     }
