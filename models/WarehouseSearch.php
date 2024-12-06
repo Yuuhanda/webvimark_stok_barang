@@ -77,38 +77,14 @@ class WarehouseSearch extends Warehouse
         $id_wh = Yii::$app->user->identity->id_wh;
 
         if (User::hasRole('Admin') && !User::hasRole('superadmin')){
-                    // Construct the query
-            $query = (new Query())
-            ->select([
-                'warehouse' => 'warehouse.wh_name',
-                'available' => 'COUNT(CASE WHEN TRIM(item_unit.status) = "1" THEN 1 END)',
-                'in_use' => 'COUNT(CASE WHEN TRIM(item_unit.status) = "2" THEN 1 END)',
-                'in_repair' => 'COUNT(CASE WHEN TRIM(item_unit.status) = "3" THEN 1 END)',
-                'lost' => 'COUNT(CASE WHEN TRIM(item_unit.status) = "4" THEN 1 END)',
-            ])
-            ->from('item_unit')
-            ->leftJoin('warehouse', 'warehouse.id_wh = item_unit.id_wh')
-            ->where(['item_unit.id_item' => $id_item])
-            ->andWhere(['IS NOT', 'warehouse.wh_name', null]) // Exclude rows with NULL `wh_name`
-            ->andWhere(['!=', 'warehouse.wh_name', '']) // Exclude rows with empty `wh_name`
-            ->andWhere(['item_unit.id_wh' => $id_wh])
-            ->groupBy('warehouse.id_wh');
+            if (empty($id_wh)) {
+                throw new \yii\base\Exception('Admin user must have an assigned warehouse');
+            }
+            
+            $query = $this->getBaseQuery($id_item)
+                ->andWhere(['warehouse.id_wh' => $id_wh]);
         } else {
-        // Construct the query
-        $query = (new Query())
-            ->select([
-                'warehouse' => 'warehouse.wh_name',
-                'available' => 'COUNT(CASE WHEN TRIM(item_unit.status) = "1" THEN 1 END)',
-                'in_use' => 'COUNT(CASE WHEN TRIM(item_unit.status) = "2" THEN 1 END)',
-                'in_repair' => 'COUNT(CASE WHEN TRIM(item_unit.status) = "3" THEN 1 END)',
-                'lost' => 'COUNT(CASE WHEN TRIM(item_unit.status) = "4" THEN 1 END)',
-            ])
-            ->from('item_unit')
-            ->leftJoin('warehouse', 'warehouse.id_wh = item_unit.id_wh')
-            ->where(['item_unit.id_item' => $id_item])
-            ->andWhere(['IS NOT', 'warehouse.wh_name', null]) // Exclude rows with NULL `wh_name`
-            ->andWhere(['!=', 'warehouse.wh_name', '']) // Exclude rows with empty `wh_name`
-            ->groupBy('warehouse.id_wh');
+            $query = $this->getBaseQuery($id_item);
             }
         // Load the search parameters
         $this->load($params);
@@ -149,4 +125,20 @@ class WarehouseSearch extends Warehouse
         ]);
     }
 
+    private function getBaseQuery($id_item){
+        return $query = (new Query())
+        ->select([
+            'warehouse' => 'warehouse.wh_name',
+            'available' => 'COUNT(CASE WHEN TRIM(item_unit.status) = "1" THEN 1 END)',
+            'in_use' => 'COUNT(CASE WHEN TRIM(item_unit.status) = "2" THEN 1 END)',
+            'in_repair' => 'COUNT(CASE WHEN TRIM(item_unit.status) = "3" THEN 1 END)',
+            'lost' => 'COUNT(CASE WHEN TRIM(item_unit.status) = "4" THEN 1 END)',
+        ])
+        ->from('item_unit')
+        ->leftJoin('warehouse', 'warehouse.id_wh = item_unit.id_wh')
+        ->where(['item_unit.id_item' => $id_item])
+        ->andWhere(['IS NOT', 'warehouse.wh_name', null]) // Exclude rows with NULL `wh_name`
+        ->andWhere(['!=', 'warehouse.wh_name', '']) // Exclude rows with empty `wh_name`
+        ->groupBy('warehouse.id_wh');
+    }
 }

@@ -1,6 +1,7 @@
 <?php
 namespace app\models;
 
+use InvalidArgumentException;
 use webvimark\modules\UserManagement\models\User;
 use Yii;
 use yii\base\Model;
@@ -39,41 +40,19 @@ class ItemSearch extends Model
         $id_wh = Yii::$app->user->identity->id_wh;
         
         if (User::hasRole('Admin') && !User::hasRole('superadmin')) {//ill use multiple condition instead
-            $query = (new Query())
-                ->select([
-                    'item_name' => 'item.item_name',
-                    'SKU' => 'item.SKU',
-                    'category' => 'item_category.category_name',
-                    'available' => 'COUNT(CASE WHEN TRIM(item_unit.status) = "1" AND item_unit.condition != 4 AND item_unit.condition != 5 THEN 1 END)',
-                    'in_use' => 'COUNT(CASE WHEN TRIM(item_unit.status) = "2" THEN 1 END)',
-                    'in_repair' => 'COUNT(CASE WHEN TRIM(item_unit.status) = "3" THEN 1 END)',
-                    'lost' => 'COUNT(CASE WHEN TRIM(item_unit.status) = "4" THEN 1 END)',
-                    'id_item' => 'item.id_item',
-                    'imagefile' => 'item.imagefile',
-                ])
-                ->from('item')
+            if (empty($id_wh)) {
+                throw new \yii\base\Exception('Admin user must have an assigned warehouse');
+            }
+            $query = $this->getBaseQuery()
                 ->leftJoin('item_unit', 'item.id_item = item_unit.id_item AND (item_unit.id_wh = :id_wh OR item_unit.id_wh IS NULL)', ['id_wh' => $id_wh]) // Adjusted the join condition
                 ->leftJoin('item_category', 'item.id_category = item_category.id_category')
                 ->groupBy('item.id_item');
         } else {
-            $query = (new Query())
-                ->select([
-                    'item_name' => 'item.item_name',
-                    'SKU' => 'item.SKU',
-                    'category' => 'item_category.category_name',
-                    'available' => 'COUNT(CASE WHEN TRIM(item_unit.status) = "1" AND item_unit.condition != 4 AND item_unit.condition != 5 THEN 1 END)',
-                    'in_use' => 'COUNT(CASE WHEN TRIM(item_unit.status) = "2" THEN 1 END)',
-                    'in_repair' => 'COUNT(CASE WHEN TRIM(item_unit.status) = "3" THEN 1 END)',
-                    'lost' => 'COUNT(CASE WHEN TRIM(item_unit.status) = "4" THEN 1 END)',
-                    'id_item' => 'item.id_item',
-                    'imagefile' => 'item.imagefile',
-                ])
-                ->from('item')
+            $query = $this->getBaseQuery()
                 ->leftJoin('item_unit', 'item.id_item = item_unit.id_item') // Left join to include all items
                 ->leftJoin('item_category', 'item.id_category = item_category.id_category')
                 ->groupBy('item.id_item');
         }
-    
         // Load the search parameters
         $this->load($params);
     
@@ -111,9 +90,11 @@ class ItemSearch extends Model
         ]);
     }
     
-
     public function searchWarehouse($params, $id_wh)
     {
+        if (!is_numeric($id_wh)) {
+            throw new InvalidArgumentException('Invalid warehouse ID');
+        }
         // Your custom query for the dashboard
         $query = (new Query())
             ->select([
@@ -124,7 +105,7 @@ class ItemSearch extends Model
                 'in_repair' => 'COUNT(CASE WHEN TRIM(item_unit.status) = "3" THEN 1 END)',
                 'lost' => 'COUNT(CASE WHEN TRIM(item_unit.status) = "4" THEN 1 END)',
                 'id_item' => 'item.id_item',
-                'imagefile' =>'item.imagefile',
+                'imagefile' => 'item.imagefile',
             ])
             ->from('item')
             ->leftJoin('item_unit', 'item.id_item = item_unit.id_item')
@@ -167,5 +148,21 @@ class ItemSearch extends Model
         ]);
     }
 
+    private function getBaseQuery()
+    {
+        return (new Query())
+            ->select([
+                'item_name' => 'item.item_name',
+                'SKU' => 'item.SKU', 
+                'available' => 'COUNT(CASE WHEN TRIM(item_unit.status) = "1" AND item_unit.condition != 4 AND item_unit.condition != 5 THEN 1 END)',
+                'in_use' => 'COUNT(CASE WHEN TRIM(item_unit.status) = "2" THEN 1 END)',
+                'in_repair' => 'COUNT(CASE WHEN TRIM(item_unit.status) = "3" THEN 1 END)',
+                'lost' => 'COUNT(CASE WHEN TRIM(item_unit.status) = "4" THEN 1 END)',
+                'id_item' => 'item.id_item',
+                'imagefile' => 'item.imagefile',
+                'category' => 'item_category.category_name',
+            ])
+            ->from('item');
+    }
 
 }
