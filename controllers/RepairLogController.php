@@ -66,30 +66,36 @@ class RepairLogController extends Controller
      */
     public function actionCreate($id_unit, $comment, $type)
     {
-        $model = new RepairLog();
-        $unit = ItemUnit::findOne($id_unit);
-        if (!$unit) {
-            throw new \yii\web\NotFoundHttpException(TranslationHelper::translate("Unit not found."));
-        }
-        $sn = $unit->serial_number;
-        $model->id_unit = $id_unit;
-        $model->comment = $sn. '. '. $comment;
-        $model->rep_type = $type;
-        $model->datetime = new \yii\db\Expression('NOW()'); // Correct this field if necessary
-        $unit = ItemUnit::findOne($id_unit);
-        if (!$unit) {
-            throw new \yii\web\NotFoundHttpException(TranslationHelper::translate("Unit not found."));
-        }
-        // Try saving and check for errors
-        if ($model->save()) {
-            return true; // Save was successful
-        } else {
+        $transaction = Yii::$app->db->beginTransaction();
+        try {
+            // Add input validation
+            if (!is_numeric($id_unit) || empty($comment) || empty($type)) {
+                throw new \yii\web\BadRequestHttpException('Invalid input parameters');
+            }
+            $model = new RepairLog();
+            $unit = ItemUnit::findOne($id_unit);
+            if (!$unit) {
+                throw new \yii\web\NotFoundHttpException(TranslationHelper::translate("Unit not found."));
+            }
+            $sn = $unit->serial_number;
+            $model->id_unit = $id_unit;
+            $model->comment = $sn. '. '. $comment;
+            $model->rep_type = $type;
+            $model->datetime = new \yii\db\Expression('NOW()'); // Correct this field if necessary. bug found, time is one hour advanced
+            // Try saving and check for errors
+            if ($model->save()) {
+                $transaction->commit();
+                return true; // Save was successful
+            }
+            $transaction->rollBack();
             // Save failed, output validation errors
             Yii::error($model->getErrors(), __METHOD__);
             throw new \yii\web\ServerErrorHttpException("Failed to save log: " . json_encode($model->getErrors()));
+        } catch(\Exception $e) {
+            $transaction->rollBack();
+            throw $e;
         }
     }
-
     /**
      * Updates an existing RepairLog model.
      * If update is successful, the browser will be redirected to the 'view' page.
@@ -179,4 +185,16 @@ class RepairLogController extends Controller
         ]);
     }
 
+    public function actionTimezoneCheck()
+    {
+        $timezone = date_default_timezone_get();
+        $timezone = new \DateTimeZone($timezone);
+        $now = new \DateTime('now', $timezone);
+        $time = $now->format('H:i:s');
+        echo $time;
+        // select now() from db use for $datetime
+        $datetime = new \DateTime('now', $timezone);
+        $datetime = $datetime->format('Y-m-d H:i:s');
+        echo $datetime;
+    }
 }

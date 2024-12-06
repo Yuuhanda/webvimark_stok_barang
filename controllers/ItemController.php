@@ -74,26 +74,25 @@ class ItemController extends Controller
 
     public function actionDetails($id_item)
     {
-        // Create the search model and load the request data
-        $searchModel = new UnitSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams, $id_item); // Raw data results
-         // Retrieve lists for Select2 dropdowns
-         $updatedByList = User::getUpdatedByList();
-         $warehouseList = Warehouse::getWarehouseList();
-         $employeeList = Employee::getEmployeeList();
-         $statusList = StatusLookup::getStatusList();
-         $conditionList = ConditionLookup::getConditionList();
-
-        // Render the view with the search model and data provider
-        return $this->render('detail', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-            'updatedByList' => $updatedByList,
-            'warehouseList' => $warehouseList,
-            'employeeList' => $employeeList,
-            'statusList' => $statusList,
-            'conditionList' => $conditionList,
-        ]);
+        $cacheKey = "item_details_" . $id_item;
+        $data = Yii::$app->cache->get($cacheKey);
+        
+        if ($data === false) {
+            $searchModel = new UnitSearch();
+            $dataProvider = $searchModel->search(Yii::$app->request->queryParams, $id_item);
+            $data = [
+                'searchModel' => $searchModel,
+                'dataProvider' => $dataProvider,
+                'updatedByList' => User::getUpdatedByList(),
+                'warehouseList' => Warehouse::getWarehouseList(),
+                'employeeList' => Employee::getEmployeeList(),
+                'statusList' => StatusLookup::getStatusList(),
+                'conditionList' => ConditionLookup::getConditionList(),
+            ];
+            Yii::$app->cache->set($cacheKey, $data, 3600); // Cache for 1 hour
+        }
+        
+        return $this->render('detail', $data);
     }
 
     public function actionWarehouse($id_item)
@@ -171,11 +170,6 @@ class ItemController extends Controller
         ]);
     }
     
-
-    
-    public function actionPicUpload(){
-        //code here
-    }
 
     protected function generateSKU($cat_code) {
         // Get the last two digits of the current year
