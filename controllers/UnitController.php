@@ -28,6 +28,7 @@ use app\models\UploadPicture;
 use app\components\MyMemoryService;
 use app\helpers\TranslationHelper;
 use webvimark\modules\UserManagement\models\User as WebvimarkUser;
+use app\controllers\LogController;
 
 /**
  * UnitController implements the CRUD actions for ItemUnit model.
@@ -660,6 +661,8 @@ class UnitController extends Controller
             foreach ($unitData as $data) {
                 $unit = new ItemUnit($data);
                 $unit->save(false); // Save without validation
+                $logController = new LogController('log', Yii::$app); // Pass the required parameters to the controller
+                $logController->actionNewUnit($unit->serial_number, $unit->id_unit);
             }
     
             $session->remove('unitData'); // Clear session data
