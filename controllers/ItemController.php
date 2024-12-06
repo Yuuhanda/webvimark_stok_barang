@@ -74,24 +74,18 @@ class ItemController extends Controller
 
     public function actionDetails($id_item)
     {
-        $cacheKey = "item_details_" . $id_item;
-        $data = Yii::$app->cache->get($cacheKey);
-        
-        if ($data === false) {
-            $searchModel = new UnitSearch();
-            $dataProvider = $searchModel->search(Yii::$app->request->queryParams, $id_item);
-            $data = [
-                'searchModel' => $searchModel,
-                'dataProvider' => $dataProvider,
-                'updatedByList' => User::getUpdatedByList(),
-                'warehouseList' => Warehouse::getWarehouseList(),
-                'employeeList' => Employee::getEmployeeList(),
-                'statusList' => StatusLookup::getStatusList(),
-                'conditionList' => ConditionLookup::getConditionList(),
-            ];
-            Yii::$app->cache->set($cacheKey, $data, 3600); // Cache for 1 hour
-        }
-        
+        $searchModel = new UnitSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams, $id_item);
+        $data = [
+            'searchModel' => $searchModel,
+            'dataProvider' => $dataProvider,
+            'updatedByList' => User::getUpdatedByList(),
+            'warehouseList' => Warehouse::getWarehouseList(),
+            'employeeList' => Employee::getEmployeeList(),
+            'statusList' => StatusLookup::getStatusList(),
+            'conditionList' => ConditionLookup::getConditionList(),
+        ];
+    
         return $this->render('detail', $data);
     }
 
