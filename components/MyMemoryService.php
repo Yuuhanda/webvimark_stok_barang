@@ -2,17 +2,23 @@
 namespace app\components;
 
 use Yii;
+use yii\httpclient\Client;
 use yii\httpclient\Exception;
 
-
+//YOU NEED AN ACCOUNT TO USE MYMEMORY TRANSLATION API
+//You can make an account, the api is free to use to a degree if it matter
 class MyMemoryService
 {
-    //YOU WILL NEED AN ACCOUNT OF MYMEMORY TRANSLATION API. if you dont have it you can try make one
-    //An account is required to use the API.
-    //For the API key, you can use your mymemory translation account to make one
-    //to use it you can open config/params.php and put your API key there
+    private $client;
+    
+    public function __construct()
+    {
+        $this->client = Yii::$app->get('myMemoryClient');
+    }
+
     public static function translate($text, $sourceLang, $targetLang, $email = 'yuhandafikri@outlook.com')
     {
+        $service = new self();
         $cacheKey = "translation_{$sourceLang}_{$targetLang}_" . md5($text);
 
         // Check if translation is already cached
@@ -23,7 +29,7 @@ class MyMemoryService
 
         // If not cached, fetch from API
         try {
-            $client = Yii::$app->myMemoryClient;
+            $client = $service->client;
 
             $params = [
                 'q' => $text,
@@ -55,7 +61,8 @@ class MyMemoryService
 
         return null;
     }
-}
 
+    
+}
 
 

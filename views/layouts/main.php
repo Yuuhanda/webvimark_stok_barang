@@ -141,12 +141,7 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
                     ],
                 ]) ?>
     <br><br>
-    <? 
-    //echo Html::dropDownList('language', Yii::$app->language, ['en' => 'English', 'id' => 'Indonesian'], [
-    //    'id' => 'language-switcher',
-    //    'class' => 'form-select',
-    //]) 
-    ?>
+
 
     <?php
     $this->registerJs(<<<JS
@@ -188,7 +183,7 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
 <br>
     <!-- Footer -->
     <footer class="main-footer">
-        <strong>&copy; Fikri A. Yuhanda - Prabubima Tech 2024 || Office Inventory Management Yii2 <?= date('Y') ?></strong>
+        <strong>© Fikri A. Yuhanda - Prabubima Tech 2024 || Office Inventory Management Yii2 <?= date('Y') ?></strong>
     </footer>
 </div>
 <?php 
