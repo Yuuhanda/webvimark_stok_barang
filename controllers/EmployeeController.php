@@ -7,8 +7,6 @@ use app\models\Employee;
 use app\models\EmployeeSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
-use yii\filters\AccessControl;
 use Yii;
 use app\models\Lending;
 

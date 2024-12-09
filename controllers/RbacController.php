@@ -1,5 +1,5 @@
 <?php
-
+///CURRENTLY NOT IN USE the app uses wevimark's user management module
 namespace app\controllers;
 
 use yii\console\Controller;

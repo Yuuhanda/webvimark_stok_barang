@@ -6,10 +6,8 @@ use app\models\DocUploaded;
 use app\models\DocSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
 use PhpOffice\PhpSpreadsheet\IOFactory;
 use Yii;
-use yii\filters\AccessControl;
 use yii\helpers\FileHelper;
 use app\helpers\TranslationHelper;
 

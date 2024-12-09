@@ -3,15 +3,12 @@
 namespace app\controllers;
 
 use Yii;
-use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\Response;
-use yii\filters\VerbFilter;
 use app\models\LoginForm;
 use app\models\ContactForm;
 use app\models\User;
 use app\components\MyMemoryService;
-use app\components\MyMemoryTranslation;
 
 class SiteController extends Controller
 {
@@ -167,21 +164,14 @@ class SiteController extends Controller
         }
     
         try {
-            $translatedText = \app\components\MyMemoryService::translate($text, $sourceLang, $targetLang);
+            $translatedText = MyMemoryService::translate($text, $sourceLang, $targetLang);
             return ['success' => true, 'translatedText' => $translatedText];
         } catch (\Exception $e) {
             return ['success' => false, 'error' => $e->getMessage()];
         }
     }
 
-    //translation tester
-    //public function actionSetLanguage()
-    //{
-    //    $language = Yii::$app->request->post('language', 'en');
-    //    Yii::$app->session->set('language', $language);
-    //    Yii::$app->language = $language;
-    //    return $this->redirect(Yii::$app->request->referrer);
-    //}
+
 
     
 }

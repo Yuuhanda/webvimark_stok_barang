@@ -8,7 +8,6 @@ use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 use app\models\Item;
 use app\models\ItemUnit;
-use app\models\Lending;
 use app\models\UnitLog;
 use Yii;
 use app\models\ItemSearch;
