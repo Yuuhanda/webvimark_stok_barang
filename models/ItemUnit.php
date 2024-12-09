@@ -16,6 +16,7 @@ use webvimark\modules\UserManagement\models\User as WebvimarkUser;
  * @property string|null $comment
  * @property string $serial_number
  * @property int $condition
+ * @property int $updated_by
  *
  * @property ConditionLookup $condition0
  * @property Item $item

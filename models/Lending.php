@@ -15,7 +15,9 @@ use app\models\ItemUnit;
  * @property int $id_employee
  * @property int $type
  * @property string $date
- *
+ * @property string $pic_loan
+ * @property string $pic_return
+ * 
  * @property Employee $employee
  * @property LendingTypeLookup $type0
  * @property ItemUnit $unit
