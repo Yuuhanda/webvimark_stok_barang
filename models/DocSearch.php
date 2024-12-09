@@ -39,7 +39,7 @@ class DocSearch extends DocUploaded
      *
      * @return ActiveDataProvider
      */
-    public function search($params)
+    public function search($params): ArrayDataProvider  
     {
         $query = (new Query())
             ->select([
