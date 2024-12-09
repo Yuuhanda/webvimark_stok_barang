@@ -13,7 +13,7 @@ use yii\web\View;
 use app\helpers\TranslationHelper;
 
 /** @var yii\web\View $this */
-/** @var app\models\LendigSearch $searchModel */
+/** @var app\models\LendingSearch $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
 $this->title = TranslationHelper::translate('Lending List');
