@@ -184,7 +184,7 @@ class WarehouseController extends Controller
         $userdata = User::findOne($id);
     
         if (!$userdata) {
-            throw new \yii\web\NotFoundHttpException(TranslationHelper::translate('User not found.'));
+            throw new NotFoundHttpException(TranslationHelper::translate('User not found.'));
         }
     
         // Prepare warehouse data as [id_wh => wh_name] for the dropdown

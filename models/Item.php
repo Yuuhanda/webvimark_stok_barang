@@ -14,7 +14,9 @@ use yii\web\UploadedFile;
  * @property int $id_item
  * @property string $item_name
  * @property string $SKU
- *
+ * @property string $id_category //what type to use, it's not a string its picture
+ * @property UploadedFile $imagefile
+ * 
  * @property ItemUnit[] $itemUnits
  */
 class Item extends \yii\db\ActiveRecord
