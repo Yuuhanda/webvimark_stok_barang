@@ -191,7 +191,7 @@ class UserController extends Controller
         $model = User::findOne($id); // Retrieve the user's record
     
         if (!$model) {
-            throw new \yii\web\NotFoundHttpException('User not found.');
+            throw new NotFoundHttpException('User not found.');
         }
     
         if ($this->request->isPost && $model->load(Yii::$app->request->post())) {

@@ -153,7 +153,7 @@ class SiteController extends Controller
 
     public function actionTranslate()
     {
-        Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+        Yii::$app->response->format = Response::FORMAT_JSON;
     
         $text = Yii::$app->request->get('text');
         $sourceLang = Yii::$app->request->get('sourceLang', 'en');
