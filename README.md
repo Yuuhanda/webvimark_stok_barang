@@ -1,6 +1,9 @@
 
 OFFICE INVENTORY MANAGEMENT SYSTEM - YII2
 -----------------------------------------
+CAREFULLY READ THESE INSTRUCTIONS BEFORE YOU START WORKING ON THIS PROJECT.
+a lot of things will break if you don't follow these instructions.
+
 DIRECTORY STRUCTURE
 -------------------
 
