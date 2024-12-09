@@ -53,8 +53,6 @@ class DocSearch extends DocUploaded
             ->groupBy('doc_uploaded.id_doc');
         
         // add conditions that should always apply here
-        //i need date time format to be dd mm, yyyy. hh.mm
-
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
         ]);
@@ -62,9 +60,13 @@ class DocSearch extends DocUploaded
         $this->load($params);
 
         if (!$this->validate()) {
-            // uncomment the following line if you do not want to return any records when validation fails
-            // $query->where('0=1');
-            return $dataProvider;
+            // Return empty ArrayDataProvider when validation fails
+            return new ArrayDataProvider([
+                'allModels' => [],
+                'pagination' => [
+                    'pageSize' => 10,
+                ],
+            ]);
         }
 
         // grid filtering conditions
