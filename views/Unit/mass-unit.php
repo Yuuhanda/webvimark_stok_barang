@@ -3,6 +3,9 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use app\helpers\TranslationHelper;
 
+/** @var yii\web\View $this */
+/** @var app\models\ItemUnit $model */
+
 $this->title = TranslationHelper::translate('Add Unit in Bulk');
 $this->params['breadcrumbs'][] = $this->title;
 ?>

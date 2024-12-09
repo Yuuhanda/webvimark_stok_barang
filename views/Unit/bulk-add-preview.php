@@ -3,7 +3,10 @@ use yii\helpers\Html;
 use yii\helpers\Url;
 use app\helpers\TranslationHelper;
 
+/** @var yii\web\View $this */
+/** @var app\models\ItemUnit $model */
 ?>
+
 
 <h1><?= TranslationHelper::translate('Preview Units to be Added')?></h1>
 <h4><?= TranslationHelper::translate('Serial Number will be rejected if an identical one is found')?></h4>
