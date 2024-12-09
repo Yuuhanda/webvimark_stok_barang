@@ -8,7 +8,8 @@ $config = [
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
 
-    //'timeZone' => 'Asia/Jakarta', // Replace with the desired time zone
+    //timezone uses db serverr timezone
+    
     'aliases' => [
         '@bower' => '@vendor/bower-asset',
         '@npm'   => '@vendor/npm-asset',

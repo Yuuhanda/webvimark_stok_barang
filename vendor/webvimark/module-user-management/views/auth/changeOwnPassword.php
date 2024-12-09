@@ -10,7 +10,7 @@ use yii\helpers\Html;
  * @var webvimark\modules\UserManagement\models\forms\ChangeOwnPasswordForm $model
  */
 
- $this->title = ucwords(UserManagementModule::t('back', TranslationHelper::translate('Change own password')));
+ $this->title = ucwords(UserManagementModule::t('back', TranslationHelper::translate('Change Password')));
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="change-own-password">
