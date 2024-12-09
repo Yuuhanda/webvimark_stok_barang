@@ -24,7 +24,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <p>
         <?php 
             // Button to trigger hidden export form
-            echo Html::button(TranslationHelper::translate('Export Data to .xlsx'), [
+            echo GhostHtml::button(TranslationHelper::translate('Export Data to .xlsx'), [
                 'class' => 'btn btn-success',
                 'onclick' => "$('#export-form').submit();"
             ]);
