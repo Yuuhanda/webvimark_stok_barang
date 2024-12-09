@@ -9,12 +9,13 @@ use app\helpers\TranslationHelper;
 /** @var string $username */
 /** @var \app\models\User $userdata */
 
-$this->title = TranslationHelper::translate("Assign Warehouse Admins {$username}");
-$this->params['breadcrumbs'][] = ['label' => 'Users', 'url' => ['index']];
-$this->params['breadcrumbs'][] = $this->title;
-?>
+
+$title = TranslationHelper::translate("Assign Warehouse Admins {$username}");
+$params['breadcrumbs'][] = ['label' => 'Users', 'url' => ['index']];
+$params['breadcrumbs'][] = $title;?>
+
 <div class="assign-admins">
-    <h1><?= Html::encode($this->title) ?></h1>
+    <h1><?= Html::encode($title) ?></h1>
 
     <p><?=TranslationHelper::translate("Assigning a warehouse to an admin will restrict the account to only be able to access items & warehouse they are assigned to")?> <strong><?//= Html::encode($username) ?></strong>.</p>
 

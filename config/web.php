@@ -110,8 +110,9 @@ $config = [
         ],
 
         'myMemoryClient' => [
-            'class' => 'yii\httpclient\Client',
+            'class' => 'app\components\MyMemoryClient',
             'baseUrl' => 'https://api.mymemory.translated.net',
+            
         ],
 
         

@@ -9,7 +9,7 @@ class RbacController extends Controller
 {
     public function actionInit()
     {
-        $auth = \Yii::$app->authManager;
+        $auth = Yii::$app->authManager;
 
         // Create permissions
         $manageItems = $auth->createPermission('manageItems');
