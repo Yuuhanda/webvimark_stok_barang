@@ -65,7 +65,5 @@ class ConditionLookup extends \yii\db\ActiveRecord
                 return TranslationHelper::translate($model->condition_name);
             }
         );
-        //return ArrayHelper::map(self::find()->all(), 'id_condition', 'condition_name'); // assuming 'id' and 'username' columns
-        //i also needs 'condition_name' to be translated using TranslationHelper::translate
     }
 }

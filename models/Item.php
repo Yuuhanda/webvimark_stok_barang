@@ -121,7 +121,7 @@ class Item extends \yii\db\ActiveRecord
     
     public static function getUpdatedByOptions()
     {
-        return \yii\helpers\ArrayHelper::map(User::find()->all(), 'id', 'username'); // Adjust fields as needed
+        return ArrayHelper::map(User::find()->all(), 'id', 'username'); // Adjust fields as needed
     }
 
     public static function getWarehouseOptions()
