@@ -14,7 +14,8 @@ use DateTime;
 use Yii;
 use app\helpers\TranslationHelper;
 use InvalidArgumentException;
-
+use yii\db\Expression;
+use yii\web\ServerErrorHttpException;
 /**
  * LogController implements the CRUD actions for UnitLog model.
  */
@@ -114,21 +115,21 @@ class LogController extends Controller
             // Get the serial number from the ItemUnit
             $unit = ItemUnit::findOne($id_unit);
             if (!$unit) {
-                throw new \yii\web\NotFoundHttpException("Unit not found.");
+                throw new NotFoundHttpException("Unit not found.");
             }
             $sn = $unit->serial_number;
         
             // Get the employee name
             $emp = Employee::findOne($id_employee);
             if (!$emp) {
-                throw new \yii\web\NotFoundHttpException("Employee not found.");
+                throw new NotFoundHttpException("Employee not found.");
             }
             $emp_name = $emp->emp_name;
             $user = Yii::$app->user->identity;
             // Set log fields
             $model->id_unit = $id_unit;
             $model->content = "Unit $sn lent to $emp_name by $user->username";
-            $model->update_at = new \yii\db\Expression('NOW()'); // Correct this field if necessary
+            $model->update_at = new Expression('NOW()'); // Correct this field if necessary
         
             // Try saving and check for errors
             if ($model->save()) {
@@ -137,7 +138,7 @@ class LogController extends Controller
             } else {
                 // Save failed, output validation errors
                 Yii::error($model->getErrors(), __METHOD__);
-                throw new \yii\web\ServerErrorHttpException("Failed to save log: " . json_encode($model->getErrors()));
+                throw new ServerErrorHttpException("Failed to save log: " . json_encode($model->getErrors()));
             }
         } catch (\Exception $e) {
             $transaction->rollBack();
@@ -217,7 +218,7 @@ class LogController extends Controller
             // Get the employee name
             $emp = Employee::findOne($id_employee);
             if (!$emp) {
-                throw new \yii\web\NotFoundHttpException("Employee not found.");
+                throw new NotFoundHttpException("Employee not found.");
             }
             $emp_name = $emp->emp_name;
             $user = Yii::$app->user->identity;
@@ -229,7 +230,7 @@ class LogController extends Controller
                 $emp_name,
                 "received by {$user->username}"
             );
-            $model->update_at = new \yii\db\Expression('NOW()'); // Correct this field if necessary
+            $model->update_at = new Expression('NOW()'); // Correct this field if necessary
 
             // Try saving and check for errors
             if ($model->save()) {
@@ -238,7 +239,7 @@ class LogController extends Controller
             } else {
                 // Save failed, output validation errors
                 Yii::error($model->getErrors(), __METHOD__);
-                throw new \yii\web\ServerErrorHttpException("Failed to save log: " . json_encode($model->getErrors()));
+                throw new ServerErrorHttpException("Failed to save log: " . json_encode($model->getErrors()));
             }
         } catch (\Exception $e) {
             $transaction->rollBack();
@@ -257,7 +258,7 @@ class LogController extends Controller
             // Get the serial number from the ItemUnit
             $unit = ItemUnit::findOne($id_unit);
             if (!$unit) {
-                throw new \yii\web\NotFoundHttpException("Unit not found.");
+                throw new NotFoundHttpException("Unit not found.");
             }
             $sn = $unit->serial_number;
             // Get data of the current logged-in user
@@ -270,7 +271,7 @@ class LogController extends Controller
                 $sn,
                 $user->username
             );
-            $model->update_at = new \yii\db\Expression('NOW()'); // Correct this field if necessary
+            $model->update_at = new Expression('NOW()'); // Correct this field if necessary
 
             // Try saving and check for errors
             if ($model->save()) {
@@ -279,7 +280,7 @@ class LogController extends Controller
             } else {
                 // Save failed, output validation errors
                 Yii::error($model->getErrors(), __METHOD__);
-                throw new \yii\web\ServerErrorHttpException("Failed to save log: " . json_encode($model->getErrors()));
+                throw new ServerErrorHttpException("Failed to save log: " . json_encode($model->getErrors()));
             }
         } catch (\Exception $e) {
             $transaction->rollBack();
@@ -300,7 +301,7 @@ class LogController extends Controller
             // Get the serial number from the ItemUnit
             $unit = ItemUnit::findOne($id_unit);
             if (!$unit) {
-                throw new \yii\web\NotFoundHttpException("Unit not found.");
+                throw new NotFoundHttpException("Unit not found.");
             }
             $sn = $unit->serial_number;
         
@@ -310,7 +311,7 @@ class LogController extends Controller
             // Set log fields
             $model->id_unit = $id_unit;
             $model->content = $this->generateLogContent('repaired and taken to warehouse', $sn, $user->username);
-            $model->update_at = new \yii\db\Expression('NOW()'); // Correct this field if necessary
+            $model->update_at = new Expression('NOW()'); // Correct this field if necessary
         
             // Try saving and check for errors
             if ($model->save()) {
@@ -319,7 +320,7 @@ class LogController extends Controller
             } else {
                 // Save failed, output validation errors
                 Yii::error($model->getErrors(), __METHOD__);
-                throw new \yii\web\ServerErrorHttpException("Failed to save log: " . json_encode($model->getErrors()));
+                throw new ServerErrorHttpException("Failed to save log: " . json_encode($model->getErrors()));
             }
         } catch (\Exception $e) {
             $transaction->rollBack();
@@ -339,7 +340,7 @@ class LogController extends Controller
             $unit = ItemUnit::find()->where(['serial_number' => $serial_number])->one();
             
             if ($unit === null) {
-                throw new \yii\web\NotFoundHttpException("Unit with serial number $serial_number not found.");
+                throw new NotFoundHttpException("Unit with serial number $serial_number not found.");
             }
         
             // Assign the unit ID to the log model
@@ -352,7 +353,7 @@ class LogController extends Controller
             $model->content = $this->generateLogContent('updated', $serial_number, $user->username);
         
             // Set other necessary fields such as timestamp (if needed)
-            $model->update_at = new \yii\db\Expression('NOW()');
+            $model->update_at = new Expression('NOW()');
         
             // Validate and save the log model
             if ($model->validate() && $model->save()) {
@@ -361,7 +362,7 @@ class LogController extends Controller
             } else {
                 // Log save failed, output validation errors
                 Yii::error($model->getErrors(), __METHOD__);
-                throw new \yii\web\ServerErrorHttpException("Failed to save log: " . json_encode($model->getErrors()));
+                throw new ServerErrorHttpException("Failed to save log: " . json_encode($model->getErrors()));
             }
         } catch (\Exception $e) {
             $transaction->rollBack();
@@ -370,7 +371,7 @@ class LogController extends Controller
     }
     public function actionSearchLog()
     {
-        $model = new \app\models\ItemUnit();
+        $model = new ItemUnit();
     
         if ($model->load(Yii::$app->request->post())) {
             if ($model->serial_number !== null) {
@@ -400,7 +401,7 @@ class LogController extends Controller
             $model->content = "New unit $serial_n added by " . $user->username;
 
             //date time
-            $model->update_at = new \yii\db\Expression('NOW()');
+            $model->update_at = new Expression('NOW()');
 
             // Validate and save the log model
             if ($model->validate() && $model->save()) {
@@ -409,7 +410,7 @@ class LogController extends Controller
             } else {
                 // Log save failed, output validation errors
                 Yii::error($model->getErrors(), __METHOD__);
-                throw new \yii\web\ServerErrorHttpException("Failed to save log: " . json_encode($model->getErrors()));
+                throw new ServerErrorHttpException("Failed to save log: " . json_encode($model->getErrors()));
             }
         } catch (\Exception $e) {
             $transaction->rollBack();
