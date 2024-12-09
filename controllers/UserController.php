@@ -1,18 +1,14 @@
 <?php
-
+//currently not in use the app uses wevimark's user management module
 namespace app\controllers;
 
 use app\models\User;
 use app\models\UserSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
 use yii\db\Expression; 
 use Yii;
-use yii\filters\AccessControl;
-use app\components\MyMemoryService;
 use app\helpers\TranslationHelper;
-use webvimark\modules\UserManagement;
 /**
  * UserController implements the CRUD actions for User model.
  */

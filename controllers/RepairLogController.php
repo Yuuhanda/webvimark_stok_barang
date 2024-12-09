@@ -8,8 +8,6 @@ use app\models\RepairLogSearch;
 use Yii;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
-use app\components\MyMemoryService;
 use app\helpers\TranslationHelper;
 use app\models\RepTypeLookup;
 

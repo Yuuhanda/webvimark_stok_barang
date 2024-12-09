@@ -6,8 +6,6 @@ use app\models\ItemCategory;
 use app\models\CategorySearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
-use app\components\MyMemoryService;
 use app\models\Item;
 use Yii;
 use app\helpers\TranslationHelper;
