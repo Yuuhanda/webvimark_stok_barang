@@ -3,7 +3,7 @@
 use webvimark\modules\UserManagement\components\GhostHtml;
 use yii\helpers\Url;
 
-/** @var app\models\Item $model */
+/** @var app\models\Lending $model */
 
 ?>
 <div class="image-preview">

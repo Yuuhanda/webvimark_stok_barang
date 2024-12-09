@@ -234,7 +234,7 @@ class LendingController extends Controller
                 if ($model->save()) {
                     $logController = new LogController('log', Yii::$app);
                     $logController->actionLendingLog($model->id_unit, $model->id_employee);
-                    $itemData = Item::findOne($model->id_item);
+                    $itemData = Item::findOne($model->getAttribute('id_item'));
                     $itemName = $itemData->item_name;
                     Yii::$app->session->setFlash('success', $itemName .' ' . $itemUnit->serial_number .' '. TranslationHelper::translate('loaned.'));
                     return $this->redirect(['index']);

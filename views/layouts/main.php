@@ -14,6 +14,7 @@ use webvimark\modules\UserManagement\components\GhostHtml;
 use webvimark\modules\UserManagement\components\GhostNav;
 use app\assets\AdminLteAsset;
 use app\helpers\TranslationHelper;
+use yii\bootstrap5\Nav;
 
 AdminLteAsset::register($this);
 AppAsset::register($this);
@@ -44,7 +45,7 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
           <path fill-rule="evenodd" d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5m0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5"/>
         </svg>
         <i class="fas fa-bars"></i></a>
-        <?= GhostNav::widget([
+        <?= Nav::widget([
             'options' => ['class' => 'navbar-nav'],
             'items' => [  
                 Yii::$app->user->isGuest
@@ -58,8 +59,7 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
                     ],
                     
             ],
-            ]) 
-        ?>
+        ]) ?>
     </nav>
 
 
@@ -141,7 +141,12 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
                     ],
                 ]) ?>
     <br><br>
-
+    <? 
+    //echo Html::dropDownList('language', Yii::$app->language, ['en' => 'English', 'id' => 'Indonesian'], [
+    //    'id' => 'language-switcher',
+    //    'class' => 'form-select',
+    //]) 
+    ?>
 
     <?php
     $this->registerJs(<<<JS
@@ -183,7 +188,7 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
 <br>
     <!-- Footer -->
     <footer class="main-footer">
-        <strong>© Fikri A. Yuhanda - Prabubima Tech 2024 || Office Inventory Management Yii2 <?= date('Y') ?></strong>
+        <strong>&copy; Fikri A. Yuhanda - Prabubima Tech 2024 || Office Inventory Management Yii2 <?= date('Y') ?></strong>
     </footer>
 </div>
 <?php 
