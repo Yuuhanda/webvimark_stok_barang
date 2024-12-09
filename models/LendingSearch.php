@@ -104,7 +104,7 @@ class LendingSearch extends Model
                 'item_name' => 'item.item_name',
                 'id_item' => 'item.id_item',
                 // Count of times each item is lent out (only type 1 lendings)
-                'total_item_lent' => new \yii\db\Expression("COUNT(CASE WHEN lending.type = 1 THEN lending.id_lending END)"),
+                'total_item_lent' => new Expression("COUNT(CASE WHEN lending.type = 1 THEN lending.id_lending END)"),
             ])
             ->from('item_unit')
             ->leftJoin('lending', 'item_unit.id_unit = lending.id_unit')
@@ -216,7 +216,7 @@ class LendingSearch extends Model
                 'id_lending' => 'lending.id_lending',
                 'pic_loan' => 'lending.pic_loan',
                 'pic_return' => 'lending.pic_return',
-                new \yii\db\Expression("CASE 
+                new Expression("CASE 
                     WHEN lending.type = 1 THEN 'In_Use' 
                     ELSE 'Returned'
                     END AS status"),
@@ -289,7 +289,7 @@ class LendingSearch extends Model
                 'id_unit' => 'lending.id_unit',
                 'id_item' => 'item_unit.id_item',
                 'id_lending' => 'lending.id_lending',
-                new \yii\db\Expression("CASE 
+                new Expression("CASE 
                     WHEN lending.type = 1 THEN 'in_use' 
                     ELSE 'returned'
                     END AS status"),
