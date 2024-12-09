@@ -1,6 +1,7 @@
 <?php
 
 use yii\helpers\Html;
+use yii\widgets\ActiveField;
 use yii\widgets\ActiveForm;
 use kartik\select2\Select2;
 use yii\helpers\ArrayHelper;
@@ -14,9 +15,14 @@ use app\helpers\TranslationHelper;
 
 <div class="item-form">
 
-    <?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]); ?>
+    <?php $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data'], 'enableClientValidation' => true,
+    'enableAjaxValidation' => false,
+    'validateOnSubmit' => true,]); ?>
 
-    <?= $form->field($model, 'item_name')->textInput(['maxlength' => true])->label(TranslationHelper::translate('Item Name')) ?>
+    <?= $form->field($model, 'item_name')->textInput(['maxlength' => true])
+    ->label(TranslationHelper::translate('Item Name'))
+    ->hint(TranslationHelper::translate('Enter an item name'))
+    ?>
 
     <?= $form->field($model, 'SKU')->textInput(['maxlength' => true])->label('SKU') ?>
 
@@ -37,7 +43,12 @@ use app\helpers\TranslationHelper;
 
 
     <!-- Image Upload Field -->
-    <?= $form->field($uploadModel, 'imageFile')->fileInput()->label(TranslationHelper::translate('Item Picture')) ?>
+    <?= $form->field($uploadModel, 'imageFile')->fileInput([
+        'accept' => 'image/*',
+        'class' => 'form-control'
+    ])->label(TranslationHelper::translate('Item Picture'))
+        ->hint(TranslationHelper::translate('Accepted formats: JPG, PNG, JPEG, WEBBP')) 
+    ?>
 
     <div class="form-group">
         <?= Html::submitButton(TranslationHelper::translate('Save'), [

@@ -41,7 +41,7 @@ class ItemUnit extends \yii\db\ActiveRecord
         return [
             [['id_item', 'condition', 'status', 'comment'], 'required'],
             [['id_item', 'status', 'id_wh', 'condition'], 'integer'],
-            [['comment', 'serial_number'], 'string', 'min' => 6, 'max' => 120],
+            [['comment', 'serial_number'], 'string', 'min' => 3, 'max' => 120],
             [['serial_number'], 'unique'],
             [['comment'], 'default', 'value' => 'New Unit'],
             [['status'], 'exist', 'skipOnError' => true, 'targetClass' => StatusLookup::class, 'targetAttribute' => ['status' => 'id_status']],

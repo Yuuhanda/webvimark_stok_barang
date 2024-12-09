@@ -21,13 +21,14 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="loan-unit">
 <h1><?= Html::encode($this->title) ?></h1>
     <?php $form = ActiveForm::begin([
-    'options' => [
-        'enctype' => 'multipart/form-data' // required for file uploads
-    ],
-    'enableClientValidation' => true,
-    'enableAjaxValidation' => false, // Set to true if you need AJAX validation
-    'method' => 'post',
-]); ?>
+        'options' => [
+            'enctype' => 'multipart/form-data',
+            'id' => 'lending-form'
+        ],
+        'enableClientValidation' => true,
+        'validateOnSubmit' => true,
+        'validateOnChange' => true,
+    ]); ?>
 
 
     
@@ -61,9 +62,12 @@ $this->params['breadcrumbs'][] = $this->title;
     ])->label(TranslationHelper::translate('Select Employee')); ?>
 
     <!-- Image Upload Field -->
-    <?= $form->field($uploadModel, 'imageFile')->fileInput(['required' => true])->label(TranslationHelper::translate('Unit Picture')) //make this field required?> 
-
-
+    <?= $form->field($uploadModel, 'imageFile')->fileInput([
+        'accept' => 'image/*',
+        'class' => 'form-control'
+    ])->label(TranslationHelper::translate('Item Picture'))
+        ->hint(TranslationHelper::translate('Accepted formats: JPG, PNG, JPEG, WEBBP')) 
+    ?>
 
     
     <div class="form-group">

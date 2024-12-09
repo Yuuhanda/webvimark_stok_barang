@@ -28,7 +28,12 @@ $this->params['breadcrumbs'][] = $this->title;
         <?= $form->field($model, 'serial_number')->hiddenInput()->label(false) ?>
 
         <!-- Image Upload Field -->
-        <?= $form->field($uploadModel, 'imageFile')->fileInput(['required' => true])->label(TranslationHelper::translate('Unit Picture')) ?>
+        <?= $form->field($uploadModel, 'imageFile')->fileInput([
+            'accept' => 'image/*',
+            'class' => 'form-control'
+        ])->label(TranslationHelper::translate('Item Picture'))
+            ->hint(TranslationHelper::translate('Accepted formats: JPG, PNG, JPEG, WEBBP')) 
+        ?>
     
 
         <div class="form-group">
