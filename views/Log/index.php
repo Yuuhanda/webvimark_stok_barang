@@ -1,12 +1,14 @@
 <?php
 
-use app\models\UnitLog;
 use webvimark\modules\UserManagement\components\GhostHtml;
 use yii\helpers\Html;
-use yii\helpers\Url;
 use yii\grid\GridView;
 use yii\widgets\ActiveForm;
 use app\helpers\TranslationHelper;
+
+/** @var yii\web\View $this */
+/** @var app\models\LogSearch $searchModel */
+/** @var yii\data\ActiveDataProvider $dataProvider */
 
 $this->title = TranslationHelper::translate('Unit Usage Logs');
 $this->params['breadcrumbs'][] = $this->title;

@@ -1,9 +1,6 @@
 <?php
 
-use app\models\Lending;
 use yii\helpers\Html;
-use yii\helpers\Url;
-use yii\grid\ActionColumn;
 use yii\grid\GridView;
 use kartik\date\DatePicker;
 use webvimark\modules\UserManagement\components\GhostHtml;
@@ -14,7 +11,7 @@ use yii\web\View;
 use app\helpers\TranslationHelper;
 
 /** @var yii\web\View $this */
-/** @var app\models\LendigSearch $searchModel */
+/** //@var app\models\LendigSearch $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
 $this->title = 'Lending History';

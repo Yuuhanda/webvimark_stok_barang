@@ -58,18 +58,6 @@ class LogController extends Controller
         ]);
     }
 
-    public function actionSearchResult($serial_number){
-        $searchModel = new LogSearch();
-        $params = Yii::$app->request->queryParams;
-        $params['LogSearch']['serial_number'] = $serial_number;
-        // Wrap the array in an ArrayDataProvider
-        $dataProvider = $dataProvider = $searchModel->search($params);
-
-        return $this->render('log-single', [
-            'dataProvider' => $dataProvider,
-            'searchModel' => $searchModel,
-        ]);
-    }
 
     /**
      * Displays a single UnitLog model.
@@ -368,22 +356,7 @@ class LogController extends Controller
             throw $e;
         }
     }
-    public function actionSearchLog()
-    {
-        $model = new ItemUnit();
-    
-        if ($model->load(Yii::$app->request->post())) {
-            if ($model->serial_number !== null) {
-                return $this->redirect(['search-result', 'serial_number' => $model->serial_number]);
-            } else{
-                Yii::$app->session->setFlash('error', TranslationHelper::translate('Serial number cannot be null.'));
-            }
-        }
-    
-        return $this->render('search-log', [
-            'model' => $model,
-        ]);
-    }
+
 
     public function actionNewUnit($serial_n, $id_unit){
         $transaction = Yii::$app->db->beginTransaction();

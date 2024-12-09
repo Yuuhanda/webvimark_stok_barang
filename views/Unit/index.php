@@ -1,17 +1,12 @@
 <?php
 
-use app\models\ItemUnit;
-use app\models\Item;
 use yii\helpers\Html;
-use yii\helpers\Url;
-use yii\grid\ActionColumn;
 use yii\grid\GridView;
-use app\controllers\UnitController;
 use webvimark\modules\UserManagement\components\GhostHtml;
 use app\helpers\TranslationHelper;
 
 /** @var yii\web\View $this */
-/** @var app\models\Itemearch $searchModel */
+/** @var app\models\UnitSearch $searchModel */
 /** @var yii\data\ActiveDataProvider $dataProvider */
 
 $this->title = TranslationHelper::translate('Manage Units');

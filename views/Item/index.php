@@ -2,11 +2,9 @@
 
 use webvimark\modules\UserManagement\components\GhostHtml;
 use yii\helpers\Html;
-use yii\helpers\Url;
 use yii\grid\GridView;
 use yii\bootstrap5\Modal;
 use yii\web\View;
-use webvimark\modules\UserManagement\models\User;
 use app\helpers\TranslationHelper;
 use yii\bootstrap5\ActiveForm;
 
