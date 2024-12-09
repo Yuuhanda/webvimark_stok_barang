@@ -10,6 +10,7 @@ use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use app\helpers\TranslationHelper;
 use app\models\RepTypeLookup;
+use yii\web\BadRequestHttpException;
 
 /**
  * RepairLogController implements the CRUD actions for RepairLog model.
@@ -68,12 +69,12 @@ class RepairLogController extends Controller
         try {
             // Add input validation
             if (!is_numeric($id_unit) || empty($comment) || empty($type)) {
-                throw new \yii\web\BadRequestHttpException('Invalid input parameters');
+                throw new BadRequestHttpException('Invalid input parameters');
             }
             $model = new RepairLog();
             $unit = ItemUnit::findOne($id_unit);
             if (!$unit) {
-                throw new \yii\web\NotFoundHttpException(TranslationHelper::translate("Unit not found."));
+                throw new NotFoundHttpException(TranslationHelper::translate("Unit not found."));
             }
             $sn = $unit->serial_number;
             $model->id_unit = $id_unit;

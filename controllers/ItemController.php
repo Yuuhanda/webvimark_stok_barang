@@ -17,7 +17,10 @@ use app\models\Employee;
 use app\models\Warehouse;
 use app\models\ConditionLookup;
 use app\models\ItemCategory;
-use app\models\StatusLookup;
+use app\models\StatusLookup;/**
+ * Imports the StatusLookup model, which is likely used to retrieve status information for items.
+ */
+
 use app\helpers\TranslationHelper;
 
 /**
@@ -299,13 +302,18 @@ class ItemController extends Controller
     }
 
     private function handleFileUpload($uploadModel) {
-        if ($uploadModel->imageFile && $uploadModel->validate()) {
-            if ($uploadModel->imageFile) {
-                $imageFileName = $uploadModel->upload();
-                if ($imageFileName) {
-                    return $imageFileName;
+        try {
+            if ($uploadModel->imageFile && $uploadModel->validate()) {
+                if ($uploadModel->imageFile) {
+                    $imageFileName = $uploadModel->upload();
+                    if ($imageFileName) {
+                        return $imageFileName;
+                    }
                 }
             }
+        } catch (\Exception $e) {
+            Yii::error("File upload failed: " . $e->getMessage());
+            throw new \yii\web\HttpException(500, 'Error processing file upload');
         }
         return null;
     }
