@@ -141,12 +141,7 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
                     ],
                 ]) ?>
     <br><br>
-    <? 
-    //echo Html::dropDownList('language', Yii::$app->language, ['en' => 'English', 'id' => 'Indonesian'], [
-    //    'id' => 'language-switcher',
-    //    'class' => 'form-select',
-    //]) 
-    ?>
+
 
     <?php
     $this->registerJs(<<<JS
