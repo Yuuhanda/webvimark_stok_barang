@@ -7,6 +7,10 @@ use yii\httpclient\Exception;
 
 class MyMemoryService
 {
+    //YOU WILL NEED AN ACCOUNT OF MYMEMORY TRANSLATION API. if you dont have it you can try make one
+    //An account is required to use the API.
+    //For the API key, you can use your mymemory translation account to make one
+    //to use it you can open config/params.php and put your API key there
     public static function translate($text, $sourceLang, $targetLang, $email = 'yuhandafikri@outlook.com')
     {
         $cacheKey = "translation_{$sourceLang}_{$targetLang}_" . md5($text);
