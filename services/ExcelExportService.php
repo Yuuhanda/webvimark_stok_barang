@@ -64,4 +64,15 @@ class ExcelExportService
         $this->sheet->setCellValue($cell, $value);
         return $this;
     }
+
+    // Add this method to ExcelExportService class
+    public function autoFitColumns()
+    {
+        foreach ($this->sheet->getColumnIterator() as $column) {
+            $this->sheet->getColumnDimension($column->getColumnIndex())->setAutoSize(true);
+        }
+        return $this;
+    }
+
 }
+
