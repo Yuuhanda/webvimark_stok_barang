@@ -113,12 +113,12 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
                                 ['label' => TranslationHelper::translate('Repair Summary'), 'url' => ['/repair-log/index'], 'options' => ['class' => 'nav-item dropdown-indent']], //dropdown item
                                 ['label' => TranslationHelper::translate('Damaged Unit'), 'url' => ['/unit/damaged'], 'options' => ['class' => 'nav-item dropdown-indent']], //dropdown item
                                 ['label' => TranslationHelper::translate('Unit In-Repair'), 'url' => ['/unit/repair'], 'options' => ['class' => 'nav-item dropdown-indent']], //dropdown item
-                                ['label' => TranslationHelper::translate('Repair Log'), 'url' => ['/repair-log/detail'], 'options' => ['class' => 'nav-item dropdown-indent']], //dropdown item
+                                ['label' => TranslationHelper::translate('Repair Logs'), 'url' => ['/repair-log/detail'], 'options' => ['class' => 'nav-item dropdown-indent']], //dropdown item
                             ],
                         ],
                         ['label' =>     TranslationHelper::translate('Edit Unit Data'), 'url' => ['/unit/correction-search'], 'options' => ['class' => 'nav-item'], 'template' => '<a href="{url}" class="nav-link">{label}</a>',], //dropdown item
                         ['label' =>     TranslationHelper::translate('Warehouse'), 'url' => ['/warehouse/index'], 'options' => ['class' => 'nav-item'], 'template' => '<a href="{url}" class="nav-link">{label}</a>',], //dropdown item
-                        ['label' =>     TranslationHelper::translate('Employee'), 'url' => ['/employee/index'], 'options' => ['class' => 'nav-item'], 'template' => '<a href="{url}" class="nav-link">{label}</a>',], //dropdown item
+                        ['label' =>     TranslationHelper::translate('Employees'), 'url' => ['/employee/index'], 'options' => ['class' => 'nav-item'], 'template' => '<a href="{url}" class="nav-link">{label}</a>',], //dropdown item
                         [
                             'label' => TranslationHelper::translate('Admin Menu'),
                             'url' => '#',
